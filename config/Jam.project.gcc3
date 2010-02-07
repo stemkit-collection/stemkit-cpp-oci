@@ -382,6 +382,16 @@ DLLFLAGS ?= -shared ;
 UNITTEST_DIRS ?= $(CONTRIB_ROOT)/cppunit-$(CPPUNIT_VERSION) ;
 UNITTEST_LIBS ?= cppunit ;
 
+project.STEMKIT_VERSION ?= 0.19 ;
+project.STEMKIT_ROOT = $(CONTRIB_ROOT)/stemkit-$(project.STEMKIT_VERSION) ;
+project.STEMKIT_INCLUDE = $(project.STEMKIT_ROOT)/include ;
+project.STEMKIT_LIBDIR = $(project.STEMKIT_ROOT)/lib ;
+
+LIBDIRS += $(project.STEMKIT_LIBDIR) ;
+INCLUDES += $(project.STEMKIT_INCLUDE) ;
+
+LIBS += sk.rt.bundle sk.util ;
+
 C++ALLFLAGS = $(C++FLAGS) $(CCDFLAGS) $(CCOFLAGS) ;
 CCALLFLAGS = $(CCFLAGS) $(CCDFLAGS) $(CCOFLAGS) ;
 C++LDALLFLAGS = $(CCFLAGS) $(CCDFLAGS) $(CCOFLAGS) $(C++LDFLAGS) ;
