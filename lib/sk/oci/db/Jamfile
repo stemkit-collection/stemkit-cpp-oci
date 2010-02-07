@@ -6,4 +6,5 @@ local objects =
   Accessor.cc
 ;
 
+use-oracle $(objects) ;
 make-static-library $(library) : $(objects) ;

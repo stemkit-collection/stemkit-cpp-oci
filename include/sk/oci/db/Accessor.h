@@ -12,6 +12,8 @@
 #define _SK_OCI_DB_ACCESSOR_H_
 
 #include <sk/oci/Accessor.h>
+#include <sk/util/String.h>
+#include <sk/util/Holder.hxx>
 
 namespace sk {
   namespace oci {
@@ -20,15 +22,35 @@ namespace sk {
         : public virtual sk::oci::Accessor
       {
         public:
-          Accessor();
+          Accessor(const sk::util::String& username, const sk::util::String& password, const sk::util::String& database);
           virtual ~Accessor();
       
+          // sk::oci::Accessor implementation.
+          void close();
+          void commit();
+          void rollback();
+
+          const sk::oci::info::Table describe(const sk::util::String& name);
+          uint64_t execute(const sk::util::String& sql);
+          uint64_t execute(const sk::util::String& sql, const sk::oci::Director& director);
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       
         private:
           Accessor(const Accessor& other);
           Accessor& operator = (const Accessor& other);
+
+          void logon();
+          void logoff();
+
+          const sk::util::String _username;
+          const sk::util::String _password;
+          const sk::util::String _database;
+
+          class Data;
+          sk::util::Holder<Data> _dataHolder;
+          Data& _data;
       };
     }
   }
