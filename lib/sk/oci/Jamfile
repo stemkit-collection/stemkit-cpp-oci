@@ -1,0 +1,14 @@
+# vim: ft=jam: sw=2:
+
+local library = sk.oci ;
+
+make-library $(library) ;
+
+add-project-library $(library) : 
+  $(library).db 
+  $(library).info
+  $(library).abstract
+;
+
+make-subdirs info abstract db mock ;
+

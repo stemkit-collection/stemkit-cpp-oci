@@ -1,0 +1,9 @@
+# vim: ft=jam: sw=2:
+
+local library = sk.oci.db ;
+
+local objects = 
+  Accessor.cc
+;
+
+make-static-library $(library) : $(objects) ;

@@ -1,0 +1,8 @@
+# vim: ft=jam: sw=2:
+
+local library = sk.oci.abstract ;
+
+local objects = 
+;
+
+make-static-library $(library) : $(objects) ;

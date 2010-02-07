@@ -1,0 +1,7 @@
+--- 
+product: sk
+name: stemkit-cpp-db
+release: 0.1
+build: 1
+library-prefix: sk
+library-major: 0

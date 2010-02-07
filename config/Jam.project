@@ -1,0 +1,3 @@
+# vim:ft=
+
+core.load-project-config Jam.project.$(JAM_COMPILE:E=gcc3) ;
