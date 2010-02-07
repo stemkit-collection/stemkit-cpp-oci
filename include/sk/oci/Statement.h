@@ -12,6 +12,7 @@
 #define _SK_OCI_STATEMENT_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/String.h>
 
 namespace sk {
   namespace oci {
@@ -19,15 +20,13 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        Statement();
-        virtual ~Statement();
-    
-        // sk::util::Object re-implementation.
-        const sk::util::Class getClass() const;
-    
-      private:
-        Statement(const Statement& other);
-        Statement& operator = (const Statement& other);
+        virtual void setDescribeOnly(bool state) = 0;
+
+        virtual void bindString(int position, int size, const sk::util::String& value) = 0;
+        virtual void bindInt(int position, int value) = 0;
+
+        virtual void bindString(const sk::util::String& placeholder, int size, const sk::util::String& value) = 0;
+        virtual void bindInt(const sk::util::String& placeholder, int value) = 0;
     };
   }
 }
