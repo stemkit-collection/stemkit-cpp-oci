@@ -2,7 +2,11 @@
 
 local library = sk.oci ;
 
-make-library $(library) ;
+local objects = 
+  Exception.cc
+;
+
+make-library $(library) : $(objects) ;
 
 add-project-library $(library) : 
   $(library).db 
