@@ -8,24 +8,23 @@
  *  Author: Gennady Bystritsky
 */
 
-#ifndef _SK_OCI_EXCEPTION_H_
-#define _SK_OCI_EXCEPTION_H_
+#ifndef _SK_OCI_STILLEXECUTINGEXCEPTION_H_
+#define _SK_OCI_STILLEXECUTINGEXCEPTION_H_
 
-#include <sk/util/Exception.h>
+#include <sk/oci/Exception.h>
 
 namespace sk {
   namespace oci {
-    class Exception 
-      : public sk::util::Exception
+    class StillExecutingException 
+      : public sk::oci::Exception
     {
       public:
-        Exception(const sk::util::String& origin, const sk::util::String& message);
-
+        StillExecutingException(const sk::util::String& origin);
+    
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
-    
     };
   }
 }
 
-#endif /* _SK_OCI_EXCEPTION_H_ */
+#endif /* _SK_OCI_STILLEXECUTINGEXCEPTION_H_ */

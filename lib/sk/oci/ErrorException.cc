@@ -11,20 +11,26 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 
-#include <sk/oci/Exception.h>
+#include <sk/oci/ErrorException.h>
 
-static const sk::util::String __className("sk::oci::Exception");
+static const sk::util::String __className("sk::oci::ErrorException");
 
-sk::oci::Exception::
-Exception(const sk::util::String& origin, const sk::util::String& message)
-  : sk::util::Exception(join(origin, message))
+sk::oci::ErrorException::
+ErrorException(const sk::util::String& origin, int code, const sk::util::String& message)
+  : sk::oci::Exception(origin, message), _code(code)
 {
 }
 
 const sk::util::Class
-sk::oci::Exception::
+sk::oci::ErrorException::
 getClass() const
 {
   return sk::util::Class(__className);
 }
 
+int
+sk::oci::ErrorException::
+getCode() const
+{
+  return _code;
+}

@@ -11,6 +11,12 @@
 #include "Handle.h"
 #include "Environment.h"
 #include "handle/Error.h"
+#include <sk/oci/Exception.h>
+#include <sk/oci/NoDataException.h>
+#include <sk/oci/ErrorException.h>
+#include <sk/oci/InvalidHandleException.h>
+#include <sk/oci/StillExecutingException.h>
+#include <sk/oci/ContinueException.h>
 
 sk::oci::db::Handle::
 Handle(ub4 type, db::Environment& env, db::handle::Error& error)
@@ -28,7 +34,7 @@ void
 sk::oci::db::Handle::
 init() 
 {
-  OCIHandleAlloc(_env.getHandle(), &_handle, _type, 0, 0);
+  SK_OCI_ENSURE_SUCCESS(OCIHandleAlloc(_env.getHandle(), &_handle, _type, 0, 0));
 }
 
 void 
@@ -45,7 +51,7 @@ void
 sk::oci::db::Handle::
 setAttr(const void* attr, ub4 size, ub4 attrType) 
 {
-  OCIAttrSet(_handle, _type, const_cast<void*>(attr), size, attrType, _error.getHandle());
+  SK_OCI_ENSURE_SUCCESS(OCIAttrSet(_handle, _type, const_cast<void*>(attr), size, attrType, _error.getHandle()));
 }
 
 void* 
@@ -62,3 +68,53 @@ toOraText(const sk::util::String& string) const
   return reinterpret_cast<const OraText*>(string.getChars());
 }
 
+OraText* 
+sk::oci::db::Handle::
+toOraText(std::vector<char> buffer) const
+{
+  if(buffer.size() == 0) {
+    throw sk::oci::Exception("toOraText", "Empty buffer");
+  }
+  return reinterpret_cast<OraText*>(&buffer.front());
+}
+
+void
+sk::oci::db::Handle::
+ensureSuccess(int status, const char* expression) const 
+{
+  if(status == OCI_SUCCESS) {
+    return;
+  }
+  sk::util::String origin(expression);
+
+  switch(status) {
+    case OCI_SUCCESS_WITH_INFO:
+      _error.handleSuccessWithInfo(origin);
+      break;
+                                
+    case OCI_NEED_DATA: 
+      throw sk::oci::Exception(origin, "Need data");
+
+    case OCI_NO_DATA:
+      throw sk::oci::NoDataException(origin);
+
+    case OCI_ERROR: {
+      std::vector<char> buffer(1024, 0);
+      sb4 code = _error.getError(buffer);
+
+      throw sk::oci::ErrorException(origin, code, &buffer.front());
+    }
+
+    case OCI_INVALID_HANDLE: 
+      throw sk::oci::InvalidHandleException(origin);
+
+    case OCI_STILL_EXECUTING: 
+      throw sk::oci::StillExecutingException(origin);
+
+    case OCI_CONTINUE: 
+      throw sk::oci::ContinueException(origin);
+
+    default:
+      throw sk::oci::Exception(origin, "Unknown OCI status " + sk::util::String::valueOf(status));
+  }
+}

@@ -26,7 +26,7 @@ namespace sk {
         
             void init(const sk::util::String database) {
               db::Handle::init();
-              OCIServerAttach(getHandle(), error().getHandle(), toOraText(database.getChars()), database.length(), OCI_DEFAULT);
+              SK_OCI_ENSURE_SUCCESS(OCIServerAttach(getHandle(), error().getHandle(), toOraText(database), database.length(), OCI_DEFAULT));
             }
 
             OCIServer* getHandle() const {

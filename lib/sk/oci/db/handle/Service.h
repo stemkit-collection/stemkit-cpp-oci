@@ -28,7 +28,7 @@ namespace sk {
               db::Handle::init();
 
               setAttr(_server.getHandle(), 0, OCI_ATTR_SERVER);
-              OCISessionBegin(getHandle(), error().getHandle(), _session.getHandle(), OCI_CRED_RDBMS, OCI_DEFAULT);
+              SK_OCI_ENSURE_SUCCESS(OCISessionBegin(getHandle(), error().getHandle(), _session.getHandle(), OCI_CRED_RDBMS, OCI_DEFAULT));
               setAttr(_session.getHandle(), 0, OCI_ATTR_SESSION);
             }
 

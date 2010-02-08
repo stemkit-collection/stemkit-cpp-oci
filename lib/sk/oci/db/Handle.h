@@ -13,6 +13,7 @@
 
 #include <sk/util/String.h>
 #include <oci.h>
+#include <vector>
 
 namespace sk {
   namespace oci {
@@ -36,6 +37,9 @@ namespace sk {
 
           void setAttr(const void* attr, ub4 size, ub4 attrType);
           const OraText* toOraText(const sk::util::String& string) const;
+          OraText* toOraText(std::vector<char> buffer) const;
+
+          void ensureSuccess(int status, const char* expression) const;
 
         private:
           Handle(const Handle& other);
@@ -49,5 +53,7 @@ namespace sk {
     }
   }
 }
+
+#define SK_OCI_ENSURE_SUCCESS(expression) ensureSuccess((expression), #expression)
 
 #endif /* _SK_OCI_DB_HANDLE_H_ */

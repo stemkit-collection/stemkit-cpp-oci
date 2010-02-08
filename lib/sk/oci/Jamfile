@@ -4,6 +4,11 @@ local library = sk.oci ;
 
 local objects = 
   Exception.cc
+  NoDataException.cc
+  ErrorException.cc
+  InvalidHandleException.cc
+  StillExecutingException.cc
+  ContinueException.cc
 ;
 
 make-library $(library) : $(objects) ;

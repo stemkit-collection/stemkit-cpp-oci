@@ -11,20 +11,19 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 
-#include <sk/oci/Exception.h>
+#include <sk/oci/NoDataException.h>
 
-static const sk::util::String __className("sk::oci::Exception");
+static const sk::util::String __className("sk::oci::NoDataException");
 
-sk::oci::Exception::
-Exception(const sk::util::String& origin, const sk::util::String& message)
-  : sk::util::Exception(join(origin, message))
+sk::oci::NoDataException::
+NoDataException(const sk::util::String& origin)
+  : sk::oci::Exception(origin, "No data")
 {
 }
 
 const sk::util::Class
-sk::oci::Exception::
+sk::oci::NoDataException::
 getClass() const
 {
   return sk::util::Class(__className);
 }
-

@@ -11,8 +11,10 @@
 #ifndef _SK_OCI_DB_HANDLE_ERROR_H_
 #define _SK_OCI_DB_HANDLE_ERROR_H_
 
+#include <sk/oci/Exception.h>
+#include <sk/rt/Scope.h>
+
 #include "Handle.h"
-#include <sk/util/IllegalStateException.h>
 #include <vector>
 
 namespace sk {
@@ -25,23 +27,29 @@ namespace sk {
         {
           public:
             Error(db::Environment& env)
-              : Handle(OCI_HTYPE_ERROR, env, *this) {}
+              : Handle(OCI_HTYPE_ERROR, env, *this), _scope("OCI") {}
 
             OCIError* getHandle() const {
               return reinterpret_cast<OCIError*>(db::Handle::getHandle());
             }
 
-            sb4 getError(int status, std::vector<char> buffer) {
+            sb4 getError(std::vector<char> buffer) {
               sb4 errorcode;
-              if(OCI_SUCCESS != OCIErrorGet(getHandle(), 1, 0, &errorcode, reinterpret_cast<OraText*>(&buffer.front()), buffer.size(), OCI_HTYPE_ERROR)) {
-                throw sk::util::IllegalStateException("OCIErrorGet failed");
+              if(OCI_SUCCESS != OCIErrorGet(getHandle(), 1, 0, &errorcode, toOraText(buffer), buffer.size(), OCI_HTYPE_ERROR)) {
+                throw sk::oci::Exception("OCIErrorGet", "Cannot get OCI error code");
               }
               return errorcode;
+            }
+
+            void handleSuccessWithInfo(const sk::util::String& origin) const {
+              _scope.warning("SUCCESS_WITH_INFO") << origin;
             }
 
           private:
             Error(const Error& other);
             Error& operator = (const Error& other);
+
+            sk::rt::Scope _scope;
         };
       }
     }

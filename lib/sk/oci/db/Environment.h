@@ -11,6 +11,8 @@
 #ifndef _SK_OCI_DB_ENVIRONMENT_H_
 #define _SK_OCI_DB_ENVIRONMENT_H_
 
+#include <sk/oci/Exception.h>
+
 namespace sk {
   namespace oci {
     namespace db {
@@ -25,7 +27,9 @@ namespace sk {
           }
 
           void init(ub4 mode) {
-            OCIEnvCreate(&_handle, mode, 0, 0, 0, 0, 0, 0);
+            if(OCI_SUCCESS != OCIEnvCreate(&_handle, mode, 0, 0, 0, 0, 0, 0)) {
+              throw sk::oci::Exception("OCIEnvCreate", "Cannot create OCI environment");
+            }
           }
 
           void reset() {
