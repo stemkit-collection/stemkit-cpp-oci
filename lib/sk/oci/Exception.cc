@@ -15,9 +15,19 @@
 
 static const sk::util::String __className("sk::oci::Exception");
 
+namespace {
+  const sk::util::String normalize_origin(const sk::util::String& origin) {
+    int index = origin.indexOf('(');
+    if(index == -1) {
+      return origin;
+    }
+    return origin.substring(0, index).trim();
+  }
+}
+
 sk::oci::Exception::
 Exception(const sk::util::String& origin, const sk::util::String& message)
-  : sk::util::Exception(join(origin, message))
+  : sk::util::Exception(join(normalize_origin(origin), message))
 {
 }
 

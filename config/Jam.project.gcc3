@@ -393,7 +393,7 @@ project.ORACLE_INCLUDES =
 ;
 
 LIBDIRS += $(project.STEMKIT_LIBDIR) ;
-INCLUDES += $(project.STEMKIT_INCLUDE) ;
+INCLUDES += $(project.STEMKIT_INCLUDE)/hooks $(project.STEMKIT_INCLUDE) ;
 
 LIBS += sk.rt.bundle sk.util ;
 

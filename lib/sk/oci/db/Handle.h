@@ -39,7 +39,7 @@ namespace sk {
           const OraText* toOraText(const sk::util::String& string) const;
           OraText* toOraText(std::vector<char> buffer) const;
 
-          void ensureSuccess(int status, const char* expression) const;
+          void ensureSuccess(int status, const char* origin) const;
 
         private:
           Handle(const Handle& other);

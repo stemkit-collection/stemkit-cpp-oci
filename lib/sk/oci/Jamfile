@@ -14,10 +14,8 @@ local objects =
 make-library $(library) : $(objects) ;
 
 add-project-library $(library) : 
-  $(library).db 
   $(library).info
   $(library).abstract
 ;
 
-make-subdirs info abstract db mock ;
-
+make-subdirs info abstract db mock tests ;

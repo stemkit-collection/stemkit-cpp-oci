@@ -80,14 +80,12 @@ toOraText(std::vector<char> buffer) const
 
 void
 sk::oci::db::Handle::
-ensureSuccess(int status, const char* expression) const 
+ensureSuccess(int status, const char* origin) const 
 {
-  if(status == OCI_SUCCESS) {
-    return;
-  }
-  sk::util::String origin(expression);
-
   switch(status) {
+    case OCI_SUCCESS:
+      break;
+      
     case OCI_SUCCESS_WITH_INFO:
       _error.handleSuccessWithInfo(origin);
       break;
