@@ -21,8 +21,8 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        virtual void prepareStatement(sk::oci::Statement& statement) = 0;
-        virtual void processCursor(sk::oci::Cursor& cursor) = 0;
+        virtual void prepareStatement(sk::oci::Statement& statement) const = 0;
+        virtual void processCursor(sk::oci::Cursor& cursor) const = 0;
     };
   }
 }
