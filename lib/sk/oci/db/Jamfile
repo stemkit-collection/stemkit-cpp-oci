@@ -4,6 +4,7 @@ local library = sk.oci.db ;
 
 local objects = 
   Accessor.cc
+  Handle.cc
 ;
 
 use-oracle $(objects) ;

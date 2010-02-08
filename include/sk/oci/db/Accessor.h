@@ -14,6 +14,7 @@
 #include <sk/oci/Accessor.h>
 #include <sk/util/String.h>
 #include <sk/util/Holder.hxx>
+#include <sk/rt/Scope.h>
 
 namespace sk {
   namespace oci {
@@ -51,6 +52,7 @@ namespace sk {
           class Data;
           sk::util::Holder<Data> _dataHolder;
           Data& _data;
+          sk::rt::Scope _scope;
       };
     }
   }

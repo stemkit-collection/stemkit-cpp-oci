@@ -13,17 +13,31 @@
 #include <sk/util/UnsupportedOperationException.h>
 
 #include <sk/oci/db/Accessor.h>
-#include <oci.h>
 
-static const sk::util::String __className("sk::oci::db::Accessor");
+#include <oci.h>
+#include "Environment.h"
+#include "handle/Error.h"
+#include "handle/Server.h"
+#include "handle/Session.h"
+#include "handle/Service.h"
 
 struct sk::oci::db::Accessor::Data : public virtual sk::util::Object {
+  Data()
+    : error(env), server(env, error), session(env, error), service(env, session, server, error) {}
+
+  db::Environment env;
+  db::handle::Error error;
+  db::handle::Session session;
+  db::handle::Server server;
+  db::handle::Service service;
 };
+
+static const sk::util::String __className("sk::oci::db::Accessor");
 
 sk::oci::db::Accessor::
 Accessor(const sk::util::String& username, const sk::util::String& password, const sk::util::String& database)
   : _username(username), _password(password), _database(database),
-    _dataHolder(new Data), _data(_dataHolder.get())
+    _scope(__className), _dataHolder(new Data), _data(_dataHolder.get())
 {
   logon();
 }
@@ -45,7 +59,11 @@ void
 sk::oci::db::Accessor::
 logon()
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  _data.env.init(OCI_OBJECT | OCI_THREADED);
+  _data.error.init();
+  _data.session.init(_username, _password);
+  _data.server.init(_database);
+  _data.service.init();
 }
 
 void 
