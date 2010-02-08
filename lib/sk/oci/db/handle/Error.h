@@ -33,7 +33,7 @@ namespace sk {
               return reinterpret_cast<OCIError*>(db::Handle::getHandle());
             }
 
-            sb4 getError(std::vector<char> buffer) {
+            sb4 getError(std::vector<char>& buffer) {
               sb4 errorcode;
               if(OCI_SUCCESS != OCIErrorGet(getHandle(), 1, 0, &errorcode, toOraText(buffer), buffer.size(), OCI_HTYPE_ERROR)) {
                 throw sk::oci::Exception("OCIErrorGet", "Cannot get OCI error code");

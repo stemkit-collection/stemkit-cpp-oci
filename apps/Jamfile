@@ -1,0 +1,8 @@
+# vim: ft=jam: sw=2:
+
+local program = oracle-probe ;
+
+use-oracle $(program) ;
+use-project-libraries $(program) : sk.oci sk.oci.db ;
+
+make-program $(program) : $(program).cc ;

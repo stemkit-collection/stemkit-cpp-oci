@@ -37,7 +37,7 @@ namespace sk {
 
           void setAttr(const void* attr, ub4 size, ub4 attrType);
           const OraText* toOraText(const sk::util::String& string) const;
-          OraText* toOraText(std::vector<char> buffer) const;
+          OraText* toOraText(std::vector<char>& buffer) const;
 
           void ensureSuccess(int status, const char* origin) const;
 

@@ -61,6 +61,13 @@ getHandle() const
   return _handle;
 }
 
+sk::oci::db::handle::Error&
+sk::oci::db::Handle::
+error() const 
+{
+  return _error;
+}
+
 const OraText* 
 sk::oci::db::Handle::
 toOraText(const sk::util::String& string) const 
@@ -70,7 +77,7 @@ toOraText(const sk::util::String& string) const
 
 OraText* 
 sk::oci::db::Handle::
-toOraText(std::vector<char> buffer) const
+toOraText(std::vector<char>& buffer) const
 {
   if(buffer.size() == 0) {
     throw sk::oci::Exception("toOraText", "Empty buffer");

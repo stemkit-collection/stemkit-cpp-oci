@@ -392,6 +392,10 @@ project.ORACLE_INCLUDES =
   include
 ;
 
+project.ORACLE_LIBS = 
+   clntsh
+;
+
 LIBDIRS += $(project.STEMKIT_LIBDIR) ;
 INCLUDES += $(project.STEMKIT_INCLUDE)/hooks $(project.STEMKIT_INCLUDE) ;
 
