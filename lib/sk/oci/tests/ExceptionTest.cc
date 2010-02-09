@@ -49,12 +49,36 @@ testBasics()
 
 void
 sk::oci::tests::ExceptionTest::
-testOriginNormalize()
+testOriginNormalizeFunction()
 {
   try {
     throw sk::oci::Exception("func(hello)", "he-he");
   }
   catch(const sk::oci::Exception& exception) {
     CPPUNIT_ASSERT_EQUAL("ERROR: func: he-he", exception.getMessage());
+  }
+}
+
+void
+sk::oci::tests::ExceptionTest::
+testOriginNormalizeNamespace()
+{
+  try {
+    throw sk::oci::Exception("aaa::bbb::ccc", "he-he");
+  }
+  catch(const sk::oci::Exception& exception) {
+    CPPUNIT_ASSERT_EQUAL("ERROR: ccc: he-he", exception.getMessage());
+  }
+}
+
+void
+sk::oci::tests::ExceptionTest::
+testOriginNormalizeBoth()
+{
+  try {
+    throw sk::oci::Exception("aaa::bbb::zzz(312)", "he-he");
+  }
+  catch(const sk::oci::Exception& exception) {
+    CPPUNIT_ASSERT_EQUAL("ERROR: zzz: he-he", exception.getMessage());
   }
 }

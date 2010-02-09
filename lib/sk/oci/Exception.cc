@@ -16,12 +16,24 @@
 static const sk::util::String __className("sk::oci::Exception");
 
 namespace {
-  const sk::util::String normalize_origin(const sk::util::String& origin) {
+  const sk::util::String normalize_origin_function(const sk::util::String& origin) {
     int index = origin.indexOf('(');
     if(index == -1) {
       return origin;
     }
-    return origin.substring(0, index).trim();
+    return origin.substring(0, index);
+  }
+
+  const sk::util::String normalize_origin_namespace(const sk::util::String& origin) {
+    int index = origin.lastIndexOf(':');
+    if(index == -1) {
+      return origin;
+    }
+    return origin.substring(index + 1);
+  }
+
+  const sk::util::String normalize_origin(const sk::util::String& origin) {
+    return normalize_origin_namespace(normalize_origin_function(origin)).trim();
   }
 }
 

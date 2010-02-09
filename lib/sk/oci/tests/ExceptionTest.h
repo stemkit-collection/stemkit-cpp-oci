@@ -22,7 +22,9 @@ namespace sk {
       {
         CPPUNIT_TEST_SUITE(sk::oci::tests::ExceptionTest);
           CPPUNIT_TEST(testBasics);
-          CPPUNIT_TEST(testOriginNormalize);
+          CPPUNIT_TEST(testOriginNormalizeFunction);
+          CPPUNIT_TEST(testOriginNormalizeNamespace);
+          CPPUNIT_TEST(testOriginNormalizeBoth);
         CPPUNIT_TEST_SUITE_END();
       
         public:
@@ -32,7 +34,9 @@ namespace sk {
           void setUp();
           void tearDown();
           void testBasics();
-          void testOriginNormalize();
+          void testOriginNormalizeFunction();
+          void testOriginNormalizeNamespace();
+          void testOriginNormalizeBoth();
       
         private:
           ExceptionTest(const ExceptionTest& other);
