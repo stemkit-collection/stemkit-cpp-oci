@@ -10,6 +10,7 @@ local objects =
   StillExecutingException.cc
   ContinueException.cc
   LogonException.cc
+  ConnectionStateException.cc
 ;
 
 make-library $(library) : $(objects) ;
