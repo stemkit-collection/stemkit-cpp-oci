@@ -39,7 +39,7 @@ namespace {
 
 sk::oci::Exception::
 Exception(const sk::util::String& origin, const sk::util::String& message)
-  : sk::util::Exception(join(normalize_origin(origin), message))
+  : sk::util::Exception(join(normalize_origin(origin), message.trim()))
 {
 }
 

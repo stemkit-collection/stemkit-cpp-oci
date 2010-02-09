@@ -43,7 +43,7 @@ testBasics()
     throw sk::oci::Exception("abc", "he-he");
   }
   catch(const sk::oci::Exception& exception) {
-    CPPUNIT_ASSERT_EQUAL("ERROR: abc: he-he", exception.getMessage());
+    CPPUNIT_ASSERT_EQUAL("ERROR: abc: he-he", exception.what());
   }
 }
 
@@ -55,7 +55,7 @@ testOriginNormalizeFunction()
     throw sk::oci::Exception("func(hello)", "he-he");
   }
   catch(const sk::oci::Exception& exception) {
-    CPPUNIT_ASSERT_EQUAL("ERROR: func: he-he", exception.getMessage());
+    CPPUNIT_ASSERT_EQUAL("ERROR: func: he-he", exception.what());
   }
 }
 
@@ -67,7 +67,7 @@ testOriginNormalizeNamespace()
     throw sk::oci::Exception("aaa::bbb::ccc", "he-he");
   }
   catch(const sk::oci::Exception& exception) {
-    CPPUNIT_ASSERT_EQUAL("ERROR: ccc: he-he", exception.getMessage());
+    CPPUNIT_ASSERT_EQUAL("ERROR: ccc: he-he", exception.what());
   }
 }
 
@@ -79,6 +79,6 @@ testOriginNormalizeBoth()
     throw sk::oci::Exception("aaa::bbb::zzz(312)", "he-he");
   }
   catch(const sk::oci::Exception& exception) {
-    CPPUNIT_ASSERT_EQUAL("ERROR: zzz: he-he", exception.getMessage());
+    CPPUNIT_ASSERT_EQUAL("ERROR: zzz: he-he", exception.what());
   }
 }

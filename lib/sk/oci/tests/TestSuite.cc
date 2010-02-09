@@ -12,10 +12,18 @@
 #include <sk/cppunit/TestRunner.h>
 #include <sk/cppunit/SourcePath.h>
 
-#include <iostream>
+#include <sk/rt/Scope.h>
+#include <sk/rt/config/InlineLocator.h>
 
 int main(int argc, const char* argv[])
 {
+  sk::rt::Scope::controller().loadXmlConfig(
+    sk::rt::config::InlineLocator(
+      "<scope>\n"
+      "  <log level='debug' show-time='true' />\n"
+      "</scope>\n"
+    )
+  );
   CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry();
   sk::cppunit::TestRunner runner;
 

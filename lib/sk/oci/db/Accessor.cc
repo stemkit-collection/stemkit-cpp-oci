@@ -16,6 +16,7 @@
 #include <sk/oci/db/Accessor.h>
 #include <sk/oci/LogonException.h>
 #include <sk/oci/ConnectionStateException.h>
+#include <sk/oci/AbstractDirector.h>
 
 #include <oci.h>
 #include "Environment.h"
@@ -75,6 +76,10 @@ logon()
     _data.service.init();
 
     _connected = true;
+  }
+  catch(const sk::util::Exception& exception) {
+    logoff();
+    throw sk::oci::LogonException(getConnectString(), exception.getMessage());
   }
   catch(const std::exception& exception) {
     logoff();
@@ -145,8 +150,7 @@ uint64_t
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql)
 {
-  ensureConnected(_connected, __FUNCTION__);
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return execute(sql, AbstractDirector());
 }
 
 uint64_t 
