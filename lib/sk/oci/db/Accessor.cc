@@ -15,6 +15,7 @@
 
 #include <sk/oci/db/Accessor.h>
 #include <sk/oci/LogonException.h>
+#include <sk/oci/ConnectionStateException.h>
 
 #include <oci.h>
 #include "Environment.h"
@@ -40,7 +41,7 @@ static const sk::util::String __className("sk::oci::db::Accessor");
 
 sk::oci::db::Accessor::
 Accessor(const sk::util::String& username, const sk::util::String& password, const sk::util::String& database)
-  : _username(username), _password(password), _database(database),
+  : _username(username), _password(password), _database(database), _connected(false),
     _scope(__className), _dataHolder(new Data), _data(_dataHolder.get())
 {
   logon();
@@ -49,7 +50,7 @@ Accessor(const sk::util::String& username, const sk::util::String& password, con
 sk::oci::db::Accessor::
 ~Accessor()
 {
-  sk::util::Exception::guard(sk::util::StreamLiner(std::cerr), *this, &Accessor::logoff, __FUNCTION__);
+  logoff();
 }
 
 const sk::util::Class
@@ -63,14 +64,20 @@ void
 sk::oci::db::Accessor::
 logon()
 {
+  if(_connected == true) {
+    throw sk::oci::ConnectionStateException(getConnectString(), "Already connected");
+  }
   try {
     _data.env.init(OCI_OBJECT | OCI_THREADED);
     _data.error.init();
     _data.session.init(_username, _password);
     _data.server.init(_database);
     _data.service.init();
+
+    _connected = true;
   }
   catch(const std::exception& exception) {
+    logoff();
     throw sk::oci::LogonException(getConnectString(), exception.what());
   }
 }
@@ -86,7 +93,13 @@ void
 sk::oci::db::Accessor::
 logoff()
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  sk::util::Exception::guard(sk::util::StreamLiner(std::cerr), _data.service, &db::handle::Service::reset);
+  sk::util::Exception::guard(sk::util::StreamLiner(std::cerr), _data.server, &db::handle::Server::reset);
+  sk::util::Exception::guard(sk::util::StreamLiner(std::cerr), _data.session, &db::handle::Session::reset);
+  sk::util::Exception::guard(sk::util::StreamLiner(std::cerr), _data.error, &db::handle::Error::reset);
+  sk::util::Exception::guard(sk::util::StreamLiner(std::cerr), _data.env, &db::Environment::reset);
+
+  _connected = false;
 }
 
 void 
@@ -96,10 +109,19 @@ close()
   logoff();
 }
 
+namespace {
+  inline void ensureConnected(bool state, const char* origin) {
+    if(state == false) {
+      throw sk::oci::ConnectionStateException(origin, "Not connected");
+    }
+  }
+}
+
 void 
 sk::oci::db::Accessor::
 commit()
 {
+  ensureConnected(_connected, __FUNCTION__);
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
@@ -107,6 +129,7 @@ void
 sk::oci::db::Accessor::
 rollback()
 {
+  ensureConnected(_connected, __FUNCTION__);
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
@@ -114,6 +137,7 @@ const sk::oci::info::Table
 sk::oci::db::Accessor::
 describe(const sk::util::String& name)
 {
+  ensureConnected(_connected, __FUNCTION__);
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
@@ -121,6 +145,7 @@ uint64_t
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql)
 {
+  ensureConnected(_connected, __FUNCTION__);
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
@@ -128,6 +153,7 @@ uint64_t
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql, const sk::oci::Director& director)
 {
+  ensureConnected(_connected, __FUNCTION__);
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 

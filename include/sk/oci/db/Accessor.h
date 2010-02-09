@@ -55,6 +55,7 @@ namespace sk {
           sk::util::Holder<Data> _dataHolder;
           Data& _data;
           sk::rt::Scope _scope;
+          bool _connected;
       };
     }
   }
