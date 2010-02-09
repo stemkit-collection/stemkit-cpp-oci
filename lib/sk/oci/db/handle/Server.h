@@ -29,6 +29,20 @@ namespace sk {
               SK_OCI_ENSURE_SUCCESS(OCIServerAttach(getHandle(), error().getHandle(), toOraText(database), database.length(), OCI_DEFAULT));
             }
 
+            void reset() {
+              if(haveHandle() == false) {
+                return;
+              }
+              try {
+                SK_OCI_ENSURE_SUCCESS(OCIServerDetach(getHandle(), error().getHandle(), OCI_DEFAULT));
+              }
+              catch(...) {
+                db::Handle::reset();
+                throw;
+              }
+              db::Handle::reset();
+            }
+
             OCIServer* getHandle() const {
               return reinterpret_cast<OCIServer*>(db::Handle::getHandle());
             }

@@ -57,6 +57,13 @@ setAttr(const void* attr, ub4 size, ub4 attrType)
   SK_OCI_ENSURE_SUCCESS(OCIAttrSet(_handle, _type, const_cast<void*>(attr), size, attrType, _error.getHandle()));
 }
 
+bool
+sk::oci::db::Handle::
+haveHandle() const 
+{
+  return _handle != 0;
+}
+
 void* 
 sk::oci::db::Handle::
 getHandle() const 

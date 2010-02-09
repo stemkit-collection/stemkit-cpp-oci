@@ -32,6 +32,7 @@ namespace sk {
           void init();
           void reset();
 
+          bool haveHandle() const;
           void* getHandle() const;
           db::handle::Error& error() const;
 

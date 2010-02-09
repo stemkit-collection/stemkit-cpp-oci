@@ -32,6 +32,20 @@ namespace sk {
               setAttr(_session.getHandle(), 0, OCI_ATTR_SESSION);
             }
 
+            void reset() {
+              if(haveHandle() == false) {
+                return;
+              }
+              try {
+                SK_OCI_ENSURE_SUCCESS(OCISessionEnd(getHandle(), error().getHandle(), _session.getHandle(), OCI_DEFAULT));
+              }
+              catch(...) {
+                db::Handle::reset();
+                throw;
+              }
+              db::Handle::reset();
+            }
+
             OCISvcCtx* getHandle() const {
               return reinterpret_cast<OCISvcCtx*>(db::Handle::getHandle());
             }
