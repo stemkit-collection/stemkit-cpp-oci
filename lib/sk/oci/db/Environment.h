@@ -34,7 +34,11 @@ namespace sk {
 
           void reset() {
             if(_handle != 0) {
-              OCIHandleFree(_handle, OCI_HTYPE_ENV);
+              sword status = OCIHandleFree(_handle, OCI_HTYPE_ENV);
+              if(status != OCI_SUCCESS) {
+                _handle = 0;
+                throw sk::oci::Exception("OCIHandleFree", "status=" + sk::util::String::valueOf(status));
+              }
               _handle = 0;
             }
           }

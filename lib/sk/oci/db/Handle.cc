@@ -27,7 +27,6 @@ Handle(ub4 type, db::Environment& env, db::handle::Error& error)
 sk::oci::db::Handle::
 ~Handle()
 {
-  reset();
 }
 
 void 
@@ -42,7 +41,11 @@ sk::oci::db::Handle::
 reset() 
 {
   if(_handle != 0) {
-    OCIHandleFree(_handle, _type);
+    sword status = OCIHandleFree(_handle, _type);
+    if(status != OCI_SUCCESS) {
+      _handle = 0;
+      throw sk::oci::Exception("OCIHandleFree", "status=" + sk::util::String::valueOf(status));
+    }
     _handle = 0;
   }
 }

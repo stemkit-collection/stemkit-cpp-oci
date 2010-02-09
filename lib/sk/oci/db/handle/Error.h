@@ -35,8 +35,9 @@ namespace sk {
 
             sb4 getError(std::vector<char>& buffer) {
               sb4 errorcode;
-              if(OCI_SUCCESS != OCIErrorGet(getHandle(), 1, 0, &errorcode, toOraText(buffer), buffer.size(), OCI_HTYPE_ERROR)) {
-                throw sk::oci::Exception("OCIErrorGet", "Cannot get OCI error code");
+              sword status = OCIErrorGet(getHandle(), 1, 0, &errorcode, toOraText(buffer), buffer.size(), OCI_HTYPE_ERROR);
+              if(status != OCI_SUCCESS) {
+                throw sk::oci::Exception("OCIErrorGet", "Cannot get OCI error code, status=" + sk::util::String::valueOf(status));
               }
               return errorcode;
             }
