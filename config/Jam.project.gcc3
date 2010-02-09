@@ -133,6 +133,8 @@ rule platform-linux-x86
   INCLUDES += [ util.make-path $(system.SRCTOP) platform include linux ] ;
   project.JAVA_INCLUDES += $(project.JAVA_HOME)/include/linux ;
 
+  project.ORACLE_HOME = /opt/quest/oracle-client/linux/10.2.0.4 ;
+
   SYSLIBS = crypt dl ;
 
   project.PTY_SPECIFICS = linux ;
@@ -410,3 +412,4 @@ system.export-to-env CONTRIB_ROOT : $(CONTRIB_ROOT) ;
 system.export-to-env MAKE_DLL : $(project.MAKE_DLL) ;
 system.export-to-env BUILD_ABILIB : $(BUILD_ABILIB) ;
 system.export-to-env DO_NOT_BUILD : $(project.DO_NOT_BUILD) ;
+system.export-to-env ORACLE_HOME : $(project.ORACLE_HOME) ;

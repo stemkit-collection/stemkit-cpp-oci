@@ -28,7 +28,8 @@ int main(int argc, const char* const argv[])
   sk::rt::Scope scope("main");
 
   try {
-    sk::oci::db::Accessor accessor("aaa", "bbb", "ccc");
+    sk::oci::db::Accessor accessor("gfb", "gfb", "w102a32f.alvspxl09.quest.com");
+    scope.info() << "Connected to " << accessor.getConnectString().inspect();
 
     scope.info("select") << accessor.execute("select * from demo_src");
     scope.info("select with director") << accessor.execute("select * from demo_dst", Director());

@@ -35,6 +35,8 @@ namespace sk {
           uint64_t execute(const sk::util::String& sql);
           uint64_t execute(const sk::util::String& sql, const sk::oci::Director& director);
 
+          const sk::util::String getConnectString() const;
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       

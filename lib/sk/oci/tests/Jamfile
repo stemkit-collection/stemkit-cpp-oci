@@ -7,8 +7,8 @@ local test-objects =
   ExceptionTest.cc
 ;
 
-use-unit-test $(test) $(test-objects) ;
-use-project-libraries $(test) : sk.oci ;
 use-stemkit $(test) : sk.cppunit ;
+use-project-libraries $(test) : sk.oci ;
+use-unit-test $(test) $(test-objects) ;
 
 make-cpp-test $(test) : $(test-objects) ;

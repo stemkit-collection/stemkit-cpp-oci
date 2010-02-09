@@ -9,6 +9,7 @@ local objects =
   InvalidHandleException.cc
   StillExecutingException.cc
   ContinueException.cc
+  LogonException.cc
 ;
 
 make-library $(library) : $(objects) ;

@@ -11,8 +11,10 @@
 #include <sk/util/Class.h>
 #include <sk/util/Holder.cxx>
 #include <sk/util/UnsupportedOperationException.h>
+#include <sk/util/StreamLiner.h>
 
 #include <sk/oci/db/Accessor.h>
+#include <sk/oci/LogonException.h>
 
 #include <oci.h>
 #include "Environment.h"
@@ -20,6 +22,8 @@
 #include "handle/Server.h"
 #include "handle/Session.h"
 #include "handle/Service.h"
+
+#include <iostream>
 
 struct sk::oci::db::Accessor::Data : public virtual sk::util::Object {
   Data()
@@ -45,7 +49,7 @@ Accessor(const sk::util::String& username, const sk::util::String& password, con
 sk::oci::db::Accessor::
 ~Accessor()
 {
-  logoff();
+  sk::util::Exception::guard(sk::util::StreamLiner(std::cerr), *this, &Accessor::logoff, __FUNCTION__);
 }
 
 const sk::util::Class
@@ -59,11 +63,23 @@ void
 sk::oci::db::Accessor::
 logon()
 {
-  _data.env.init(OCI_OBJECT | OCI_THREADED);
-  _data.error.init();
-  _data.session.init(_username, _password);
-  _data.server.init(_database);
-  _data.service.init();
+  try {
+    _data.env.init(OCI_OBJECT | OCI_THREADED);
+    _data.error.init();
+    _data.session.init(_username, _password);
+    _data.server.init(_database);
+    _data.service.init();
+  }
+  catch(const std::exception& exception) {
+    throw sk::oci::LogonException(getConnectString(), exception.what());
+  }
+}
+
+const sk::util::String
+sk::oci::db::Accessor::
+getConnectString() const
+{
+  return _username + '/' + _password + '@' + _database;
 }
 
 void 
