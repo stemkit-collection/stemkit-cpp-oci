@@ -34,7 +34,10 @@ namespace sk {
 
           bool haveHandle() const;
           void* getHandle() const;
+
           db::handle::Error& error() const;
+          db::Environment& environment() const;
+          ub4 type() const;
 
           void setAttr(const void* attr, ub4 size, ub4 attrType);
           const OraText* toOraText(const sk::util::String& string) const;
@@ -48,7 +51,7 @@ namespace sk {
 
           void* _handle;
           ub4 _type;
-          db::Environment& _env;
+          db::Environment& _environment;
           db::handle::Error& _error;
       };
     }

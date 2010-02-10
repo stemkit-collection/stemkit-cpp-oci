@@ -20,11 +20,20 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
+        virtual bool isSelect() const = 0;
+        virtual bool isUpdate() const = 0;
+        virtual bool isDelete() const = 0;
+        virtual bool isInsert() const = 0;
+        virtual bool isCreate() const = 0;
+        virtual bool isDrop() const = 0;
+        virtual bool isAlter() const = 0;
+        virtual bool isBegin() const = 0;
+        virtual bool isDeclare() const = 0;
+
         virtual void setDescribeOnly(bool state) = 0;
 
         virtual void bindString(int position, int size, const sk::util::String& value) = 0;
         virtual void bindInt(int position, int value) = 0;
-
         virtual void bindString(const sk::util::String& placeholder, int size, const sk::util::String& value) = 0;
         virtual void bindInt(const sk::util::String& placeholder, int value) = 0;
     };

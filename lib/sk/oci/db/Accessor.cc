@@ -25,11 +25,14 @@
 #include "handle/Session.h"
 #include "handle/Service.h"
 
+#include "Statement.h"
+#include "Cursor.h"
+
 #include <iostream>
 
 struct sk::oci::db::Accessor::Data : public virtual sk::util::Object {
   Data()
-    : error(env), server(env, error), session(env, error), service(env, session, server, error) {}
+    : error(env), server(env, error), session(env, error), service(error, session, server) {}
 
   db::Environment env;
   db::handle::Error error;
@@ -158,6 +161,14 @@ sk::oci::db::Accessor::
 execute(const sk::util::String& sql, const sk::oci::Director& director)
 {
   ensureConnected(_connected, __FUNCTION__);
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  db::Statement statement(_data.error, sql);
+
+  director.prepareStatement(statement);
+  statement.execute(_data.service);
+
+  db::Cursor cursor(statement);
+  director.processCursor(cursor);
+
+  return cursor.rowCount();
 }
 

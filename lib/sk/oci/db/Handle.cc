@@ -20,7 +20,7 @@
 
 sk::oci::db::Handle::
 Handle(ub4 type, db::Environment& env, db::handle::Error& error)
-  : _type(type), _env(env), _handle(0), _error(error) 
+  : _type(type), _environment(env), _handle(0), _error(error) 
 {
 }
 
@@ -33,7 +33,7 @@ void
 sk::oci::db::Handle::
 init() 
 {
-  SK_OCI_ENSURE_SUCCESS(OCIHandleAlloc(_env.getHandle(), &_handle, _type, 0, 0));
+  SK_OCI_ENSURE_SUCCESS(OCIHandleAlloc(_environment.getHandle(), &_handle, _type, 0, 0));
 }
 
 void 
@@ -76,6 +76,20 @@ sk::oci::db::Handle::
 error() const 
 {
   return _error;
+}
+
+ub4
+sk::oci::db::Handle::
+type() const 
+{
+  return _type;
+}
+
+sk::oci::db::Environment&
+sk::oci::db::Handle::
+environment() const 
+{
+  return _environment;
 }
 
 const OraText* 

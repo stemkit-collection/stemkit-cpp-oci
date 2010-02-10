@@ -12,6 +12,9 @@
 #define _SK_OCI_DB_HANDLE_SERVICE_H_
 
 #include "Handle.h"
+#include "handle/Error.h"
+#include "handle/Server.h"
+#include "handle/Session.h"
 
 namespace sk {
   namespace oci {
@@ -21,8 +24,8 @@ namespace sk {
           : public db::Handle
         {
           public:
-            Service(db::Environment& env, db::handle::Session& session, db::handle::Server& server, db::handle::Error& error)
-              : Handle(OCI_HTYPE_SVCCTX, env, error), _session(session), _server(server) {}
+            Service(db::handle::Error& error, db::handle::Session& session, db::handle::Server& server)
+              : Handle(OCI_HTYPE_SVCCTX, error.environment(), error), _session(session), _server(server) {}
 
             void init() {
               db::Handle::init();

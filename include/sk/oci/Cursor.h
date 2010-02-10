@@ -19,15 +19,6 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        Cursor();
-        virtual ~Cursor();
-    
-        // sk::util::Object re-implementation.
-        const sk::util::Class getClass() const;
-    
-      private:
-        Cursor(const Cursor& other);
-        Cursor& operator = (const Cursor& other);
     };
   }
 }

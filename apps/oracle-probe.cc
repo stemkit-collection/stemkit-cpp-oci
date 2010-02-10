@@ -29,7 +29,7 @@ int main(int argc, const char* const argv[])
   sk::rt::Scope::controller().loadXmlConfig(
     sk::rt::config::InlineLocator(
       "<scope>\n"
-      "  <log level='debug' show-time='true' />\n"
+      "  <log level='info' show-time='true' />\n"
       "</scope>\n"
     )
   );
@@ -40,8 +40,8 @@ int main(int argc, const char* const argv[])
     sk::oci::db::Accessor accessor("gfb", "gfb", "w102a32f.alvspxl09.quest.com");
     scope.info() << "Connected to " << accessor.getConnectString().inspect();
 
-    scope.info("select") << accessor.execute("select * from demo_src");
-    scope.info("select with director") << accessor.execute("select * from demo_dst", Director());
+    scope.info("select") << accessor.execute("select * from just_table");
+    scope.info("select with director") << accessor.execute("select * from just_table", Director());
 
     accessor.close();
   }

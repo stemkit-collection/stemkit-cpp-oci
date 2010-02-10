@@ -4,6 +4,8 @@ local library = sk.oci.db ;
 
 local objects = 
   Accessor.cc
+  Statement.cc
+  Cursor.cc
   Handle.cc
 ;
 
