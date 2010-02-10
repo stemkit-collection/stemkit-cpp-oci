@@ -27,6 +27,7 @@
 
 #include "Statement.h"
 #include "Cursor.h"
+#include "TableDescriber.h"
 
 #include <iostream>
 
@@ -146,7 +147,10 @@ sk::oci::db::Accessor::
 describe(const sk::util::String& name)
 {
   ensureConnected(_connected, __FUNCTION__);
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  info::Table table(name);
+  execute("select * from " + name, db::TableDescriber(table));
+
+  return table;
 }
 
 uint64_t 

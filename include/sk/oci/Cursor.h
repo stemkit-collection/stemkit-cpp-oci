@@ -12,6 +12,8 @@
 #define _SK_OCI_CURSOR_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/Processor.h>
+#include <sk/oci/info/Column.h>
 
 namespace sk {
   namespace oci {
@@ -19,6 +21,8 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
+        virtual uint64_t rowCount() = 0;
+        virtual void forEachColumn(const sk::util::Processor<const info::Column>& processor) = 0;
     };
   }
 }

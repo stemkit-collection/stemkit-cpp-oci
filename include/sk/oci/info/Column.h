@@ -8,37 +8,30 @@
  *  Author: Gennady Bystritsky
 */
 
-#ifndef _SK_OCI_INFO_TABLE_H_
-#define _SK_OCI_INFO_TABLE_H_
+#ifndef _SK_OCI_INFO_COLUMN_H_
+#define _SK_OCI_INFO_COLUMN_H_
 
 #include <sk/util/Object.h>
-#include <sk/util/String.h>
-#include <sk/oci/info/Column.h>
 
 namespace sk {
   namespace oci {
     namespace info {
-      class Table 
+      class Column 
         : public virtual sk::util::Object
       {
         public:
-          Table(const sk::util::String& name);
-          Table(const Table& other);
-          virtual ~Table();
-
-          void add(const info::Column& column);
-          const sk::util::String getName() const;
+          Column();
+          virtual ~Column();
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
-
+      
         private:
-          Table& operator = (const Table& other);
-
-          const sk::util::String _name;
+          Column(const Column& other);
+          Column& operator = (const Column& other);
       };
     }
   }
 }
 
-#endif /* _SK_OCI_INFO_TABLE_H_ */
+#endif /* _SK_OCI_INFO_COLUMN_H_ */

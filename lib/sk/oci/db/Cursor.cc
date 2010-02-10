@@ -40,3 +40,10 @@ rowCount()
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
+
+void 
+sk::oci::db::Cursor::
+forEachColumn(const sk::util::Processor<const info::Column>& processor)
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}

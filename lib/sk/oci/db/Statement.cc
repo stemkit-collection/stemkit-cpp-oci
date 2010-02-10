@@ -119,7 +119,7 @@ void
 sk::oci::db::Statement::
 setDescribeOnly(bool state)
 {
-  _mode = OCI_DESCRIBE_ONLY;
+  _mode = (state == true ? OCI_DESCRIBE_ONLY : OCI_DEFAULT);
 }
 
 void 

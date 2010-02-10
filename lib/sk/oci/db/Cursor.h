@@ -24,10 +24,13 @@ namespace sk {
           Cursor(db::Statement& statement);
           virtual ~Cursor();
 
-          uint64_t rowCount();
-      
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
+
+          // sk::oci::Cursor implementation.
+          void forEachColumn(const sk::util::Processor<const info::Column>& processor);
+          uint64_t rowCount();
+
       
         private:
           Cursor(const Cursor& other);
