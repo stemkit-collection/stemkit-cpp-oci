@@ -38,7 +38,7 @@ uint64_t
 sk::oci::db::Cursor::
 rowCount()
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _statement.rowCount();
 }
 
 void 

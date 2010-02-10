@@ -28,6 +28,7 @@ namespace sk {
           virtual ~Statement();
 
           void execute(db::handle::Service& service);
+          ub4 rowCount();
 
           // sk::oci::Statement implementation.
           bool isSelect() const;
