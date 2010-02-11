@@ -37,7 +37,7 @@ int main(int argc, const char* const argv[])
     scope.info() << "Connected to " << accessor.getConnectString().inspect();
 
     sk::util::PrettyPrinter printer(std::cerr);
-    printer.print(accessor.describe(argv[1]).inspect());
+    printer.print(accessor.describeTable(argv[1]).inspect());
   }
   catch(const sk::util::Exception& exception) {
     scope.error("EX") << exception.getMessage();

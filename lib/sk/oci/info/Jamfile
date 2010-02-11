@@ -4,6 +4,8 @@ local library = sk.oci.info ;
 
 local objects = 
   Table.cc
+  Column.cc
+  Type.cc
 ;
 
 make-static-library $(library) : $(objects) ;

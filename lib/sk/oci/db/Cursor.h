@@ -29,7 +29,9 @@ namespace sk {
 
           // sk::oci::Cursor implementation.
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
-          uint64_t rowCount();
+          uint32_t rowCount();
+          uint32_t columnCount();
+          const info::Column columnAt(int index);
 
       
         private:
@@ -37,6 +39,8 @@ namespace sk {
           Cursor& operator = (const Cursor& other);
 
           db::Statement& _statement;
+          bool _haveColumnCount;
+          uint32_t _columnCount;
       };
     }
   }

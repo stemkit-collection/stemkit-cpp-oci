@@ -30,6 +30,7 @@ namespace sk {
           ~Handle();
 
           void init();
+          void init(void* handle);
           void reset();
 
           bool haveHandle() const;
@@ -40,6 +41,9 @@ namespace sk {
           ub4 type() const;
 
           void setAttr(const void* attr, ub4 size, ub4 attrType);
+          ub4 getIntAttr(ub4 attrType);
+          ub2 getShortAttr(ub4 attrType);
+          const char* getCStrAttr(uint32_t* length, ub4 attrType);
           const OraText* toOraText(const sk::util::String& string) const;
           OraText* toOraText(std::vector<char>& buffer) const;
 

@@ -11,6 +11,8 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/UnsupportedOperationException.h>
+#include <sk/util/StringArray.h>
+#include <sk/util/ArrayList.cxx>
 
 #include <sk/oci/info/Table.h>
 
@@ -45,5 +47,17 @@ void
 sk::oci::info::Table::
 add(const info::Column& column)
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  _columns.add(new info::Column(column));
+}
+
+const sk::util::String
+sk::oci::info::Table::
+inspect() const
+{
+  sk::util::StringArray depot;
+
+  depot << "name=" + _name.inspect();
+  depot << "columns=" + _columns.inspect();
+
+  return "<Table: " + depot.join(", ") + ">";
 }

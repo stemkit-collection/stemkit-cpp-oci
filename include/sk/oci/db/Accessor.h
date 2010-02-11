@@ -31,7 +31,7 @@ namespace sk {
           void commit();
           void rollback();
 
-          const sk::oci::info::Table describe(const sk::util::String& name);
+          const sk::oci::info::Table describeTable(const sk::util::String& name);
           uint64_t execute(const sk::util::String& sql);
           uint64_t execute(const sk::util::String& sql, const sk::oci::Director& director);
 

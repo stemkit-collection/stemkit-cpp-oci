@@ -14,6 +14,7 @@
 #include <sk/util/Object.h>
 #include <sk/util/String.h>
 #include <sk/oci/info/Column.h>
+#include <sk/util/ArrayList.hxx>
 
 namespace sk {
   namespace oci {
@@ -31,11 +32,13 @@ namespace sk {
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
+          const sk::util::String inspect() const;
 
         private:
           Table& operator = (const Table& other);
 
           const sk::util::String _name;
+          sk::util::ArrayList<info::Column> _columns;
       };
     }
   }

@@ -22,7 +22,7 @@ Statement(db::handle::Error& error, const sk::util::String& sql)
 {
   init();
   SK_OCI_ENSURE_SUCCESS(OCIStmtPrepare(getHandle(), error.getHandle(), toOraText(sql), sql.length(), OCI_NTV_SYNTAX, OCI_DEFAULT));
-  SK_OCI_ENSURE_SUCCESS(OCIAttrGet(getHandle(), type(), &_type, 0, OCI_ATTR_STMT_TYPE, error.getHandle()));
+  _type = getIntAttr(OCI_ATTR_STMT_TYPE);
 }
 
 sk::oci::db::Statement::
@@ -150,12 +150,3 @@ bindInt(const sk::util::String& placeholder, int value)
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-ub4 
-sk::oci::db::Statement::
-rowCount() 
-{
-  ub4 count;
-  SK_OCI_ENSURE_SUCCESS(OCIAttrGet(getHandle(), type(), &count, 0, OCI_ATTR_ROW_COUNT, error().getHandle()));
-
-  return count;
-}

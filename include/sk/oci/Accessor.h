@@ -25,7 +25,7 @@ namespace sk {
         virtual void commit() = 0;
         virtual void rollback() = 0;
 
-        virtual const sk::oci::info::Table describe(const sk::util::String& name) = 0;
+        virtual const sk::oci::info::Table describeTable(const sk::util::String& name) = 0;
         virtual uint64_t execute(const sk::util::String& sql) = 0;
         virtual uint64_t execute(const sk::util::String& sql, const sk::oci::Director& director) = 0;
     };

@@ -21,7 +21,9 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        virtual uint64_t rowCount() = 0;
+        virtual uint32_t rowCount() = 0;
+        virtual uint32_t columnCount() = 0;
+        virtual const info::Column columnAt(int index) = 0;
         virtual void forEachColumn(const sk::util::Processor<const info::Column>& processor) = 0;
     };
   }

@@ -144,7 +144,7 @@ rollback()
 
 const sk::oci::info::Table 
 sk::oci::db::Accessor::
-describe(const sk::util::String& name)
+describeTable(const sk::util::String& name)
 {
   ensureConnected(_connected, __FUNCTION__);
   info::Table table(name);

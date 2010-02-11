@@ -38,6 +38,13 @@ init()
 
 void 
 sk::oci::db::Handle::
+init(void* handle) 
+{
+  _handle = handle;
+}
+
+void 
+sk::oci::db::Handle::
 reset() 
 {
   if(_handle != 0) {
@@ -55,6 +62,38 @@ sk::oci::db::Handle::
 setAttr(const void* attr, ub4 size, ub4 attrType) 
 {
   SK_OCI_ENSURE_SUCCESS(OCIAttrSet(_handle, _type, const_cast<void*>(attr), size, attrType, _error.getHandle()));
+}
+
+ub4
+sk::oci::db::Handle::
+getIntAttr(ub4 attrType)
+{
+  ub4 value = 0;
+  SK_OCI_ENSURE_SUCCESS(OCIAttrGet(_handle, _type, &value, 0, attrType, _error.getHandle()));
+
+  return value;
+}
+
+ub2
+sk::oci::db::Handle::
+getShortAttr(ub4 attrType)
+{
+  ub2 value = 0;
+  SK_OCI_ENSURE_SUCCESS(OCIAttrGet(_handle, _type, &value, 0, attrType, _error.getHandle()));
+
+  return value;
+}
+
+const char*
+sk::oci::db::Handle::
+getCStrAttr(uint32_t* length, ub4 attrType)
+{
+  ub4 size = 0;
+  void* location = 0;
+  SK_OCI_ENSURE_SUCCESS(OCIAttrGet(_handle, _type, &location, &size, attrType, _error.getHandle()));
+
+  *length = size;
+  return reinterpret_cast<const char*>(location);
 }
 
 bool
