@@ -23,6 +23,28 @@ namespace sk {
         public:
           virtual ~Type();
 
+          bool isNumber() const;
+          bool isVarChar2() const;
+          bool isVarChar() const;
+          bool isChar() const;
+          bool isRef() const;
+          bool isDate() const;
+          bool isReal() const;
+          bool isDouble() const;
+          bool isFloat() const;
+          bool isDecimal() const;
+          bool isOctet() const;
+          bool isInteger() const;
+          bool isSmallInt() const;
+          bool isRaw() const;
+          bool isVarray() const;
+          bool isTable() const;
+          bool isClob() const;
+          bool isBlob() const;
+          bool isBfile() const;
+          bool isObject() const;
+          bool isNamedCollection() const;
+
           static const info::Type& valueOf(const sk::util::String& name);
           static const info::Type& valueOf(int value);
 
@@ -62,6 +84,8 @@ namespace sk {
           Type(const sk::util::String& name);
           Type(const Type& other);
           Type& operator = (const Type& other);
+
+          inline bool assess(const info::Type& type) const;
 
           typedef std::vector<info::Type*> container_t;
           static container_t _types;

@@ -9,5 +9,6 @@ local test-objects =
 
 use-unit-test $(test) $(test-objects) ;
 use-stemkit $(test) : sk.cppunit ;
+use-project-libraries $(test) : sk.oci.info ;
 
 make-cpp-test $(test) : $(test-objects) ;

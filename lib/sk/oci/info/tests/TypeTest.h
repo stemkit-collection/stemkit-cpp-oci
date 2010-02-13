@@ -22,7 +22,8 @@ namespace sk {
           : public CppUnit::TestFixture
         {
           CPPUNIT_TEST_SUITE(sk::oci::info::tests::TypeTest);
-            CPPUNIT_TEST(testBasics);
+            CPPUNIT_TEST(testQueries);
+            CPPUNIT_TEST(testOppositeQueries);
           CPPUNIT_TEST_SUITE_END();
         
           public:
@@ -31,7 +32,8 @@ namespace sk {
         
             void setUp();
             void tearDown();
-            void testBasics();
+            void testQueries();
+            void testOppositeQueries();
         
           private:
             TypeTest(const TypeTest& other);
