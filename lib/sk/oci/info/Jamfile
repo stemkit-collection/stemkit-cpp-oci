@@ -9,3 +9,4 @@ local objects =
 ;
 
 make-static-library $(library) : $(objects) ;
+make-subdirs tests ;
