@@ -47,7 +47,7 @@ static const sk::util::String __className("sk::oci::db::Accessor");
 sk::oci::db::Accessor::
 Accessor(const sk::util::String& username, const sk::util::String& password, const sk::util::String& database)
   : _username(username), _password(password), _database(database), _connected(false),
-    _scope(__className), _dataHolder(new Data), _data(_dataHolder.get())
+    _scope(__className), _dataHolder(new Data), _data(_dataHolder.getMutable())
 {
   logon();
 }
