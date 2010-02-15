@@ -192,7 +192,6 @@ rule platform-aix-ppc
     -Wl,-brtl
     -Wl,-u__TSC_BUILD__
   ;
-  DLLFLAGS += -shared ;
   CC_SONAME_FLAG = ;
   DLLFLAGS += -Wl,-G -Wl,-bnoentry -Wl,-bexpall ;
 
