@@ -13,11 +13,10 @@ local objects =
   ConnectionStateException.cc
 ;
 
-make-library $(library) : $(objects) ;
+make-shared-library $(library) : $(objects) ;
 
 add-project-library $(library) : 
   $(library).info
-  $(library).abstract
 ;
 
-make-subdirs info abstract db mock tests ;
+make-subdirs info db mock tests ;

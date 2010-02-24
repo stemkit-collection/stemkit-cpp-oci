@@ -8,5 +8,5 @@ local objects =
   Type.cc
 ;
 
-make-static-library $(library) : $(objects) ;
+make-library $(library) : $(objects) ;
 make-subdirs tests ;

@@ -11,4 +11,4 @@ local objects =
 ;
 
 use-oracle $(objects) ;
-make-static-library $(library) : $(objects) ;
+make-shared-library $(library) : $(objects) ;
