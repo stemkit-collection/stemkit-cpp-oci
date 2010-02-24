@@ -164,3 +164,10 @@ forEachColumn(const sk::util::Processor<const info::Column>& processor)
     processor.process(columnAt(index));
   }
 }
+
+const sk::oci::DataRegistry& 
+sk::oci::db::Cursor::
+data() const
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}

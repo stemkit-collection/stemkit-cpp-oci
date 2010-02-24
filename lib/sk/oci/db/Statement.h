@@ -40,10 +40,11 @@ namespace sk {
           bool isBegin() const;
           bool isDeclare() const;
           void setDescribeOnly(bool state);
-          void bindString(int position, int size, const sk::util::String& value);
-          void bindInt(int position, int value);
-          void bindString(const sk::util::String& placeholder, int size, const sk::util::String& value);
-          void bindInt(const sk::util::String& placeholder, int value);
+
+          int bindStringAt(int position, int size, const sk::util::String& value);
+          int bindIntAt(int position, int value);
+          int bindTaggedString(const sk::util::String& tag, int size, const sk::util::String& value);
+          int bindTaggedInt(const sk::util::String& tag, int value);
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

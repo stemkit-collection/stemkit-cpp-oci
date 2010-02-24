@@ -32,10 +32,11 @@ namespace sk {
 
         virtual void setDescribeOnly(bool state) = 0;
 
-        virtual void bindString(int position, int size, const sk::util::String& value) = 0;
-        virtual void bindInt(int position, int value) = 0;
-        virtual void bindString(const sk::util::String& placeholder, int size, const sk::util::String& value) = 0;
-        virtual void bindInt(const sk::util::String& placeholder, int value) = 0;
+        virtual int bindStringAt(int position, int size, const sk::util::String& value) = 0;
+        virtual int bindIntAt(int position, int value) = 0;
+
+        virtual int bindTaggedString(const sk::util::String& tag, int size, const sk::util::String& value) = 0;
+        virtual int bindTaggedInt(const sk::util::String& tag, int value) = 0;
     };
   }
 }

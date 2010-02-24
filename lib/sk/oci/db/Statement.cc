@@ -122,30 +122,30 @@ setDescribeOnly(bool state)
   _mode = (state == true ? OCI_DESCRIBE_ONLY : OCI_DEFAULT);
 }
 
-void 
+int
 sk::oci::db::Statement::
-bindString(int position, int size, const sk::util::String& value)
+bindStringAt(int position, int size, const sk::util::String& value)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-void 
+int
 sk::oci::db::Statement::
-bindInt(int position, int value)
+bindIntAt(int position, int value)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-void 
+int
 sk::oci::db::Statement::
-bindString(const sk::util::String& placeholder, int size, const sk::util::String& value)
+bindTaggedString(const sk::util::String& tag, int size, const sk::util::String& value)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-void 
+int
 sk::oci::db::Statement::
-bindInt(const sk::util::String& placeholder, int value)
+bindTaggedInt(const sk::util::String& tag, int value)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }

@@ -14,6 +14,7 @@
 #include <sk/util/Object.h>
 #include <sk/util/Processor.h>
 #include <sk/oci/info/Column.h>
+#include <sk/oci/DataRegistry.h>
 
 namespace sk {
   namespace oci {
@@ -25,6 +26,7 @@ namespace sk {
         virtual uint32_t columnCount() = 0;
         virtual const info::Column columnAt(int index) = 0;
         virtual void forEachColumn(const sk::util::Processor<const info::Column>& processor) = 0;
+        virtual const sk::oci::DataRegistry& data() const = 0;
     };
   }
 }

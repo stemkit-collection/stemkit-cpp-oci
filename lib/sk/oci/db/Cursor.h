@@ -28,11 +28,13 @@ namespace sk {
           const sk::util::Class getClass() const;
 
           // sk::oci::Cursor implementation.
-          void forEachColumn(const sk::util::Processor<const info::Column>& processor);
           uint32_t rowCount();
           uint32_t columnCount();
           const info::Column columnAt(int index);
+          void forEachColumn(const sk::util::Processor<const info::Column>& processor);
 
+          // sk::oci::Cursor implementation.
+          const sk::oci::DataRegistry& data() const;
       
         private:
           Cursor(const Cursor& other);
