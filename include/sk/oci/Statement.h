@@ -35,8 +35,8 @@ namespace sk {
         virtual int bindStringAt(int position, int size, const sk::util::String& value) = 0;
         virtual int bindIntAt(int position, int value) = 0;
 
-        virtual int bindTaggedString(const sk::util::String& tag, int size, const sk::util::String& value) = 0;
-        virtual int bindTaggedInt(const sk::util::String& tag, int value) = 0;
+        virtual int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value) = 0;
+        virtual int bindIntTag(const sk::util::String& tag, int value) = 0;
     };
   }
 }

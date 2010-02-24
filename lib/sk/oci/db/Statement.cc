@@ -138,14 +138,14 @@ bindIntAt(int position, int value)
 
 int
 sk::oci::db::Statement::
-bindTaggedString(const sk::util::String& tag, int size, const sk::util::String& value)
+bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 int
 sk::oci::db::Statement::
-bindTaggedInt(const sk::util::String& tag, int value)
+bindIntTag(const sk::util::String& tag, int value)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }

@@ -44,8 +44,8 @@ namespace sk {
 
           int bindStringAt(int position, int size, const sk::util::String& value);
           int bindIntAt(int position, int value);
-          int bindTaggedString(const sk::util::String& tag, int size, const sk::util::String& value);
-          int bindTaggedInt(const sk::util::String& tag, int value);
+          int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value);
+          int bindIntTag(const sk::util::String& tag, int value);
 
           const sk::oci::BindRegistry& bindRegistry() const;
       
