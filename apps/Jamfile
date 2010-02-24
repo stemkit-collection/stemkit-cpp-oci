@@ -5,7 +5,6 @@ local programs =
   describe-table 
 ;
 
-use-oracle $(programs) ;
 use-project-libraries $(programs) : sk.oci sk.oci.db ;
 
 local program ; 
