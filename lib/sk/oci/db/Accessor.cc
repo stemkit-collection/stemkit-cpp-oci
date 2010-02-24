@@ -142,17 +142,6 @@ rollback()
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-const sk::oci::info::Table 
-sk::oci::db::Accessor::
-describeTable(const sk::util::String& name)
-{
-  ensureConnected(_connected, __FUNCTION__);
-  info::Table table(name);
-  execute("select * from " + name, db::TableDescriber(table));
-
-  return table;
-}
-
 uint64_t 
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql)
@@ -176,3 +165,41 @@ execute(const sk::util::String& sql, const sk::oci::Director& director)
   return cursor.rowCount();
 }
 
+const sk::oci::info::Table 
+sk::oci::db::Accessor::
+describeTable(const sk::util::String& name)
+{
+  ensureConnected(_connected, __FUNCTION__);
+  info::Table table(name);
+  execute("select * from " + name, db::TableDescriber(table));
+
+  return table;
+}
+
+namespace {
+  struct CountingDirector : public virtual sk::oci::Director {
+    CountingDirector(uint64_t& counter) 
+      : _counter(counter) {}
+
+    void prepareStatement(sk::oci::Statement& statement) const {
+      statement.bindIntAt(1, 0);
+    }
+
+    void processCursor(sk::oci::Cursor& cursor) const {
+      _counter = cursor.data().at(1).intValue();
+    }
+
+    uint64_t& _counter;
+  };
+}
+
+uint64_t
+sk::oci::db::Accessor::
+tableSize(const sk::util::String& name)
+{
+  uint64_t counter = 0;
+  ensureConnected(_connected, __FUNCTION__);
+  execute("select count(*) from " + name, CountingDirector(counter));
+
+  return counter;
+}

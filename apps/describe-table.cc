@@ -36,8 +36,11 @@ int main(int argc, const char* const argv[])
     sk::oci::db::Accessor accessor("gfb", "gfb", "w102a32f.alvspxl09.quest.com");
     scope.info() << "Connected to " << accessor.getConnectString().inspect();
 
+    const sk::util::String table(argv[1]);
     sk::util::PrettyPrinter printer(std::cerr);
-    printer.print(accessor.describeTable(argv[1]).inspect());
+    printer.print(accessor.describeTable(table).inspect());
+
+    scope.info() << "Table " << table.inspect() << " has " << accessor.tableSize(table) << " row(s)";
   }
   catch(const sk::util::Exception& exception) {
     scope.error("EX") << exception.getMessage();
