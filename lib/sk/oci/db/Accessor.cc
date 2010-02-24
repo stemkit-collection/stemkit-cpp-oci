@@ -198,6 +198,7 @@ sk::oci::db::Accessor::
 tableSize(const sk::util::String& name)
 {
   uint64_t counter = 0;
+
   ensureConnected(_connected, __FUNCTION__);
   execute("select count(*) from " + name, CountingDirector(counter));
 
