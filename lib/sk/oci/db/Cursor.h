@@ -33,9 +33,11 @@ namespace sk {
           const info::Column columnAt(int index);
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
 
-          // sk::oci::Cursor implementation.
-          const sk::oci::DataRegistry& data() const;
-      
+          // sk::oci::BindRegistry implementation (via sk::oci::Cursor).
+          const sk::oci::Data& dataBindAt(int position) const;
+          const sk::oci::Data& dataTagBind(const sk::util::String& tag) const;
+          const sk::oci::Data& dataTagBind(int index) const;
+
         private:
           Cursor(const Cursor& other);
           Cursor& operator = (const Cursor& other);

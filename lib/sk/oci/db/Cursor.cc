@@ -165,9 +165,23 @@ forEachColumn(const sk::util::Processor<const info::Column>& processor)
   }
 }
 
-const sk::oci::DataRegistry& 
+const sk::oci::Data& 
 sk::oci::db::Cursor::
-data() const
+dataBindAt(int position) const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _statement.bindRegistry().dataBindAt(position);
+}
+
+const sk::oci::Data& 
+sk::oci::db::Cursor::
+dataTagBind(const sk::util::String& tag) const
+{
+  return _statement.bindRegistry().dataTagBind(tag);
+}
+
+const sk::oci::Data& 
+sk::oci::db::Cursor::
+dataTagBind(int index) const
+{
+  return _statement.bindRegistry().dataTagBind(index);
 }

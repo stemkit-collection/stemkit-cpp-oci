@@ -150,3 +150,9 @@ bindTaggedInt(const sk::util::String& tag, int value)
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
+const sk::oci::BindRegistry&
+sk::oci::db::Statement::
+bindRegistry() const
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}

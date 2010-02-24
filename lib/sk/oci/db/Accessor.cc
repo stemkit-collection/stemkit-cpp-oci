@@ -186,7 +186,7 @@ namespace {
     }
 
     void processCursor(sk::oci::Cursor& cursor) const {
-      _counter = cursor.data().at(1).intValue();
+      _counter = cursor.dataBindAt(1).intValue();
     }
 
     uint64_t& _counter;

@@ -15,6 +15,7 @@
 #include "handle/Error.h"
 #include "handle/Service.h"
 #include <sk/oci/Statement.h>
+#include <sk/oci/BindRegistry.h>
 
 namespace sk {
   namespace oci {
@@ -45,6 +46,8 @@ namespace sk {
           int bindIntAt(int position, int value);
           int bindTaggedString(const sk::util::String& tag, int size, const sk::util::String& value);
           int bindTaggedInt(const sk::util::String& tag, int value);
+
+          const sk::oci::BindRegistry& bindRegistry() const;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

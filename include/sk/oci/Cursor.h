@@ -14,19 +14,18 @@
 #include <sk/util/Object.h>
 #include <sk/util/Processor.h>
 #include <sk/oci/info/Column.h>
-#include <sk/oci/DataRegistry.h>
+#include <sk/oci/BindRegistry.h>
 
 namespace sk {
   namespace oci {
     class Cursor 
-      : public virtual sk::util::Object
+      : public virtual oci::BindRegistry
     {
       public:
         virtual uint32_t rowCount() = 0;
         virtual uint32_t columnCount() = 0;
         virtual const info::Column columnAt(int index) = 0;
         virtual void forEachColumn(const sk::util::Processor<const info::Column>& processor) = 0;
-        virtual const sk::oci::DataRegistry& data() const = 0;
     };
   }
 }
