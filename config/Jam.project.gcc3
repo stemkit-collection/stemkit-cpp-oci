@@ -9,22 +9,15 @@ PRODUCT_NAME = $(JAMCONFIG_PRODUCT_NAME) ;
 PRODUCT_RELEASE = $(JAMCONFIG_PRODUCT_RELEASE) ;
 PRODUCT_BUILD = $(JAMCONFIG_PRODUCT_BUILD) ;
 PRODUCT_TAG = $(JAMCONFIG_PRODUCT_TAG) ;
-PRODUCT_PLATFORM = $(JAMCONFIG_PRODUCT_PLATFORM) ;
+PRODUCT_PLATFORM = $(platform.NAME) ;
 
-# project.DISTRIB_ENV = $(SRCTOP:J=/)/project/config/environment ;
 project.DISTRIB_PRODINFO = $(SRCTOP:J=/)/install/prodinfo ;
-project.DO_NOT_BUILD = ruby java ;
 
 TOOLS_HOME = /opt/quest/platform/$(JAMCONFIG_PRODUCT_PLATFORM) ;
 
 GCC_VERSION ?= 3.4 ;
-SWIG_VERSION = 1.3 ;
-project.RUBY_DIR = $(TOOLS_HOME)/ruby-1.8/lib/ruby/1.8/$(RUBY_PLATFORM) ;
-project.JAVA_HOME = $(TOOLS_HOME)/java/jdk-1.5 ;
-project.JAVA_INCLUDES = $(project.JAVA_HOME)/include ;
 project.USE_PRODUCT_RELEASE_IN_DLL = true ;
 
-BOOST_VERSION = 1_32 ;
 CPPUNIT_VERSION = 1.12 ;
 
 C++ = ;
@@ -58,14 +51,6 @@ rule platform-nt-x86-win32
   util.delete-from project.DO_NOT_BUILD : java ;
 
   INCLUDES += [ util.make-path $(system.SRCTOP) platform include windows-visual-studio ] ;
-
-  project.JAVA_HOME = [ util.make-path "C:" "Program Files (x86)" "Java" "jdk1.5.0_15" ] ;
-  project.JAVA_INCLUDES = [ util.make-path $(project.JAVA_HOME) include ] ;
-  project.JAVA_INCLUDES += [ util.make-path $(project.JAVA_HOME) include win32 ] ;
-
-  JAVAC = [ util.make-path $(project.JAVA_HOME) bin javac.exe ] ;
-  JAR = [ util.make-path $(project.JAVA_HOME) bin jar.exe ] ;
-  SWIG = [ util.make-path $(TOOLS_HOME) swigwin-1.3.35 swig.exe ] ;
 }
 
 rule platform-nt-x86-mks32
@@ -132,13 +117,10 @@ rule platform-linux-x86
   CCFLAGS += -fpic ;
   DEFINES += ;
   INCLUDES += [ util.make-path $(system.SRCTOP) platform include linux ] ;
-  project.JAVA_INCLUDES += $(project.JAVA_HOME)/include/linux ;
 
   project.ORACLE_HOME = /opt/quest/oracle-client/linux/10.2.0.4 ;
 
   SYSLIBS = crypt dl ;
-
-  project.PTY_SPECIFICS = linux ;
 }
 
 rule platform-linux-ia64
@@ -156,13 +138,11 @@ rule platform-linux-amd64
   DEFINES += ;
 
   INCLUDES += [ util.make-path $(system.SRCTOP) platform include linux ] ;
-  project.JAVA_INCLUDES += $(project.JAVA_HOME)/include/linux ;
 
   SYSLIBS = crypt dl ;
   LDFLAGS += -m elf_i386 ;
 
   project.PLATFORM_SPECIFICS = linux ;
-  project.PTY_SPECIFICS = linux ;
 }
 
 rule platform-osf-alpha
@@ -179,8 +159,6 @@ rule platform-osf-alpha
 
   CC_SONAME_FLAG = "-Wl,-soname," ;
   DLLFLAGS = -shared -Wl,-expect_unresolved,* ;
-
-  project.PTY_SPECIFICS = streams-hp ;
 }
 
 rule platform-aix-ppc
@@ -198,8 +176,6 @@ rule platform-aix-ppc
   DEFINES += _POSIX_PTHREAD_SEMANTICS _FILE_OFFSET_BITS=64 ;
   INCLUDES += [ util.make-path $(system.SRCTOP) platform include aix ] ;
   SYSLIBS = crypt dl ;
-
-  project.PTY_SPECIFICS = aix ;
 }
 
 rule platform-macos
@@ -232,10 +208,6 @@ rule platform-macos
   jam.DSO_EXTENTION = dylib ;
 
   RANLIB = ranlib -s ;
-
-  project.PTY_SPECIFICS = posix ;
-  project.RUBY_DIR = ;
-  project.JAVA_HOME = ;
 }
 
 rule platform-macos-tiger
@@ -260,9 +232,6 @@ rule platform-solaris-sparc
   DEFINES += _FILE_OFFSET_BITS=64 _POSIX_PTHREAD_SEMANTICS ;
   INCLUDES += [ util.make-path $(system.SRCTOP) platform include solaris ] ;
   SYSLIBS = socket nsl gen rt ;
-
-  project.JAVA_INCLUDES += $(project.JAVA_HOME)/include/solaris ;
-  project.PTY_SPECIFICS = streams ;
 }
 
 rule platform-solaris6-sparc
@@ -281,8 +250,6 @@ rule platform-solaris-x86
   SYSLIBS = socket nsl gen rt ;
 
   project.ORACLE_HOME = /opt/quest/oracle-client/solaris-x86/11.2.0.1 ;
-
-  project.PTY_SPECIFICS = streams ;
 }
 
 rule platform-hpux-pa
@@ -299,8 +266,6 @@ rule platform-hpux-pa
   C++LDFLAGS += -Wl,+s ;
   CC_SONAME_FLAG = -Wl,+h ;
   jam.DSO_EXTENTION = sl ;
-
-  project.PTY_SPECIFICS = streams-hp ;
 }
 
 rule platform-hpux-ia64
@@ -321,11 +286,9 @@ rule platform-hpux-ia64
 
   C++LDFLAGS += -Wl,+s ;
   CC_SONAME_FLAG = -Wl,+h ;
-
-  project.PTY_SPECIFICS = streams-hp ;
 }
 
-rule platform-rh21-unsupported
+rule platform-unsupported
 {
   exit 
     Platform $(1) unsupported because of faulty thread implementation -- when
@@ -342,7 +305,7 @@ switch $(PRODUCT_PLATFORM) {
   case rh-40-x86 : platform-linux-x86 ;
   case rh-40-amd64 : platform-linux-amd64 ;
   case rh-40-ia64 : platform-linux-ia64 ;
-  case rh-21-x86 : platform-rh21-unsupported $(PRODUCT_PLATFORM) ;
+  case rh-21-x86 : platform-unsupported $(PRODUCT_PLATFORM) ;
   case aix-51-ppc : platform-aix-ppc ;
   case aix-52-ppc : platform-aix-ppc ;
   case aix-53-ppc : platform-aix-ppc ;
@@ -380,8 +343,6 @@ CONTRIB_ROOT ?= $(GCC_ROOT)/contrib ;
 
 C++ ?= $(GCC_ROOT)/bin/g++ ;
 CC ?= $(GCC_ROOT)/bin/gcc ;
-
-SWIG ?= $(TOOLS_HOME)/swig-$(SWIG_VERSION)/bin/swig ;
 
 LIBDIRS += $(GCC_ROOT)/lib ;
 
