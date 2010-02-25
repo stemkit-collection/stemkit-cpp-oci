@@ -171,3 +171,32 @@ boundDataAt(int index) const
 {
   return _statement.bindRegistry().boundDataAt(index);
 }
+
+int 
+sk::oci::db::Cursor::
+bindIntAt(int position)
+{
+  return _statement.bindRegistry().bindInteger(*this, position, 0);
+}
+
+int 
+sk::oci::db::Cursor::
+bindStringAt(int position, int size)
+{
+  return _statement.bindRegistry().bindString(*this, position, size, "");
+}
+
+void 
+sk::oci::db::Cursor::
+bindDataPosition(oci::db::Data& data)
+{
+  _statement.defineDataPosition(data);
+}
+
+void 
+sk::oci::db::Cursor::
+bindDataTag(oci::db::Data& data)
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}
+

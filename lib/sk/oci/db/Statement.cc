@@ -192,9 +192,29 @@ bindDataTag(db::Data& data)
   );
 }
 
-const sk::oci::BindRegistry&
+void
 sk::oci::db::Statement::
-bindRegistry() const
+defineDataPosition(db::Data& data)
+{
+  SK_OCI_ENSURE_SUCCESS(
+    OCIDefineByPos(
+      getHandle(), 
+      &data.defineHandle(), 
+      error().getHandle(), 
+      data.position(), 
+      data.valuePointer(), 
+      data.valueSize(), 
+      data.type(), 
+      data.indicatorPointer(), 
+      0, 0, 
+      OCI_DEFAULT
+    )
+  );
+}
+
+sk::oci::db::bind::Registry&
+sk::oci::db::Statement::
+bindRegistry()
 {
   return _bindRegistry;
 }

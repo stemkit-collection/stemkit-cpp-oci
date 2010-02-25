@@ -179,14 +179,14 @@ describeTable(const sk::util::String& name)
 
 namespace {
   struct CountingDirector : public virtual sk::oci::abstract::Director {
-    CountingDirector(uint64_t& counter) 
+    CountingDirector(uint32_t& counter) 
       : _counter(counter) {}
 
     void processCursor(sk::oci::Cursor& cursor) const {
       _counter = cursor.boundDataAt(cursor.bindIntAt(1)).intValue();
     }
 
-    uint64_t& _counter;
+    uint32_t& _counter;
   };
 }
 
@@ -194,7 +194,7 @@ uint64_t
 sk::oci::db::Accessor::
 tableSize(const sk::util::String& name)
 {
-  uint64_t counter = 0;
+  uint32_t counter = 0;
 
   ensureConnected(_connected, __FUNCTION__);
   execute("select count(*) from " + name, CountingDirector(counter));

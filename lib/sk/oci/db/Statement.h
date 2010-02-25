@@ -54,7 +54,8 @@ namespace sk {
           int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value);
           int bindIntTag(const sk::util::String& tag, uint32_t value);
 
-          const sk::oci::BindRegistry& bindRegistry() const;
+          db::bind::Registry& bindRegistry();
+          void defineDataPosition(oci::db::Data& data);
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

@@ -14,13 +14,16 @@
 #include <sk/oci/Cursor.h>
 #include <sk/oci/BindRegistry.h>
 #include "Statement.h"
+#include "bind/Provider.h"
 
 namespace sk {
   namespace oci {
     namespace db {
       class Cursor 
         : public virtual sk::oci::Cursor,
-          public virtual sk::oci::BindRegistry
+          public virtual sk::oci::BindRegistry,
+          public virtual bind::Provider
+
       {
         public:
           Cursor(db::Statement& statement);
@@ -35,13 +38,18 @@ namespace sk {
           const info::Column columnAt(int index);
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
           int bindIntAt(int position);
+          int bindStringAt(int position, int size);
 
-          // sk::oci::BindRegistry implementation (via sk::oci::Cursor).
+          // sk::oci::BindRegistry implementation.
           const sk::oci::Data& boundDataAt(int index) const;
 
         private:
           Cursor(const Cursor& other);
           Cursor& operator = (const Cursor& other);
+
+          // sk::oci::db::bind::Provider implementation.
+          void bindDataPosition(oci::db::Data& data);
+          void bindDataTag(oci::db::Data& data);
 
           db::Statement& _statement;
           bool _haveColumnCount;
