@@ -13,6 +13,7 @@
 #include <sk/util/UnsupportedOperationException.h>
 
 #include "Statement.h"
+#include "Data.h"
 
 static const sk::util::String __className("sk::oci::db::Statement");
 
@@ -126,33 +127,49 @@ int
 sk::oci::db::Statement::
 bindStringAt(int position, int size, const sk::util::String& value)
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return bindDataPosition(_binder.bindString(position, size, value));
 }
 
 int
 sk::oci::db::Statement::
-bindIntAt(int position, int value)
+bindIntAt(int position, uint32_t value)
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return bindDataPosition(_binder.bindInteger(position, value));
 }
 
 int
 sk::oci::db::Statement::
 bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value)
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return bindDataTag(_binder.bindString(tag, size, value));
 }
 
 int
 sk::oci::db::Statement::
-bindIntTag(const sk::util::String& tag, int value)
+bindIntTag(const sk::util::String& tag, uint32_t value)
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return bindDataTag(_binder.bindInteger(tag, value));
+}
+
+int
+sk::oci::db::Statement::
+bindDataPosition(db::Data& data)
+{
+  SK_OCI_ENSURE_SUCCESS(OCIBindByPos(getHandle(), &bindp, error().getHandle(), data.index(), data.valuePointer(), data.valueSize(), data.type(), data.indicatorPointer(), 0, 0, 0, 0, OCI_DEFAULT));
+  return data.index();
+}
+
+int
+sk::oci::db::Statement::
+bindDataTag(db::Data& data)
+{
+  SK_OCI_ENSURE_SUCCESS(OCIBindByName(getHandle(), 0, error().getHandle(), data.tagPointer(), data.tagSize(), data.valuePointer(), data.valueSize(), data.type(), data.indicatorPointer(), 0, 0, 0, 0, OCI_DEFAULT));
+  return data.index();
 }
 
 const sk::oci::BindRegistry&
 sk::oci::db::Statement::
 bindRegistry() const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _binder;
 }

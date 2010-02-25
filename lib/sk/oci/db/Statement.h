@@ -11,15 +11,20 @@
 #ifndef _SK_OCI_DB_STATEMENT_H_
 #define _SK_OCI_DB_STATEMENT_H_
 
+#include <sk/oci/Statement.h>
+
 #include "Handle.h"
 #include "handle/Error.h"
 #include "handle/Service.h"
-#include <sk/oci/Statement.h>
-#include <sk/oci/BindRegistry.h>
+#include "Binder.h"
 
 namespace sk {
   namespace oci {
+    class BindRegistry;
+
     namespace db {
+      class Data;
+
       class Statement 
         : public db::Handle,
           public virtual sk::oci::Statement
@@ -43,9 +48,9 @@ namespace sk {
           void setDescribeOnly(bool state);
 
           int bindStringAt(int position, int size, const sk::util::String& value);
-          int bindIntAt(int position, int value);
+          int bindIntAt(int position, uint32_t value);
           int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value);
-          int bindIntTag(const sk::util::String& tag, int value);
+          int bindIntTag(const sk::util::String& tag, uint32_t value);
 
           const sk::oci::BindRegistry& bindRegistry() const;
       
@@ -59,6 +64,10 @@ namespace sk {
           Statement(const Statement& other);
           Statement& operator = (const Statement& other);
 
+          int bindDataPosition(oci::db::Data& data);
+          int bindDataTag(oci::db::Data& data);
+
+          oci::db::Binder _binder;
           ub4 _mode;
           ub4 _type;
       };

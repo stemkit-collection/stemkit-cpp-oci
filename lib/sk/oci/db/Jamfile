@@ -1,6 +1,6 @@
 # vim: ft=jam: sw=2:
 
-local library = sk.oci.db. ;
+local library = sk.oci.db ;
 
 local objects = 
   Accessor.cc
@@ -8,7 +8,10 @@ local objects =
   Cursor.cc
   Handle.cc
   TableDescriber.cc
+  Binder.cc
+  Data.cc
 ;
 
-use-oracle $(objects) $(library) ;
+use-oracle $(objects) $(library). ;
 make-shared-library $(library) : $(objects) ;
+
