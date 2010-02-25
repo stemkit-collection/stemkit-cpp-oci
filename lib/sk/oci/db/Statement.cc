@@ -127,28 +127,28 @@ int
 sk::oci::db::Statement::
 bindStringAt(int position, int size, const sk::util::String& value)
 {
-  return bindDataPosition(_binder.bindString(position, size, value));
+  return bindDataPosition(_bindRegistry.bindString(position, size, value));
 }
 
 int
 sk::oci::db::Statement::
 bindIntAt(int position, uint32_t value)
 {
-  return bindDataPosition(_binder.bindInteger(position, value));
+  return bindDataPosition(_bindRegistry.bindInteger(position, value));
 }
 
 int
 sk::oci::db::Statement::
 bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value)
 {
-  return bindDataTag(_binder.bindString(tag, size, value));
+  return bindDataTag(_bindRegistry.bindString(tag, size, value));
 }
 
 int
 sk::oci::db::Statement::
 bindIntTag(const sk::util::String& tag, uint32_t value)
 {
-  return bindDataTag(_binder.bindInteger(tag, value));
+  return bindDataTag(_bindRegistry.bindInteger(tag, value));
 }
 
 int
@@ -198,5 +198,5 @@ const sk::oci::BindRegistry&
 sk::oci::db::Statement::
 bindRegistry() const
 {
-  return _binder;
+  return _bindRegistry;
 }

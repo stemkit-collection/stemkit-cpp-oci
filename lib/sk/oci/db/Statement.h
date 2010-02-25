@@ -16,7 +16,7 @@
 #include "Handle.h"
 #include "handle/Error.h"
 #include "handle/Service.h"
-#include "Binder.h"
+#include "bind/Registry.h"
 
 namespace sk {
   namespace oci {
@@ -67,7 +67,7 @@ namespace sk {
           int bindDataPosition(oci::db::Data& data);
           int bindDataTag(oci::db::Data& data);
 
-          oci::db::Binder _binder;
+          db::bind::Registry _bindRegistry;
           ub4 _mode;
           ub4 _type;
       };

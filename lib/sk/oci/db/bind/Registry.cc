@@ -11,24 +11,24 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 
-#include "Binder.h"
+#include "Registry.h"
 #include "data/String.h"
 #include "data/Integer.h"
 
-static const sk::util::String __className("sk::oci::db::Binder");
+static const sk::util::String __className("sk::oci::db::bind::Registry");
 
-sk::oci::db::Binder::
-Binder()
+sk::oci::db::bind::Registry::
+Registry()
 {
 }
 
-sk::oci::db::Binder::
-~Binder()
+sk::oci::db::bind::Registry::
+~Registry()
 {
 }
 
 const sk::util::Class
-sk::oci::db::Binder::
+sk::oci::db::bind::Registry::
 getClass() const
 {
   return sk::util::Class(__className);

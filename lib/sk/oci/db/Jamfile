@@ -8,7 +8,7 @@ local objects =
   Cursor.cc
   Handle.cc
   TableDescriber.cc
-  Binder.cc
+  bind/Registry.cc
   Data.cc
 ;
 
