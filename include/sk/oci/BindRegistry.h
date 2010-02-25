@@ -12,17 +12,16 @@
 #define _SK_OCI_BINDREGISTRY_H_
 
 #include <sk/util/Object.h>
-#include <sk/oci/Data.h>
 
 namespace sk {
   namespace oci {
+    class Data;
+
     class BindRegistry 
       : public virtual sk::util::Object
     {
       public:
-        virtual const sk::oci::Data& dataBindAt(int position) const = 0;
-        virtual const sk::oci::Data& dataTagBind(const sk::util::String& tag) const = 0;
-        virtual const sk::oci::Data& dataTagBind(int index) const = 0;
+        virtual const sk::oci::Data& boundDataAt(int index) const = 0;
     };
   }
 }

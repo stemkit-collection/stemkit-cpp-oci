@@ -16,7 +16,8 @@
 #include <sk/oci/db/Accessor.h>
 #include <sk/oci/LogonException.h>
 #include <sk/oci/ConnectionStateException.h>
-#include <sk/oci/AbstractDirector.h>
+#include <sk/oci/abstract/Director.h>
+#include <sk/oci/Data.h>
 
 #include <oci.h>
 #include "Environment.h"
@@ -146,7 +147,7 @@ uint64_t
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql)
 {
-  return execute(sql, AbstractDirector());
+  return execute(sql, sk::oci::abstract::Director());
 }
 
 uint64_t 
@@ -177,16 +178,12 @@ describeTable(const sk::util::String& name)
 }
 
 namespace {
-  struct CountingDirector : public virtual sk::oci::Director {
+  struct CountingDirector : public virtual sk::oci::abstract::Director {
     CountingDirector(uint64_t& counter) 
       : _counter(counter) {}
 
-    void prepareStatement(sk::oci::Statement& statement) const {
-      statement.bindIntAt(1, 0);
-    }
-
     void processCursor(sk::oci::Cursor& cursor) const {
-      _counter = cursor.dataBindAt(1).intValue();
+      _counter = cursor.boundDataAt(cursor.bindIntAt(1)).intValue();
     }
 
     uint64_t& _counter;

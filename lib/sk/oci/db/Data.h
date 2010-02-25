@@ -20,11 +20,19 @@ namespace sk {
       class Data 
         : public virtual sk::util::Object
       {
+        typedef OCIBind* oci_bind_handle;
+        typedef OCIDefine* oci_define_handle;
+
         public:
           Data();
           virtual ~Data();
 
+          oci_bind_handle& bindHandle();
+          oci_define_handle& defineHandle();
+
+          ub4 position() const;
           ub4 index() const;
+
           dvoid* valuePointer();
           sb4 valueSize() const;
           ub2 type() const;

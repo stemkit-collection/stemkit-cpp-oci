@@ -30,9 +30,7 @@ namespace sk {
           db::Data& bindString(const sk::util::String& tag, int sze, const sk::util::String& value);
           db::Data& bindInteger(const sk::util::String& tag, uint32_t value);
 
-          const sk::oci::Data& dataBindAt(int position) const;
-          const sk::oci::Data& dataTagBind(const sk::util::String& tag) const;
-          const sk::oci::Data& dataTagBind(int index) const;
+          const sk::oci::Data& boundDataAt(int index) const;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

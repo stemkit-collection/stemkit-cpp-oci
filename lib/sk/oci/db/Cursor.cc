@@ -167,21 +167,7 @@ forEachColumn(const sk::util::Processor<const info::Column>& processor)
 
 const sk::oci::Data& 
 sk::oci::db::Cursor::
-dataBindAt(int position) const
+boundDataAt(int index) const
 {
-  return _statement.bindRegistry().dataBindAt(position);
-}
-
-const sk::oci::Data& 
-sk::oci::db::Cursor::
-dataTagBind(const sk::util::String& tag) const
-{
-  return _statement.bindRegistry().dataTagBind(tag);
-}
-
-const sk::oci::Data& 
-sk::oci::db::Cursor::
-dataTagBind(int index) const
-{
-  return _statement.bindRegistry().dataTagBind(index);
+  return _statement.bindRegistry().boundDataAt(index);
 }

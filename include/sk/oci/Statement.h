@@ -33,10 +33,10 @@ namespace sk {
         virtual void setDescribeOnly(bool state) = 0;
 
         virtual int bindStringAt(int position, int size, const sk::util::String& value) = 0;
-        virtual int bindIntAt(int position, int value) = 0;
+        virtual int bindIntAt(int position, uint32_t value) = 0;
 
         virtual int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value) = 0;
-        virtual int bindIntTag(const sk::util::String& tag, int value) = 0;
+        virtual int bindIntTag(const sk::util::String& tag, uint32_t value) = 0;
     };
   }
 }

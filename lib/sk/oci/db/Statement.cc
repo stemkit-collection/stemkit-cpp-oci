@@ -155,7 +155,20 @@ int
 sk::oci::db::Statement::
 bindDataPosition(db::Data& data)
 {
-  SK_OCI_ENSURE_SUCCESS(OCIBindByPos(getHandle(), &bindp, error().getHandle(), data.index(), data.valuePointer(), data.valueSize(), data.type(), data.indicatorPointer(), 0, 0, 0, 0, OCI_DEFAULT));
+  SK_OCI_ENSURE_SUCCESS(
+    OCIBindByPos(
+      getHandle(), 
+      &data.bindHandle(), 
+      error().getHandle(), 
+      data.position(), 
+      data.valuePointer(), 
+      data.valueSize(), 
+      data.type(), 
+      data.indicatorPointer(), 
+      0, 0, 0, 0, 
+      OCI_DEFAULT
+    )
+  );
   return data.index();
 }
 
@@ -163,7 +176,21 @@ int
 sk::oci::db::Statement::
 bindDataTag(db::Data& data)
 {
-  SK_OCI_ENSURE_SUCCESS(OCIBindByName(getHandle(), 0, error().getHandle(), data.tagPointer(), data.tagSize(), data.valuePointer(), data.valueSize(), data.type(), data.indicatorPointer(), 0, 0, 0, 0, OCI_DEFAULT));
+  SK_OCI_ENSURE_SUCCESS(
+    OCIBindByName(
+      getHandle(), 
+      &data.bindHandle(), 
+      error().getHandle(), 
+      data.tagPointer(), 
+      data.tagSize(), 
+      data.valuePointer(), 
+      data.valueSize(), 
+      data.type(), 
+      data.indicatorPointer(), 
+      0, 0, 0, 0, 
+      OCI_DEFAULT
+    )
+  );
   return data.index();
 }
 

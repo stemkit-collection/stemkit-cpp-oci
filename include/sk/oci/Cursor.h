@@ -26,6 +26,7 @@ namespace sk {
         virtual uint32_t columnCount() = 0;
         virtual const info::Column columnAt(int index) = 0;
         virtual void forEachColumn(const sk::util::Processor<const info::Column>& processor) = 0;
+        virtual int bindIntAt(int position) = 0;
     };
   }
 }

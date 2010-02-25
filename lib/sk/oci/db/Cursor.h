@@ -12,13 +12,15 @@
 #define _SK_OCI_DB_CURSOR_H_
 
 #include <sk/oci/Cursor.h>
+#include <sk/oci/BindRegistry.h>
 #include "Statement.h"
 
 namespace sk {
   namespace oci {
     namespace db {
       class Cursor 
-        : public virtual sk::oci::Cursor
+        : public virtual sk::oci::Cursor,
+          public virtual sk::oci::BindRegistry
       {
         public:
           Cursor(db::Statement& statement);
@@ -32,11 +34,10 @@ namespace sk {
           uint32_t columnCount();
           const info::Column columnAt(int index);
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
+          int bindIntAt(int position);
 
           // sk::oci::BindRegistry implementation (via sk::oci::Cursor).
-          const sk::oci::Data& dataBindAt(int position) const;
-          const sk::oci::Data& dataTagBind(const sk::util::String& tag) const;
-          const sk::oci::Data& dataTagBind(int index) const;
+          const sk::oci::Data& boundDataAt(int index) const;
 
         private:
           Cursor(const Cursor& other);
