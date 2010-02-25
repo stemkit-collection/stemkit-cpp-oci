@@ -17,6 +17,7 @@
 #include "handle/Error.h"
 #include "handle/Service.h"
 #include "bind/Registry.h"
+#include "bind/Provider.h"
 
 namespace sk {
   namespace oci {
@@ -27,7 +28,8 @@ namespace sk {
 
       class Statement 
         : public db::Handle,
-          public virtual sk::oci::Statement
+          public virtual oci::Statement,
+          public virtual oci::db::bind::Provider
       {
         public:
           Statement(db::handle::Error& error, const sk::util::String& sql);
@@ -64,8 +66,9 @@ namespace sk {
           Statement(const Statement& other);
           Statement& operator = (const Statement& other);
 
-          int bindDataPosition(oci::db::Data& data);
-          int bindDataTag(oci::db::Data& data);
+          // sk::oci::db::bind::Provider implementation.
+          void bindDataPosition(oci::db::Data& data);
+          void bindDataTag(oci::db::Data& data);
 
           db::bind::Registry _bindRegistry;
           ub4 _mode;

@@ -23,7 +23,8 @@ namespace sk {
           : public virtual sk::util::Object
         {
           public:
-            virtual void bindData(db::Data& data) = 0;
+            virtual void bindDataPosition(oci::db::Data& data) = 0;
+            virtual void bindDataTag(oci::db::Data& data) = 0;
         };
       }
     }

@@ -12,6 +12,7 @@
 #define _SK_OCI_DB_BIND_REGISTRY_H_
 
 #include <sk/oci/BindRegistry.h>
+#include "bind/Provider.h"
 
 namespace sk {
   namespace oci {
@@ -26,10 +27,10 @@ namespace sk {
             Registry();
             virtual ~Registry();
 
-            db::Data& bindString(int position, int sze, const sk::util::String& value);
-            db::Data& bindInteger(int position, uint32_t value);
-            db::Data& bindString(const sk::util::String& tag, int sze, const sk::util::String& value);
-            db::Data& bindInteger(const sk::util::String& tag, uint32_t value);
+            int bindString(db::bind::Provider& provider, int position, int sze, const sk::util::String& value);
+            int bindInteger(db::bind::Provider& provider, int position, uint32_t value);
+            int bindString(db::bind::Provider& provider, const sk::util::String& tag, int sze, const sk::util::String& value);
+            int bindInteger(db::bind::Provider& provider, const sk::util::String& tag, uint32_t value);
 
             const sk::oci::Data& boundDataAt(int index) const;
         

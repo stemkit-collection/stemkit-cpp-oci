@@ -31,7 +31,6 @@ namespace sk {
           oci_define_handle& defineHandle();
 
           ub4 position() const;
-          ub4 index() const;
 
           dvoid* valuePointer();
           sb4 valueSize() const;
