@@ -9,12 +9,12 @@
 */
 
 #include <sk/oci/db/Accessor.h>
-#include <sk/oci/Director.h>
+#include <sk/oci/abstract/Director.h>
 #include <sk/rt/Scope.h>
 #include <sk/rt/config/InlineLocator.h>
 
 namespace {
-  struct Director : public virtual sk::oci::Director {
+  struct Director : public virtual sk::oci::abstract::Director {
     void prepareStatement(sk::oci::Statement& statement) const {
       statement.setDescribeOnly(true);
     }

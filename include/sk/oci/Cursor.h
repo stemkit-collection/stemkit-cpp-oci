@@ -15,19 +15,20 @@
 #include <sk/util/Processor.h>
 #include <sk/oci/info/Column.h>
 #include <sk/oci/BindRegistry.h>
+#include <sk/oci/OutputPositionBinder.h>
 
 namespace sk {
   namespace oci {
     class Cursor 
-      : public virtual oci::BindRegistry
+      : public virtual oci::OutputPositionBinder,
+        public virtual oci::BindRegistry
     {
       public:
         virtual uint32_t rowCount() = 0;
         virtual uint32_t columnCount() = 0;
         virtual const info::Column columnAt(int index) = 0;
         virtual void forEachColumn(const sk::util::Processor<const info::Column>& processor) = 0;
-        virtual int bindIntAt(int position) = 0;
-        virtual int bindStringAt(int position, int size) = 0;
+        virtual void fetch(uint32_t amount) = 0;
     };
   }
 }

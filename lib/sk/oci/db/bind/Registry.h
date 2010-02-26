@@ -11,8 +11,9 @@
 #ifndef _SK_OCI_DB_BIND_REGISTRY_H_
 #define _SK_OCI_DB_BIND_REGISTRY_H_
 
+#include <sk/util/ArrayList.hxx>
 #include <sk/oci/BindRegistry.h>
-#include "bind/Provider.h"
+#include "Provider.h"
 
 namespace sk {
   namespace oci {
@@ -40,6 +41,8 @@ namespace sk {
           private:
             Registry(const Registry& other);
             Registry& operator = (const Registry& other);
+
+            sk::util::ArrayList<db::Data> _depot;
         };
       }
     }

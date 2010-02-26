@@ -18,6 +18,7 @@
 #include <sk/oci/ConnectionStateException.h>
 #include <sk/oci/abstract/Director.h>
 #include <sk/oci/Data.h>
+#include <sk/oci/info/Column.h>
 
 #include <oci.h>
 #include "Environment.h"
@@ -28,7 +29,6 @@
 
 #include "Statement.h"
 #include "Cursor.h"
-#include "TableDescriber.h"
 
 #include <iostream>
 
@@ -166,24 +166,48 @@ execute(const sk::util::String& sql, const sk::oci::Director& director)
   return cursor.rowCount();
 }
 
+namespace {
+  struct TableDescriber : public sk::oci::abstract::Director, public virtual sk::util::Processor<const sk::oci::info::Column> {
+    TableDescriber(sk::oci::info::Table& table)
+      : _table(table) {}
+
+    void prepareStatement(sk::oci::Statement& statement) const {
+      statement.setDescribeOnly(true);
+    }
+
+    void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.forEachColumn(*this);
+    }
+
+    void process(const sk::oci::info::Column& column) const {
+      _table.add(column);
+    }
+
+    sk::oci::info::Table& _table;
+  };
+}
+
 const sk::oci::info::Table 
 sk::oci::db::Accessor::
 describeTable(const sk::util::String& name)
 {
   ensureConnected(_connected, __FUNCTION__);
   info::Table table(name);
-  execute("select * from " + name, db::TableDescriber(table));
+  execute("select * from " + name, TableDescriber(table));
 
   return table;
 }
 
 namespace {
-  struct CountingDirector : public virtual sk::oci::abstract::Director {
+  struct CountingDirector : public sk::oci::abstract::Director {
     CountingDirector(uint32_t& counter) 
       : _counter(counter) {}
 
     void processCursor(sk::oci::Cursor& cursor) const {
-      _counter = cursor.boundDataAt(cursor.bindIntAt(1)).intValue();
+      int index = cursor.bindIntAt(1);
+      cursor.fetch(1);
+
+      _counter = cursor.boundDataAt(index).intValue();
     }
 
     uint32_t& _counter;

@@ -36,6 +36,9 @@ namespace sk {
           virtual ~Statement();
 
           void execute(db::handle::Service& service);
+          void fetch(uint32_t amount);
+          db::bind::Registry& bindRegistry();
+          void defineDataPosition(oci::db::Data& data);
 
           // sk::oci::Statement implementation.
           bool isSelect() const;
@@ -47,16 +50,23 @@ namespace sk {
           bool isAlter() const;
           bool isBegin() const;
           bool isDeclare() const;
-          void setDescribeOnly(bool state);
 
+          // sk::oci::Statement implementation.
+          void setDescribeOnly(bool state);
+          void setIterations(uint32_t number);
+          void setRowOffset(uint32_t offset);
+
+          // sk::oci::InputPositionBinder implementation.
           int bindStringAt(int position, int size, const sk::util::String& value);
           int bindIntAt(int position, uint32_t value);
+
+          // sk::oci::InputTagBinder implementation.
           int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value);
           int bindIntTag(const sk::util::String& tag, uint32_t value);
 
-          db::bind::Registry& bindRegistry();
-          void defineDataPosition(oci::db::Data& data);
-      
+          // sk::oci::BindRegistry implementation.
+          const sk::oci::Data& boundDataAt(int index) const;
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       
@@ -74,6 +84,8 @@ namespace sk {
           db::bind::Registry _bindRegistry;
           ub4 _mode;
           ub4 _type;
+          ub4 _iterations;
+          ub4 _offset;
       };
     }
   }

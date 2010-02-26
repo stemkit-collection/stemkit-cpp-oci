@@ -21,8 +21,15 @@ namespace sk {
     namespace abstract {
       class Director : public virtual sk::oci::Director {
         public:
-          void prepareStatement(sk::oci::Statement& statement) const {}
-          void processCursor(sk::oci::Cursor& cursor) const {}
+          void prepareStatement(sk::oci::Statement& statement) const {
+          }
+
+          void processCursor(sk::oci::Cursor& cursor) const {
+          }
+
+          bool nextIteration() const {
+            return false;
+          }
       };
     }
   }

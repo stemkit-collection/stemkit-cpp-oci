@@ -146,11 +146,13 @@ columnAt(int index)
   info::Column column(sk::util::String(name, length), map_column_type(type), size);
 
   if((type == OCI_TYPECODE_OBJECT) || (type == OCI_TYPECODE_NAMEDCOLLECTION)) {
-    name = parameter.getCStrAttr(&length, OCI_ATTR_SCHEMA_NAME);
-    column.setSchemaName(sk::util::String(name, length));
+    uint32_t schema_length = 0;
+    uint32_t object_length = 0;
 
-    name = parameter.getCStrAttr(&length, OCI_ATTR_TYPE_NAME);
-    column.setObjectName(sk::util::String(name, length));
+    const char* schema_name = parameter.getCStrAttr(&schema_length, OCI_ATTR_SCHEMA_NAME);
+    const char* object_name = parameter.getCStrAttr(&object_length, OCI_ATTR_TYPE_NAME);
+
+    column.setTypeName(sk::util::String(schema_name, schema_length), sk::util::String(object_name, object_length));
   }
   return column;
 }
@@ -170,6 +172,13 @@ sk::oci::db::Cursor::
 boundDataAt(int index) const
 {
   return _statement.bindRegistry().boundDataAt(index);
+}
+
+void 
+sk::oci::db::Cursor::
+fetch(uint32_t amount)
+{
+  _statement.fetch(amount);
 }
 
 int 

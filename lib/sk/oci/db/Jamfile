@@ -7,11 +7,14 @@ local objects =
   Statement.cc
   Cursor.cc
   Handle.cc
-  TableDescriber.cc
-  bind/Registry.cc
   Data.cc
 ;
 
 use-oracle $(objects) $(library). ;
 make-shared-library $(library) : $(objects) ;
 
+add-project-library $(library) :
+  $(library).bind 
+;
+
+make-subdirs "bind" ;

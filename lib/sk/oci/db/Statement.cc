@@ -19,7 +19,7 @@ static const sk::util::String __className("sk::oci::db::Statement");
 
 sk::oci::db::Statement::
 Statement(db::handle::Error& error, const sk::util::String& sql)
-  : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT)
+  : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT), _iterations(0), _offset(0)
 {
   init();
   SK_OCI_ENSURE_SUCCESS(OCIStmtPrepare(getHandle(), error.getHandle(), toOraText(sql), sql.length(), OCI_NTV_SYNTAX, OCI_DEFAULT));
@@ -50,7 +50,8 @@ void
 sk::oci::db::Statement::
 execute(db::handle::Service& service) 
 {
-  SK_OCI_ENSURE_SUCCESS(OCIStmtExecute(service.getHandle(), getHandle(), error().getHandle(), 0, 0, 0, 0, _mode));
+  SK_OCI_ENSURE_SUCCESS(OCIStmtExecute(service.getHandle(), getHandle(), error().getHandle(), _iterations, _offset, 0, 0, _mode));
+  _offset += _iterations;
 }
 
 bool 
@@ -121,6 +122,27 @@ sk::oci::db::Statement::
 setDescribeOnly(bool state)
 {
   _mode = (state == true ? OCI_DESCRIBE_ONLY : OCI_DEFAULT);
+}
+
+void
+sk::oci::db::Statement::
+setIterations(uint32_t number)
+{
+  _iterations = number;
+}
+
+void
+sk::oci::db::Statement::
+setRowOffset(uint32_t number)
+{
+  _offset = number;
+}
+
+const sk::oci::Data& 
+sk::oci::db::Statement::
+boundDataAt(int index) const
+{
+  return _bindRegistry.boundDataAt(index);
 }
 
 int
@@ -218,3 +240,19 @@ bindRegistry()
 {
   return _bindRegistry;
 }
+
+void
+sk::oci::db::Statement::
+fetch(uint32_t amount)
+{
+  SK_OCI_ENSURE_SUCCESS(
+    OCIStmtFetch(
+      getHandle(), 
+      error().getHandle(), 
+      amount,
+      OCI_FETCH_NEXT,
+      OCI_DEFAULT
+    )
+  );
+}
+

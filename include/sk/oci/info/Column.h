@@ -25,8 +25,12 @@ namespace sk {
           Column(const sk::util::String& name, const info::Type& type, uint32_t size);
           virtual ~Column();
 
-          void setSchemaName(const sk::util::String& name);
-          void setObjectName(const sk::util::String& name);
+          const sk::util::String getName() const;
+          const sk::util::String getTypeName() const;
+          const info::Type& getType() const;
+          int getSize() const;
+
+          void setTypeName(const sk::util::String& schema, const sk::util::String& object);
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
@@ -39,8 +43,7 @@ namespace sk {
           const info::Type& _type;
           const int _size;
 
-          sk::util::String _schemaName;
-          sk::util::String _objectName;
+          sk::util::String _typeName;
       };
     }
   }

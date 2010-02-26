@@ -1,0 +1,10 @@
+# vim: ft=jam: sw=2:
+
+local library = sk.oci.db.bind ;
+
+local objects = 
+  Registry.cc
+;
+
+use-oracle $(objects) $(library). ;
+make-library $(library) : $(objects) ;

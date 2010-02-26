@@ -11,20 +11,21 @@
 #ifndef _SK_OCI_DB_DATA_H_
 #define _SK_OCI_DB_DATA_H_
 
-#include <sk/util/Object.h>
+#include <sk/oci/Data.h>
 #include <oci.h>
+#include <vector>
 
 namespace sk {
   namespace oci {
     namespace db {
       class Data 
-        : public virtual sk::util::Object
+        : public virtual sk::oci::Data
       {
         typedef OCIBind* oci_bind_handle;
         typedef OCIDefine* oci_define_handle;
 
         public:
-          Data();
+          Data(uint32_t position, ub2 type, const void* value, int32_t size);
           virtual ~Data();
 
           oci_bind_handle& bindHandle();
@@ -42,9 +43,25 @@ namespace sk {
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       
+          // sk::oci::Data implementation.
+          uint32_t intValue() const;
+          const std::vector<char>& stringValue() const;
+          bool isNull() const;
+          bool isTruncated() const;
+
         private:
           Data(const Data& other);
           Data& operator = (const Data& other);
+
+          union {
+            oci_define_handle oci_define;
+            oci_bind_handle oci_bind;
+          } _handle;
+
+          ub4 _position;
+          ub2 _type;
+          sb2 _indicator;
+          std::vector<char> _value;
       };
     }
   }

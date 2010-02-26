@@ -13,11 +13,16 @@
 
 #include <sk/util/Object.h>
 #include <sk/util/String.h>
+#include <sk/oci/InputPositionBinder.h>
+#include <sk/oci/InputTagBinder.h>
+#include <sk/oci/BindRegistry.h>
 
 namespace sk {
   namespace oci {
     class Statement 
-      : public virtual sk::util::Object
+      : public virtual sk::oci::InputPositionBinder,
+        public virtual sk::oci::InputTagBinder,
+        public virtual sk::oci::BindRegistry
     {
       public:
         virtual bool isSelect() const = 0;
@@ -31,12 +36,8 @@ namespace sk {
         virtual bool isDeclare() const = 0;
 
         virtual void setDescribeOnly(bool state) = 0;
-
-        virtual int bindStringAt(int position, int size, const sk::util::String& value) = 0;
-        virtual int bindIntAt(int position, uint32_t value) = 0;
-
-        virtual int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value) = 0;
-        virtual int bindIntTag(const sk::util::String& tag, uint32_t value) = 0;
+        virtual void setIterations(uint32_t number) = 0;
+        virtual void setRowOffset(uint32_t number) = 0;
     };
   }
 }

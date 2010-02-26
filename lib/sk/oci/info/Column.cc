@@ -43,8 +43,8 @@ inspect() const
   depot << "name=" + _name.inspect();
   depot << "type=" + _type.inspect();
 
-  if(_objectName.isEmpty() == false) {
-    depot << "object=" + _schemaName.inspect() + '.' + _objectName.inspect();
+  if(_typeName.isEmpty() == false) {
+    depot << "object=" + _typeName;
   }
   depot << "size=" + sk::util::String::valueOf(_size);
 
@@ -53,14 +53,35 @@ inspect() const
 
 void
 sk::oci::info::Column::
-setSchemaName(const sk::util::String& name)
+setTypeName(const sk::util::String& schema, const sk::util::String& object)
 {
-  _schemaName = name;
+  _typeName = schema + '.' + object;
 }
 
-void
+const sk::util::String
 sk::oci::info::Column::
-setObjectName(const sk::util::String& name)
+getName() const
 {
-  _objectName = name;
+  return _name;
+}
+
+const sk::oci::info::Type&
+sk::oci::info::Column::
+getType() const
+{
+  return _type;
+}
+
+int
+sk::oci::info::Column::
+getSize() const
+{
+  return _size;
+}
+
+const sk::util::String
+sk::oci::info::Column::
+getTypeName() const
+{
+  return _typeName;
 }

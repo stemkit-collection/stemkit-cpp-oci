@@ -39,6 +39,7 @@ namespace sk {
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
           int bindIntAt(int position);
           int bindStringAt(int position, int size);
+          void fetch(uint32_t amount);
 
           // sk::oci::BindRegistry implementation.
           const sk::oci::Data& boundDataAt(int index) const;
