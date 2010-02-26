@@ -37,9 +37,12 @@ namespace sk {
           uint32_t columnCount();
           const info::Column columnAt(int index);
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
+          uint32_t fetch();
+          void setCapacity(uint32_t capacity);
+
+          // sk::oci::OutputPositionBind implementation.
           int bindIntAt(int position);
           int bindStringAt(int position, int size);
-          void fetch(uint32_t amount);
 
           // sk::oci::BindRegistry implementation.
           const sk::oci::Data& boundDataAt(int index) const;
@@ -55,6 +58,8 @@ namespace sk {
           db::Statement& _statement;
           bool _haveColumnCount;
           uint32_t _columnCount;
+          uint32_t _rowCount;
+          uint32_t _capacity;
       };
     }
   }

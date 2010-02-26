@@ -205,7 +205,7 @@ namespace {
 
     void processCursor(sk::oci::Cursor& cursor) const {
       int index = cursor.bindIntAt(1);
-      cursor.fetch(1);
+      cursor.fetch();
 
       _counter = cursor.boundDataAt(index).intValue();
     }

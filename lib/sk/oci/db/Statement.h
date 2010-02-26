@@ -37,6 +37,7 @@ namespace sk {
 
           void execute(db::handle::Service& service);
           void fetch(uint32_t amount);
+          uint32_t obtainRowCount();
           db::bind::Registry& bindRegistry();
           void defineDataPosition(oci::db::Data& data);
 

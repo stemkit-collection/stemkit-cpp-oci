@@ -256,3 +256,10 @@ fetch(uint32_t amount)
   );
 }
 
+uint32_t 
+sk::oci::db::Statement::
+obtainRowCount()
+{
+  return getIntAttr(OCI_ATTR_ROW_COUNT);
+}
+

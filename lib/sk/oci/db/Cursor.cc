@@ -21,7 +21,7 @@ static const sk::util::String __className("sk::oci::db::Cursor");
 
 sk::oci::db::Cursor::
 Cursor(db::Statement& statement)
-  : _statement(statement), _haveColumnCount(false)
+  : _statement(statement), _haveColumnCount(false), _capacity(1), _rowCount(0)
 {
 }
 
@@ -41,7 +41,7 @@ uint32_t
 sk::oci::db::Cursor::
 rowCount()
 {
-  return _statement.getIntAttr(OCI_ATTR_ROW_COUNT);
+  return _rowCount;
 }
 
 uint32_t
@@ -167,18 +167,31 @@ forEachColumn(const sk::util::Processor<const info::Column>& processor)
   }
 }
 
+void
+sk::oci::db::Cursor::
+setCapacity(uint32_t capacity)
+{
+  _capacity = capacity;
+}
+
+uint32_t
+sk::oci::db::Cursor::
+fetch()
+{
+  _statement.fetch(_capacity);
+  uint32_t db_row_count = _statement.obtainRowCount();
+  uint32_t delta = db_row_count - _rowCount;
+
+  _rowCount = db_row_count;
+
+  return delta;
+}
+
 const sk::oci::Data& 
 sk::oci::db::Cursor::
 boundDataAt(int index) const
 {
   return _statement.bindRegistry().boundDataAt(index);
-}
-
-void 
-sk::oci::db::Cursor::
-fetch(uint32_t amount)
-{
-  _statement.fetch(amount);
 }
 
 int 
