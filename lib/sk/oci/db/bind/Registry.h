@@ -18,9 +18,9 @@
 namespace sk {
   namespace oci {
     namespace db {
+      namespace bind {
         class Data;
 
-      namespace bind {
         class Registry 
           : public virtual sk::oci::BindRegistry
         {
@@ -42,7 +42,7 @@ namespace sk {
             Registry(const Registry& other);
             Registry& operator = (const Registry& other);
 
-            sk::util::ArrayList<db::Data> _depot;
+            sk::util::ArrayList<db::bind::Data> _depot;
         };
       }
     }

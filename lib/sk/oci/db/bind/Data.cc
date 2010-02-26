@@ -15,9 +15,9 @@
 
 #include "Data.h"
 
-static const sk::util::String __className("sk::oci::db::Data");
+static const sk::util::String __className("sk::oci::db::bind::Data");
 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 Data(uint32_t capacity, uint32_t position, ub2 type, const void* value, int32_t size)
   : _position(position), _type(type), _indicator(0), 
     _value(reinterpret_cast<const char*>(value), reinterpret_cast<const char*>(value) + size)
@@ -26,83 +26,83 @@ Data(uint32_t capacity, uint32_t position, ub2 type, const void* value, int32_t 
   _handle.oci_bind = 0;
 }
 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 ~Data()
 {
 }
 
 const sk::util::Class
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 getClass() const
 {
   return sk::util::Class(__className);
 }
 
-sk::oci::db::Data::oci_bind_handle& 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::oci_bind_handle& 
+sk::oci::db::bind::Data::
 bindHandle()
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-sk::oci::db::Data::oci_define_handle& 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::oci_define_handle& 
+sk::oci::db::bind::Data::
 defineHandle()
 {
   return _handle.oci_define;
 }
 
 ub4 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 position() const
 {
   return _position;
 }
 
 dvoid* 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 valuePointer()
 {
   return _value.size() == 0 ? 0 : &_value.front();
 }
 
 sb4 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 valueSize() const
 {
   return _value.size();
 }
 
 ub2 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 type() const
 {
   return _type;
 }
 
 dvoid* 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 indicatorPointer()
 {
   return &_indicator;
 }
 
 const text* 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 tagPointer() const
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 sb4 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 tagSize() const
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 uint32_t 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 intValue() const
 {
   uint32_t value;
@@ -114,21 +114,21 @@ intValue() const
 }
 
 const std::vector<char>& 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 stringValue() const
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 bool 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 isNull() const
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 bool 
-sk::oci::db::Data::
+sk::oci::db::bind::Data::
 isTruncated() const
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);

@@ -16,15 +16,15 @@
 namespace sk {
   namespace oci {
     namespace db {
-      class Data;
-
       namespace bind {
+        class Data;
+
         class Provider 
           : public virtual sk::util::Object
         {
           public:
-            virtual void bindDataPosition(oci::db::Data& data) = 0;
-            virtual void bindDataTag(oci::db::Data& data) = 0;
+            virtual void bindDataPosition(db::bind::Data& data) = 0;
+            virtual void bindDataTag(db::bind::Data& data) = 0;
             virtual uint32_t datasetSize() const = 0;
         };
       }

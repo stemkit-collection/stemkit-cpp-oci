@@ -7,7 +7,6 @@ local objects =
   Statement.cc
   Cursor.cc
   Handle.cc
-  Data.cc
 ;
 
 use-oracle $(objects) $(library). ;

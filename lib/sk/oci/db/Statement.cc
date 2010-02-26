@@ -13,7 +13,7 @@
 #include <sk/util/UnsupportedOperationException.h>
 
 #include "Statement.h"
-#include "Data.h"
+#include "bind/Data.h"
 
 static const sk::util::String __className("sk::oci::db::Statement");
 
@@ -182,7 +182,7 @@ bindIntTag(const sk::util::String& tag, uint32_t value)
 
 void
 sk::oci::db::Statement::
-bindDataPosition(db::Data& data)
+bindDataPosition(db::bind::Data& data)
 {
   SK_OCI_ENSURE_SUCCESS(
     OCIBindByPos(
@@ -202,7 +202,7 @@ bindDataPosition(db::Data& data)
 
 void
 sk::oci::db::Statement::
-bindDataTag(db::Data& data)
+bindDataTag(db::bind::Data& data)
 {
   SK_OCI_ENSURE_SUCCESS(
     OCIBindByName(
@@ -223,7 +223,7 @@ bindDataTag(db::Data& data)
 
 void
 sk::oci::db::Statement::
-defineDataPosition(db::Data& data)
+defineDataPosition(db::bind::Data& data)
 {
   SK_OCI_ENSURE_SUCCESS(
     OCIDefineByPos(

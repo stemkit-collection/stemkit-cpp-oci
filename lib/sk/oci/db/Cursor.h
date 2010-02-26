@@ -52,8 +52,8 @@ namespace sk {
           Cursor& operator = (const Cursor& other);
 
           // sk::oci::db::bind::Provider implementation.
-          void bindDataPosition(oci::db::Data& data);
-          void bindDataTag(oci::db::Data& data);
+          void bindDataPosition(db::bind::Data& data);
+          void bindDataTag(db::bind::Data& data);
           uint32_t datasetSize() const;
 
           db::Statement& _statement;

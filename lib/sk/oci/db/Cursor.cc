@@ -217,14 +217,14 @@ bindStringAt(int position, int size)
 
 void 
 sk::oci::db::Cursor::
-bindDataPosition(oci::db::Data& data)
+bindDataPosition(db::bind::Data& data)
 {
   _statement.defineDataPosition(data);
 }
 
 void 
 sk::oci::db::Cursor::
-bindDataTag(oci::db::Data& data)
+bindDataTag(db::bind::Data& data)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }

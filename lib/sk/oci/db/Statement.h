@@ -24,8 +24,6 @@ namespace sk {
     class BindRegistry;
 
     namespace db {
-      class Data;
-
       class Statement 
         : public db::Handle,
           public virtual oci::Statement,
@@ -39,7 +37,7 @@ namespace sk {
           void fetch(uint32_t amount);
           uint32_t obtainRowCount();
           db::bind::Registry& bindRegistry();
-          void defineDataPosition(oci::db::Data& data);
+          void defineDataPosition(db::bind::Data& data);
 
           // sk::oci::Statement implementation.
           bool isSelect() const;
@@ -79,8 +77,8 @@ namespace sk {
           Statement& operator = (const Statement& other);
 
           // sk::oci::db::bind::Provider implementation.
-          void bindDataPosition(oci::db::Data& data);
-          void bindDataTag(oci::db::Data& data);
+          void bindDataPosition(db::bind::Data& data);
+          void bindDataTag(db::bind::Data& data);
           uint32_t datasetSize() const;
 
           db::bind::Registry _bindRegistry;
