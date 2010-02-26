@@ -25,6 +25,7 @@ namespace sk {
           public:
             virtual void bindDataPosition(oci::db::Data& data) = 0;
             virtual void bindDataTag(oci::db::Data& data) = 0;
+            virtual uint32_t datasetSize() const = 0;
         };
       }
     }

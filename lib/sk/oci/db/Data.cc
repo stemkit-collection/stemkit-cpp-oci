@@ -18,8 +18,9 @@
 static const sk::util::String __className("sk::oci::db::Data");
 
 sk::oci::db::Data::
-Data(uint32_t position, ub2 type, const void* value, int32_t size)
-  : _position(position), _type(type), _indicator(0), _value(reinterpret_cast<const char*>(value), reinterpret_cast<const char*>(value) + size)
+Data(uint32_t capacity, uint32_t position, ub2 type, const void* value, int32_t size)
+  : _position(position), _type(type), _indicator(0), 
+    _value(reinterpret_cast<const char*>(value), reinterpret_cast<const char*>(value) + size)
 {
   _handle.oci_define = 0;
   _handle.oci_bind = 0;

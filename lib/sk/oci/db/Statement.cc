@@ -131,6 +131,13 @@ setIterations(uint32_t number)
   _iterations = number;
 }
 
+uint32_t
+sk::oci::db::Statement::
+datasetSize() const
+{
+  return _iterations;
+}
+
 void
 sk::oci::db::Statement::
 setRowOffset(uint32_t number)

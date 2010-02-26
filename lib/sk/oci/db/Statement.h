@@ -81,6 +81,7 @@ namespace sk {
           // sk::oci::db::bind::Provider implementation.
           void bindDataPosition(oci::db::Data& data);
           void bindDataTag(oci::db::Data& data);
+          uint32_t datasetSize() const;
 
           db::bind::Registry _bindRegistry;
           ub4 _mode;

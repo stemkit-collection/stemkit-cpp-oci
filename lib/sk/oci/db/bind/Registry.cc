@@ -50,7 +50,7 @@ int
 sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, int position, uint32_t value)
 {
-  sk::util::Holder<db::Data> holder(new db::Data(position, SQLT_INT, &value, sizeof(value)));
+  sk::util::Holder<db::Data> holder(new db::Data(provider.datasetSize(), position, SQLT_INT, &value, sizeof(value)));
   provider.bindDataPosition(holder.getMutable());
 
   int index = _depot.size();

@@ -176,6 +176,13 @@ setCapacity(uint32_t capacity)
 
 uint32_t
 sk::oci::db::Cursor::
+datasetSize() const
+{
+  return _capacity;
+}
+
+uint32_t
+sk::oci::db::Cursor::
 fetch()
 {
   _statement.fetch(_capacity);

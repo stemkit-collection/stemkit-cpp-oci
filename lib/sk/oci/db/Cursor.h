@@ -54,6 +54,7 @@ namespace sk {
           // sk::oci::db::bind::Provider implementation.
           void bindDataPosition(oci::db::Data& data);
           void bindDataTag(oci::db::Data& data);
+          uint32_t datasetSize() const;
 
           db::Statement& _statement;
           bool _haveColumnCount;
