@@ -13,7 +13,6 @@
 
 #include <sk/oci/Data.h>
 #include <oci.h>
-#include <vector>
 
 namespace sk {
   namespace oci {
@@ -47,7 +46,7 @@ namespace sk {
         
             // sk::oci::Data implementation.
             uint32_t intValue() const;
-            const std::vector<char>& stringValue() const;
+            const sk::util::Container& stringValue() const;
             bool isNull() const;
             bool isTruncated() const;
 
@@ -63,7 +62,7 @@ namespace sk {
             ub4 _position;
             ub2 _type;
             sb2 _indicator;
-            std::vector<char> _value;
+            sk::util::Container _value;
         };
       }
     }

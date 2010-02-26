@@ -73,7 +73,7 @@ namespace {
       while(cursor.fetch() != 0) {
         std::cerr 
           << c1.getName() << "=" << cursor.boundDataAt(p1).intValue() << ", " 
-          << c2.getName() << "=" << sk::util::Container(cursor.boundDataAt(p2).stringValue()).toString().inspect()
+          << c2.getName() << "=" << cursor.boundDataAt(p2).stringValue().toString().inspect()
           << std::endl
         ;
       }

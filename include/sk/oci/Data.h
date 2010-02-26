@@ -12,7 +12,7 @@
 #define _SK_OCI_DATA_H_
 
 #include <sk/util/Object.h>
-#include <vector>
+#include <sk/util/Container.h>
 
 namespace sk {
   namespace oci {
@@ -21,7 +21,7 @@ namespace sk {
     {
       public:
         virtual uint32_t intValue() const = 0;
-        virtual const std::vector<char>& stringValue() const = 0;
+        virtual const sk::util::Container& stringValue() const = 0;
         virtual bool isNull() const = 0;
         virtual bool isTruncated() const = 0;
     };

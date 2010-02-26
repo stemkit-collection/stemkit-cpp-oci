@@ -19,22 +19,29 @@ static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
 Data(uint32_t position, ub2 type, uint32_t value)
-  : _position(position), _type(type), _indicator(0), 
-    _value(reinterpret_cast<const char*>(&value), reinterpret_cast<const char*>(&value) + sizeof(value))
+  : _position(position), _type(type), _indicator(0)
 {
+  union {
+    uint32_t value;
+    char buffer[sizeof(uint32_t)];
+  } data;
+
+  data.value = value;
+  _value.assign(data.buffer, data.buffer + sizeof(value));
+
   _handle.oci_define = 0;
   _handle.oci_bind = 0;
 }
 
 sk::oci::db::bind::Data::
 Data(uint32_t position, ub2 type, int size, const sk::util::String& value)
-  : _position(position), _type(type), _indicator(0), 
-    _value(size, 0)
+  : _position(position), _type(type), _indicator(0)
 {
   _handle.oci_define = 0;
   _handle.oci_bind = 0;
 
-  std::copy(value.begin(), value.begin() + std::min(size, value.size()), _value.begin());
+  _value.assign(value.begin(), value.begin() + std::min(size - 1, value.size()));
+  _value.resize(size, 0);
 }
 
 sk::oci::db::bind::Data::
@@ -116,15 +123,19 @@ uint32_t
 sk::oci::db::bind::Data::
 intValue() const
 {
-  uint32_t value;
-  if(_value.size() != sizeof(value)) {
+  union {
+    uint32_t value;
+    char buffer[sizeof(uint32_t)];
+  } data;
+
+  if(_value.size() != sizeof(data.value)) {
     throw sk::util::IllegalStateException(SK_METHOD);
   }
-  std::copy(_value.begin(), _value.end(), reinterpret_cast<char*>(&value));
-  return value;
+  std::copy(_value.begin(), _value.end(), data.buffer);
+  return data.value;
 }
 
-const std::vector<char>& 
+const sk::util::Container&
 sk::oci::db::bind::Data::
 stringValue() const
 {
