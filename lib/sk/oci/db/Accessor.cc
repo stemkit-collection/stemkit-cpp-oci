@@ -157,8 +157,11 @@ execute(const sk::util::String& sql, const sk::oci::Director& director)
   ensureConnected(_connected, __FUNCTION__);
   db::Statement statement(_data.error, sql);
 
-  director.prepareStatement(statement);
-  statement.execute(_data.service);
+  do {
+    director.prepareStatement(statement);
+    statement.execute(_data.service);
+  }
+  while(director.nextIteration() == true);
 
   db::Cursor cursor(statement);
   director.processCursor(cursor);
