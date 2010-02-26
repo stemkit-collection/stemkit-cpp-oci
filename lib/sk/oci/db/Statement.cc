@@ -252,15 +252,18 @@ void
 sk::oci::db::Statement::
 fetch(uint32_t amount)
 {
-  SK_OCI_ENSURE_SUCCESS(
-    OCIStmtFetch(
-      getHandle(), 
-      error().getHandle(), 
-      amount,
-      OCI_FETCH_NEXT,
-      OCI_DEFAULT
-    )
+  int status = OCIStmtFetch2(
+    getHandle(), 
+    error().getHandle(), 
+    amount,
+    OCI_FETCH_NEXT,
+    0,
+    OCI_DEFAULT
   );
+
+  if(status != OCI_NO_DATA) {
+    SK_OCI_ENSURE_SUCCESS(status);
+  }
 }
 
 uint32_t 

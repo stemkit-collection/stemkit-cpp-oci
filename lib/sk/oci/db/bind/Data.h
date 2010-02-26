@@ -26,7 +26,8 @@ namespace sk {
           typedef OCIDefine* oci_define_handle;
 
           public:
-            Data(uint32_t capacity, uint32_t position, ub2 type, const void* value, int32_t size);
+            Data(uint32_t position, ub2 type, uint32_t value);
+            Data(uint32_t position, ub2 type, int size, const sk::util::String& value);
             virtual ~Data();
 
             oci_bind_handle& bindHandle();

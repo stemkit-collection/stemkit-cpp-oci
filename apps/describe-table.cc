@@ -9,12 +9,18 @@
 */
 
 #include <sk/oci/db/Accessor.h>
+#include <sk/oci/abstract/Director.h>
+#include <sk/oci/Data.h>
+
 #include <sk/rt/Scope.h>
 #include <sk/rt/config/InlineLocator.h>
 #include <sk/util/PrettyPrinter.h>
 #include <sk/util/Pathname.h>
+#include <sk/util/Container.h>
 
 #include <iostream>
+
+void printContent(sk::oci::Accessor& accessor, const sk::util::String& table);
 
 int main(int argc, const char* const argv[])
 {
@@ -41,6 +47,8 @@ int main(int argc, const char* const argv[])
     printer.print(accessor.describeTable(table).inspect());
 
     scope.info() << "Table " << table.inspect() << " has " << accessor.tableSize(table) << " row(s)";
+
+    printContent(accessor, table);
   }
   catch(const sk::util::Exception& exception) {
     scope.error("EX") << exception.getMessage();
@@ -51,4 +59,28 @@ int main(int argc, const char* const argv[])
     return 2;
   }
   return 0;
+}
+
+namespace {
+  struct ContentPrinter : public sk::oci::abstract::Director {
+    void processCursor(sk::oci::Cursor& cursor) const {
+      const sk::oci::info::Column c1 = cursor.columnAt(0);
+      const sk::oci::info::Column c2 = cursor.columnAt(1);
+      
+      int p1 = cursor.bindIntAt(1);
+      int p2 = cursor.bindStringAt(2, c2.getSize());
+
+      while(cursor.fetch() != 0) {
+        std::cerr 
+          << c1.getName() << "=" << cursor.boundDataAt(p1).intValue() << ", " 
+          << c2.getName() << "=" << sk::util::Container(cursor.boundDataAt(p2).stringValue()).toString().inspect()
+          << std::endl
+        ;
+      }
+    }
+  };
+}
+
+void printContent(sk::oci::Accessor& accessor, const sk::util::String& table) {
+  accessor.execute("select * from " + table, ContentPrinter());
 }

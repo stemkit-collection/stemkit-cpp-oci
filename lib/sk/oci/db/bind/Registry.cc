@@ -41,16 +41,12 @@ getClass() const
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, int position, int sze, const sk::util::String& value)
+bindString(db::bind::Provider& provider, int position, int size, const sk::util::String& value)
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
-}
-
-int 
-sk::oci::db::bind::Registry::
-bindInteger(db::bind::Provider& provider, int position, uint32_t value)
-{
-  sk::util::Holder<db::bind::Data> holder(new db::bind::Data(provider.datasetSize(), position, SQLT_INT, &value, sizeof(value)));
+  if(provider.datasetSize() > 1) {
+    throw sk::util::UnsupportedOperationException("array bind");
+  }
+  sk::util::Holder<db::bind::Data> holder(new db::bind::Data(position, SQLT_STR, size, value));
   provider.bindDataPosition(holder.getMutable());
 
   int index = _depot.size();
@@ -61,7 +57,23 @@ bindInteger(db::bind::Provider& provider, int position, uint32_t value)
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, const sk::util::String& tag, int sze, const sk::util::String& value)
+bindInteger(db::bind::Provider& provider, int position, uint32_t value)
+{
+  if(provider.datasetSize() > 1) {
+    throw sk::util::UnsupportedOperationException("array bind");
+  }
+  sk::util::Holder<db::bind::Data> holder(new db::bind::Data(position, SQLT_INT, value));
+  provider.bindDataPosition(holder.getMutable());
+
+  int index = _depot.size();
+  _depot.add(holder.release());
+
+  return index;
+}
+
+int 
+sk::oci::db::bind::Registry::
+bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::String& value)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }

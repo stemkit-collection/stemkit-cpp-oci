@@ -18,12 +18,23 @@
 static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
-Data(uint32_t capacity, uint32_t position, ub2 type, const void* value, int32_t size)
+Data(uint32_t position, ub2 type, uint32_t value)
   : _position(position), _type(type), _indicator(0), 
-    _value(reinterpret_cast<const char*>(value), reinterpret_cast<const char*>(value) + size)
+    _value(reinterpret_cast<const char*>(&value), reinterpret_cast<const char*>(&value) + sizeof(value))
 {
   _handle.oci_define = 0;
   _handle.oci_bind = 0;
+}
+
+sk::oci::db::bind::Data::
+Data(uint32_t position, ub2 type, int size, const sk::util::String& value)
+  : _position(position), _type(type), _indicator(0), 
+    _value(size, 0)
+{
+  _handle.oci_define = 0;
+  _handle.oci_bind = 0;
+
+  std::copy(value.begin(), value.begin() + std::min(size, value.size()), _value.begin());
 }
 
 sk::oci::db::bind::Data::
@@ -42,7 +53,7 @@ sk::oci::db::bind::Data::oci_bind_handle&
 sk::oci::db::bind::Data::
 bindHandle()
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _handle.oci_bind;
 }
 
 sk::oci::db::bind::Data::oci_define_handle& 
@@ -117,19 +128,19 @@ const std::vector<char>&
 sk::oci::db::bind::Data::
 stringValue() const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _value;
 }
 
 bool 
 sk::oci::db::bind::Data::
 isNull() const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _indicator == -1;
 }
 
 bool 
 sk::oci::db::bind::Data::
 isTruncated() const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _indicator == -2 || _indicator > 0;
 }
