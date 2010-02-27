@@ -18,35 +18,13 @@
 static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
-Data(uint32_t position, ub2 type, uint32_t value)
+Data(uint32_t position, ub2 type, int size)
   : _position(position), _type(type), _indicator(0)
 {
-  union {
-    char buffer[sizeof(uint32_t)];
-    uint32_t value;
-  } data;
-
-  data.value = value;
-  _value.assign(data.buffer, data.buffer + sizeof(value));
-
-  _handle.oci_define = 0;
-  _handle.oci_bind = 0;
-}
-
-sk::oci::db::bind::Data::
-Data(uint32_t position, ub2 type, int size, const sk::util::String& value)
-  : _position(position), _type(type), _indicator(0)
-{
-  _handle.oci_define = 0;
-  _handle.oci_bind = 0;
-
-  _value.assign(value.begin(), value.begin() + std::min(size - 1, value.size()));
   _value.resize(size, 0);
-}
 
-sk::oci::db::bind::Data::
-~Data()
-{
+  _handle.oci_define = 0;
+  _handle.oci_bind = 0;
 }
 
 const sk::util::Class

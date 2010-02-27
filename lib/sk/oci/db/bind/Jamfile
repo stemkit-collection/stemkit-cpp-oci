@@ -5,6 +5,8 @@ local library = sk.oci.db.bind ;
 local objects = 
   Registry.cc
   Data.cc
+  IntData.cc
+  StringData.cc
 ;
 
 use-oracle $(objects) $(library). ;

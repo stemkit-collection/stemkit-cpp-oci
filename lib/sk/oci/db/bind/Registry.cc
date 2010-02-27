@@ -17,6 +17,8 @@
 #include "Registry.h"
 #include "Provider.h"
 #include "Data.h"
+#include "IntData.h"
+#include "StringData.h"
 
 #include <oci.h>
 
@@ -46,7 +48,7 @@ bindString(db::bind::Provider& provider, int position, int size, const sk::util:
   if(provider.datasetSize() > 1) {
     throw sk::util::UnsupportedOperationException("array bind");
   }
-  sk::util::Holder<db::bind::Data> holder(new db::bind::Data(position, SQLT_STR, size, value));
+  sk::util::Holder<db::bind::Data> holder(new db::bind::StringData(position, size, value));
   provider.bindDataPosition(holder.getMutable());
 
   int index = _depot.size();
@@ -62,7 +64,7 @@ bindInteger(db::bind::Provider& provider, int position, uint32_t value)
   if(provider.datasetSize() > 1) {
     throw sk::util::UnsupportedOperationException("array bind");
   }
-  sk::util::Holder<db::bind::Data> holder(new db::bind::Data(position, SQLT_INT, value));
+  sk::util::Holder<db::bind::Data> holder(new db::bind::IntData(position, value));
   provider.bindDataPosition(holder.getMutable());
 
   int index = _depot.size();
