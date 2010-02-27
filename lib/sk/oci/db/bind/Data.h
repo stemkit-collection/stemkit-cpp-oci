@@ -45,7 +45,9 @@ namespace sk {
             const sk::util::Class getClass() const;
         
             // sk::oci::Data implementation.
-            uint32_t intValue() const;
+            uint32_t& intValue();
+            const uint32_t& intValue() const;
+            sk::util::Container& stringValue();
             const sk::util::Container& stringValue() const;
             bool isNull() const;
             bool isTruncated() const;

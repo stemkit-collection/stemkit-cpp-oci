@@ -119,7 +119,23 @@ tagSize() const
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-uint32_t 
+uint32_t&
+sk::oci::db::bind::Data::
+intValue()
+{
+  if(_value.size() != sizeof(uint32_t)) {
+    throw sk::util::IllegalStateException(SK_METHOD);
+  }
+  union data_map_t {
+    char buffer[sizeof(uint32_t)];
+    uint32_t value;
+  };
+
+  data_map_t* data = reinterpret_cast<data_map_t*>(&_value.front());
+  return data->value;
+}
+
+const uint32_t&
 sk::oci::db::bind::Data::
 intValue() const
 {
@@ -133,6 +149,13 @@ intValue() const
 
   const data_map_t* data = reinterpret_cast<const data_map_t*>(&_value.front());
   return data->value;
+}
+
+sk::util::Container&
+sk::oci::db::bind::Data::
+stringValue()
+{
+  return _value;
 }
 
 const sk::util::Container&
