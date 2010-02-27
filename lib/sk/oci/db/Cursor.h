@@ -38,6 +38,7 @@ namespace sk {
           const info::Column columnAt(int index);
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
           uint32_t fetch();
+          uint32_t fetchIgnoreTruncate();
           void setCapacity(uint32_t capacity);
 
           // sk::oci::OutputPositionBind implementation.
@@ -50,6 +51,8 @@ namespace sk {
         private:
           Cursor(const Cursor& other);
           Cursor& operator = (const Cursor& other);
+
+          uint32_t updateRowcount();
 
           // sk::oci::db::bind::Provider implementation.
           void bindDataPosition(db::bind::Data& data);

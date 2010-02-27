@@ -11,6 +11,7 @@ local objects =
   ContinueException.cc
   LogonException.cc
   ConnectionStateException.cc
+  TruncatedColumnException.cc
 ;
 
 make-shared-library $(library) : $(objects) ;

@@ -17,6 +17,7 @@
 #include <sk/oci/InvalidHandleException.h>
 #include <sk/oci/StillExecutingException.h>
 #include <sk/oci/ContinueException.h>
+#include <sk/oci/TruncatedColumnException.h>
 
 sk::oci::db::Handle::
 Handle(ub4 type, db::Environment& env, db::handle::Error& error)
@@ -170,6 +171,10 @@ ensureSuccess(int status, const char* origin) const
       std::vector<char> buffer(1024, 0);
       sb4 code = _error.getError(buffer);
 
+      switch(code) {
+        case 1406:
+          throw sk::oci::TruncatedColumnException(origin);
+      }
       throw sk::oci::ErrorException(origin, code, &buffer.front());
     }
 

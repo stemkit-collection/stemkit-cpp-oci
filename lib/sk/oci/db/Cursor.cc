@@ -12,6 +12,7 @@
 #include <sk/util/String.h>
 #include <sk/util/UnsupportedOperationException.h>
 #include <sk/util/IndexOutOfBoundsException.h>
+#include <sk/oci/TruncatedColumnException.h>
 #include <sk/oci/info/Column.h>
 #include "handle/Parameter.h"
 
@@ -185,13 +186,39 @@ uint32_t
 sk::oci::db::Cursor::
 fetch()
 {
-  _statement.fetch(_capacity);
+  try {
+    _statement.fetch(_capacity);
+    return updateRowcount();
+  }
+  catch(const sk::oci::Exception& exception) {
+    updateRowcount();
+    throw;
+  }
+}
+
+uint32_t
+sk::oci::db::Cursor::
+updateRowcount()
+{
   uint32_t db_row_count = _statement.obtainRowCount();
   uint32_t delta = db_row_count - _rowCount;
 
   _rowCount = db_row_count;
 
   return delta;
+}
+
+uint32_t
+sk::oci::db::Cursor::
+fetchIgnoreTruncate()
+{
+  uint32_t preservedRowCount = _rowCount;
+  try {
+    fetch();
+  }
+  catch(const sk::oci::TruncatedColumnException& exception) {}
+
+  return _rowCount - preservedRowCount;
 }
 
 const sk::oci::Data& 

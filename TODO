@@ -1,0 +1,26 @@
+
+[2010-02-26]
+============
+
+- bind::Data must return non-const uint32_t reference so that it can be
+  modified.
+
+- Specific bind data type classes, like bind::Integer and bind::String, will
+  take care of construction and inspect().
+
+- bind::Registry#boundMutableDataAt() must return non-const reference to bind::Data.
+
+- db::oci::Statement must have boundMutableDataAt() to make it possible to modify bound
+  data (say, for the new iterations).
+
+- Bind by tag, retrieve by tag.
+
+- Array capable data binds.
+
+- Support for resulting data lengths.
+
+- Support for column-level return codes.
+
+- Implement mocking
+
+- Make it possible to wrap existing oracle connections.

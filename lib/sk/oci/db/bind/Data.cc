@@ -22,8 +22,8 @@ Data(uint32_t position, ub2 type, uint32_t value)
   : _position(position), _type(type), _indicator(0)
 {
   union {
-    uint32_t value;
     char buffer[sizeof(uint32_t)];
+    uint32_t value;
   } data;
 
   data.value = value;
@@ -123,16 +123,16 @@ uint32_t
 sk::oci::db::bind::Data::
 intValue() const
 {
-  union {
-    uint32_t value;
-    char buffer[sizeof(uint32_t)];
-  } data;
-
-  if(_value.size() != sizeof(data.value)) {
+  if(_value.size() != sizeof(uint32_t)) {
     throw sk::util::IllegalStateException(SK_METHOD);
   }
-  std::copy(_value.begin(), _value.end(), data.buffer);
-  return data.value;
+  union data_map_t {
+    char buffer[sizeof(uint32_t)];
+    uint32_t value;
+  };
+
+  const data_map_t* data = reinterpret_cast<const data_map_t*>(&_value.front());
+  return data->value;
 }
 
 const sk::util::Container&
