@@ -195,7 +195,7 @@ bindDataPosition(db::bind::Data& data)
       data.valueSize(), 
       data.type(), 
       data.indicatorPointer(), 
-      0, 
+      data.sizePointer(), 
       (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
       0, 0, 
       OCI_DEFAULT
@@ -218,7 +218,7 @@ bindDataTag(db::bind::Data& data)
       data.valueSize(), 
       data.type(), 
       data.indicatorPointer(), 
-      0, 
+      data.sizePointer(), 
       (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
       0, 0, 
       OCI_DEFAULT
@@ -240,7 +240,7 @@ defineDataPosition(db::bind::Data& data)
       data.valueSize(), 
       data.type(), 
       data.indicatorPointer(), 
-      0, 
+      data.sizePointer(), 
       (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
       OCI_DEFAULT
     )

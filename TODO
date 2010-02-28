@@ -1,10 +1,34 @@
 
+[2010-02-28]
+============
+
++ Added method info() that returns more detailed information than inspect().
+  Changed apps to use this method for presentations.
+
++ Implemented internal processing for column level return codes and for the
+  resulting data sizes.
+
+- Implement useColumnLevelCodes() for db::Statement and db::Accessor to
+  control processing of columm level return codes.
+
+- Implement methods setIgnoreTruncate() for db::Statement and db::Accessor and
+  get rid of fetchIgnoreTruncate() -- fetch() must check the ignore flag
+  instead.
+
+- Add methods sk::oci::Data#getSize() and sk::oci::Data#getColumnCode().
+
+- Implement control for SUCCESS_WITH_INFO. Ability to query if info is
+  available after fetch(). NOTE: it is always the case when column level
+  return codes are used.
+
 [2010-02-27]
 ============
 
-- Implement inspect() for bind::IntData and bind::StringData.
++ [2010-02-28]
+  Implement inspect() for bind::IntData and bind::StringData.
 
-- Change apps to use inspect() for data presentation.
++ [2010-02-28]
+  Change apps to use inspect() for data presentation.
 
 [2010-02-26]
 ============
@@ -26,9 +50,11 @@
 
 - Array capable data binds.
 
-- Support for resulting data lengths.
++ [2010-02-28]
+  Support for resulting data lengths.
 
-- Support for column-level return codes.
++ [2010-02-28]
+  Support for column-level return codes.
 
 - Implement mocking
 

@@ -39,6 +39,7 @@ namespace sk {
             const text* tagPointer() const;
             sb4 tagSize() const;
             ub2* errorCodePointer();
+            ub2* sizePointer();
         
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;
@@ -65,6 +66,7 @@ namespace sk {
             ub2 _type;
             sb2 _indicator;
             ub2 _errorCode;
+            ub2 _size;
             sk::util::Container _value;
         };
       }
