@@ -86,6 +86,7 @@ namespace sk {
           ub4 _type;
           ub4 _iterations;
           ub4 _offset;
+          bool _useColumnLevelErrors;
       };
     }
   }

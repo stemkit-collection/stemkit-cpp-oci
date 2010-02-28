@@ -65,8 +65,8 @@ namespace {
 
       while(cursor.fetchIgnoreTruncate() != 0) {
         std::cout 
-          << c1.getName() << "=" << d1.inspect() << ", "
-          << c2.getName() << "=" << d2.inspect()
+          << c1.getName() << "=" << d1.info() << ", "
+          << c2.getName() << "=" << d2.info()
           << std::endl
         ;
       }

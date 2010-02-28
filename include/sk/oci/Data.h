@@ -20,6 +20,8 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
+        virtual const sk::util::String info() const = 0;
+
         virtual uint32_t& intValue() = 0;
         virtual const uint32_t& intValue() const = 0;
 

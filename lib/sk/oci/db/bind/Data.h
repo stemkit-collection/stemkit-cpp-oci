@@ -38,11 +38,13 @@ namespace sk {
             dvoid* indicatorPointer();
             const text* tagPointer() const;
             sb4 tagSize() const;
+            ub2* errorCodePointer();
         
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;
         
             // sk::oci::Data implementation.
+            const sk::util::String info() const;
             uint32_t& intValue();
             const uint32_t& intValue() const;
             sk::util::Container& stringValue();
@@ -62,6 +64,7 @@ namespace sk {
             ub4 _position;
             ub2 _type;
             sb2 _indicator;
+            ub2 _errorCode;
             sk::util::Container _value;
         };
       }

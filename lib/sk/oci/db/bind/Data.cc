@@ -12,6 +12,7 @@
 #include <sk/util/String.h>
 #include <sk/util/UnsupportedOperationException.h>
 #include <sk/util/IllegalStateException.h>
+#include <sk/util/StringArray.h>
 
 #include "Data.h"
 
@@ -19,7 +20,7 @@ static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
 Data(uint32_t position, ub2 type, int size)
-  : _position(position), _type(type), _indicator(0)
+  : _position(position), _type(type), _indicator(0), _errorCode(0)
 {
   _value.resize(size, 0);
 
@@ -32,6 +33,26 @@ sk::oci::db::bind::Data::
 getClass() const
 {
   return sk::util::Class(__className);
+}
+
+const sk::util::String
+sk::oci::db::bind::Data::
+info() const
+{
+  sk::util::StringArray depot;
+  depot << inspect();
+
+  if(isTruncated() == true) {
+    depot << "truncated";
+    if(_indicator > 0) {
+      depot << "actual=" + sk::util::String::valueOf(_indicator);
+    }
+  }
+  if(_errorCode != 0) {
+    depot << "error=" + sk::util::String::valueOf(_errorCode);
+  }
+
+  return depot.join(":");
 }
 
 sk::oci::db::bind::Data::oci_bind_handle& 
@@ -81,6 +102,13 @@ sk::oci::db::bind::Data::
 indicatorPointer()
 {
   return &_indicator;
+}
+
+ub2*
+sk::oci::db::bind::Data::
+errorCodePointer()
+{
+  return &_errorCode;
 }
 
 const text* 

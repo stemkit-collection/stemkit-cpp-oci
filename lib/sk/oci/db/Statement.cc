@@ -19,7 +19,8 @@ static const sk::util::String __className("sk::oci::db::Statement");
 
 sk::oci::db::Statement::
 Statement(db::handle::Error& error, const sk::util::String& sql)
-  : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT), _iterations(0), _offset(0)
+  : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT), _iterations(0), _offset(0),
+    _useColumnLevelErrors(false)
 {
   init();
   SK_OCI_ENSURE_SUCCESS(OCIStmtPrepare(getHandle(), error.getHandle(), toOraText(sql), sql.length(), OCI_NTV_SYNTAX, OCI_DEFAULT));
@@ -194,7 +195,9 @@ bindDataPosition(db::bind::Data& data)
       data.valueSize(), 
       data.type(), 
       data.indicatorPointer(), 
-      0, 0, 0, 0, 
+      0, 
+      (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
+      0, 0, 
       OCI_DEFAULT
     )
   );
@@ -215,7 +218,9 @@ bindDataTag(db::bind::Data& data)
       data.valueSize(), 
       data.type(), 
       data.indicatorPointer(), 
-      0, 0, 0, 0, 
+      0, 
+      (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
+      0, 0, 
       OCI_DEFAULT
     )
   );
@@ -235,7 +240,8 @@ defineDataPosition(db::bind::Data& data)
       data.valueSize(), 
       data.type(), 
       data.indicatorPointer(), 
-      0, 0, 
+      0, 
+      (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
       OCI_DEFAULT
     )
   );
@@ -262,7 +268,7 @@ fetch(uint32_t amount)
   );
 
   if(status != OCI_NO_DATA) {
-    SK_OCI_ENSURE_SUCCESS(status);
+    ensureSuccess(status, "fetch");
   }
 }
 
