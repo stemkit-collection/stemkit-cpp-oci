@@ -29,11 +29,12 @@ int main(int argc, const char* const argv[])
 namespace {
   struct ContentPrinter : public sk::oci::abstract::Director {
     void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.useTruncate(true);
+      cursor.useColumnCodes(true);
+      
       const sk::oci::info::Column c1 = cursor.columnAt(0);
       const sk::oci::info::Column c2 = cursor.columnAt(1);
 
-      cursor.useTruncate(true);
-      
       int p1 = cursor.bindIntAt(1);
       int p2 = cursor.bindStringAt(2, c2.getSize());
 
@@ -45,7 +46,7 @@ namespace {
           << c1.getName() << "=" << d1.intValue() << " (" 
             << d1.isNull() << ", " << d1.isTruncated() 
           << "), " 
-          << c2.getName() << "=" << d2.stringValue().toString().inspect() << " ("  
+          << c2.getName() << "=" << sk::util::String(d2.stringValue().getChars(), d2.getSize()).inspect() << " ("  
             << d2.isNull() << ", " << d2.isTruncated() 
           << ")"
           << std::endl

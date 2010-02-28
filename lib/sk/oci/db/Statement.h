@@ -57,7 +57,7 @@ namespace sk {
 
           // sk::oci::Statement implementation.
           void useTruncate(bool state);
-          void useColumnLevelCodes(bool state);
+          void useColumnCodes(bool state);
 
           // sk::oci::InputPositionBinder implementation.
           int bindStringAt(int position, int size, const sk::util::String& value);
@@ -94,7 +94,7 @@ namespace sk {
           ub4 _iterations;
           ub4 _offset;
 
-          bool _useColumnLevelCodes;
+          bool _useColumnCodes;
           bool _useTruncate;
       };
     }

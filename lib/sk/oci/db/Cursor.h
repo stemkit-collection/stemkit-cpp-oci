@@ -40,7 +40,7 @@ namespace sk {
           uint32_t fetch();
           void setCapacity(uint32_t capacity);
           void useTruncate(bool state);
-          void useColumnLevelCodes(bool state);
+          void useColumnCodes(bool state);
 
           // sk::oci::OutputPositionBind implementation.
           int bindIntAt(int position);

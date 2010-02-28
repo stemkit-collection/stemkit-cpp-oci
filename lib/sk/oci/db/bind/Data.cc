@@ -20,7 +20,7 @@ static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
 Data(uint32_t position, ub2 type, int size)
-  : _position(position), _type(type), _indicator(OCI_IND_NULL), _errorCode(0), _size(size)
+  : _position(position), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size)
 {
   _value.resize(size, 0);
 
@@ -50,8 +50,8 @@ info() const
       depot << "truncated";
     }
   }
-  if(_errorCode != 0) {
-    depot << "code(" + sk::util::String::valueOf(_errorCode) + ")";
+  if(_columnCode != 0) {
+    depot << "code(" + sk::util::String::valueOf(_columnCode) + ")";
   }
   return depot.join(":");
 }
@@ -105,11 +105,25 @@ indicatorPointer()
   return &_indicator;
 }
 
+uint32_t
+sk::oci::db::bind::Data::
+getColumnCode() const
+{
+  return _columnCode;
+}
+
 ub2*
 sk::oci::db::bind::Data::
-errorCodePointer()
+columnCodePointer()
 {
-  return &_errorCode;
+  return &_columnCode;
+}
+
+uint32_t
+sk::oci::db::bind::Data::
+getSize() const
+{
+  return _size;
 }
 
 ub2*

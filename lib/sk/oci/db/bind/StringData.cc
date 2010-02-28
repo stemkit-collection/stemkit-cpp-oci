@@ -38,12 +38,12 @@ const sk::util::String
 sk::oci::db::bind::StringData::
 toString() const
 {
-  return isNull() ? "" : stringValue().toString();
+  return isNull() ? "" : sk::util::String(stringValue().getChars(), getSize());
 }
 
 const sk::util::String
 sk::oci::db::bind::StringData::
 inspect() const
 {
-  return isNull() ? "NULL" : stringValue().toString().inspect();
+  return isNull() ? "NULL" : sk::util::String(stringValue().getChars(), getSize()).inspect(); 
 }

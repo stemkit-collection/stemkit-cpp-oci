@@ -47,9 +47,9 @@ useTruncate(bool state)
 
 void 
 sk::oci::db::Cursor::
-useColumnLevelCodes(bool state)
+useColumnCodes(bool state)
 {
-  _statement.useColumnLevelCodes(state);
+  _statement.useColumnCodes(state);
 }
 
 uint32_t 

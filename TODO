@@ -8,7 +8,7 @@
 + Implemented internal processing for column level return codes and for the
   resulting data sizes.
 
-+ Implemented useColumnLevelCodes() for db::Statement and db::Cursor to
++ Implemented useColumnCodes() for db::Statement and db::Cursor to
   control processing of columm level return codes.
 
 + Implemented methods useTruncate() for db::Statement and db::Cursor.
@@ -16,7 +16,7 @@
 + Got rid of fetchIgnoreTruncate() -- db::Statement#fetch() now map 1406 to 0
   when useTruncate flag is set.
 
-- Add methods sk::oci::Data#getSize() and sk::oci::Data#getColumnCode().
++ Added methods sk::oci::Data#getSize() and sk::oci::Data#getColumnCode().
 
 - Implement control for SUCCESS_WITH_INFO. Ability to query if info is
   available after fetch(). NOTE: it is always the case when column level

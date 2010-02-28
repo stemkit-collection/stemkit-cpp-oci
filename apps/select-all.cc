@@ -57,7 +57,7 @@ int main(int argc, const char* const argv[])
 namespace {
   struct ContentPrinter : public sk::oci::abstract::Director {
     void processCursor(sk::oci::Cursor& cursor) const {
-      cursor.useColumnLevelCodes(true);
+      cursor.useColumnCodes(true);
       cursor.useTruncate(true);
 
       const sk::oci::info::Column c1 = cursor.columnAt(0);

@@ -38,7 +38,7 @@ namespace sk {
             dvoid* indicatorPointer();
             const text* tagPointer() const;
             sb4 tagSize() const;
-            ub2* errorCodePointer();
+            ub2* columnCodePointer();
             ub2* sizePointer();
         
             // sk::util::Object re-implementation.
@@ -52,6 +52,8 @@ namespace sk {
             const sk::util::Container& stringValue() const;
             bool isNull() const;
             bool isTruncated() const;
+            uint32_t getSize() const;
+            uint32_t getColumnCode() const;
 
           private:
             Data(const Data& other);
@@ -65,7 +67,7 @@ namespace sk {
             ub4 _position;
             ub2 _type;
             sb2 _indicator;
-            ub2 _errorCode;
+            ub2 _columnCode;
             ub2 _size;
             sk::util::Container _value;
         };

@@ -33,7 +33,7 @@ namespace sk {
 
         virtual void setCapacity(uint32_t capacity) = 0;
         virtual void useTruncate(bool state) = 0;
-        virtual void useColumnLevelCodes(bool state) = 0;
+        virtual void useColumnCodes(bool state) = 0;
     };
   }
 }
