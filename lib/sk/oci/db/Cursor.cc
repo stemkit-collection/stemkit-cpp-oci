@@ -38,6 +38,20 @@ getClass() const
   return sk::util::Class(__className);
 }
 
+void 
+sk::oci::db::Cursor::
+useTruncate(bool state)
+{
+  _statement.useTruncate(state);
+}
+
+void 
+sk::oci::db::Cursor::
+useColumnLevelCodes(bool state)
+{
+  _statement.useColumnLevelCodes(state);
+}
+
 uint32_t 
 sk::oci::db::Cursor::
 rowCount()

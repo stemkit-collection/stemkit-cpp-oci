@@ -20,7 +20,7 @@ static const sk::util::String __className("sk::oci::db::Statement");
 sk::oci::db::Statement::
 Statement(db::handle::Error& error, const sk::util::String& sql)
   : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT), _iterations(0), _offset(0),
-    _useColumnLevelErrors(false)
+    _useColumnLevelCodes(false), _useTruncate(false)
 {
   init();
   SK_OCI_ENSURE_SUCCESS(OCIStmtPrepare(getHandle(), error.getHandle(), toOraText(sql), sql.length(), OCI_NTV_SYNTAX, OCI_DEFAULT));
@@ -53,6 +53,20 @@ execute(db::handle::Service& service)
 {
   SK_OCI_ENSURE_SUCCESS(OCIStmtExecute(service.getHandle(), getHandle(), error().getHandle(), _iterations, _offset, 0, 0, _mode));
   _offset += _iterations;
+}
+
+void
+sk::oci::db::Statement::
+useTruncate(bool state) 
+{
+  _useTruncate = state;
+}
+
+void
+sk::oci::db::Statement::
+useColumnLevelCodes(bool state) 
+{
+  _useColumnLevelCodes = state;
 }
 
 bool 
@@ -196,7 +210,7 @@ bindDataPosition(db::bind::Data& data)
       data.type(), 
       data.indicatorPointer(), 
       data.sizePointer(), 
-      (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
+      (_useColumnLevelCodes ? data.errorCodePointer() : 0), 
       0, 0, 
       OCI_DEFAULT
     )
@@ -219,7 +233,7 @@ bindDataTag(db::bind::Data& data)
       data.type(), 
       data.indicatorPointer(), 
       data.sizePointer(), 
-      (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
+      (_useColumnLevelCodes ? data.errorCodePointer() : 0), 
       0, 0, 
       OCI_DEFAULT
     )
@@ -241,7 +255,7 @@ defineDataPosition(db::bind::Data& data)
       data.type(), 
       data.indicatorPointer(), 
       data.sizePointer(), 
-      (_useColumnLevelErrors ? data.errorCodePointer() : 0), 
+      (_useColumnLevelCodes ? data.errorCodePointer() : 0), 
       OCI_DEFAULT
     )
   );

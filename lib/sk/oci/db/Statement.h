@@ -55,6 +55,10 @@ namespace sk {
           void setIterations(uint32_t number);
           void setRowOffset(uint32_t offset);
 
+          // sk::oci::Statement implementation.
+          void useTruncate(bool state);
+          void useColumnLevelCodes(bool state);
+
           // sk::oci::InputPositionBinder implementation.
           int bindStringAt(int position, int size, const sk::util::String& value);
           int bindIntAt(int position, uint32_t value);
@@ -86,7 +90,9 @@ namespace sk {
           ub4 _type;
           ub4 _iterations;
           ub4 _offset;
-          bool _useColumnLevelErrors;
+
+          bool _useColumnLevelCodes;
+          bool _useTruncate;
       };
     }
   }

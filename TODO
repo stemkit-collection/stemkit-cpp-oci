@@ -8,11 +8,12 @@
 + Implemented internal processing for column level return codes and for the
   resulting data sizes.
 
-- Implement useColumnLevelCodes() for db::Statement and db::Accessor to
++ Implemented useColumnLevelCodes() for db::Statement and db::Cursor to
   control processing of columm level return codes.
 
-- Implement methods setIgnoreTruncate() for db::Statement and db::Accessor and
-  get rid of fetchIgnoreTruncate() -- fetch() must check the ignore flag
++ Implemented methods useTruncate() for db::Statement and db::Cursor.
+
+- Get rid of fetchIgnoreTruncate() -- fetch() must check the ignore flag
   instead.
 
 - Add methods sk::oci::Data#getSize() and sk::oci::Data#getColumnCode().
