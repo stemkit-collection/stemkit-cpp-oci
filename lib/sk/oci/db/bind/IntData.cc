@@ -31,7 +31,14 @@ getClass() const
 
 const sk::util::String
 sk::oci::db::bind::IntData::
+toString() const
+{
+  return isNull() ? "0" : sk::util::String::valueOf(intValue());
+}
+
+const sk::util::String
+sk::oci::db::bind::IntData::
 inspect() const
 {
-  return bind::Data::inspect();
+  return isNull() ? "NULL" : sk::util::String::valueOf(intValue());
 }

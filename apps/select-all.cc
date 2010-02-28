@@ -64,13 +64,9 @@ namespace {
       const sk::oci::Data& d2 = cursor.boundDataAt(cursor.bindStringAt(2, c2.getSize()));
 
       while(cursor.fetchIgnoreTruncate() != 0) {
-        std::cout << std::boolalpha
-          << c1.getName() << "=" << d1.intValue() << " (" 
-            << d1.isNull() << ", " << d1.isTruncated() 
-          << "), " 
-          << c2.getName() << "=" << d2.stringValue().toString().inspect() << " ("  
-            << d2.isNull() << ", " << d2.isTruncated() 
-          << ")"
+        std::cout 
+          << c1.getName() << "=" << d1.inspect() << ", "
+          << c2.getName() << "=" << d2.inspect()
           << std::endl
         ;
       }
