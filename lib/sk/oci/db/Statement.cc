@@ -286,6 +286,16 @@ fetch(uint32_t amount)
   }
 }
 
+sb4
+sk::oci::db::Statement::
+mapOracleError(sb4 code) const 
+{
+  if(code == 1406 && _useTruncate == true) {
+    return 0;
+  }
+  return code;
+}
+
 uint32_t 
 sk::oci::db::Statement::
 obtainRowCount()

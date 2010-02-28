@@ -38,7 +38,6 @@ namespace sk {
           const info::Column columnAt(int index);
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
           uint32_t fetch();
-          uint32_t fetchIgnoreTruncate();
           void setCapacity(uint32_t capacity);
           void useTruncate(bool state);
           void useColumnLevelCodes(bool state);

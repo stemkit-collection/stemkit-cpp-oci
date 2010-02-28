@@ -31,6 +31,8 @@ namespace {
     void processCursor(sk::oci::Cursor& cursor) const {
       const sk::oci::info::Column c1 = cursor.columnAt(0);
       const sk::oci::info::Column c2 = cursor.columnAt(1);
+
+      cursor.useTruncate(true);
       
       int p1 = cursor.bindIntAt(1);
       int p2 = cursor.bindStringAt(2, c2.getSize());
@@ -38,7 +40,7 @@ namespace {
       const sk::oci::Data& d1 = cursor.boundDataAt(p1);
       const sk::oci::Data& d2 = cursor.boundDataAt(p2);
 
-      while(cursor.fetchIgnoreTruncate() != 0) {
+      while(cursor.fetch() != 0) {
         std::cout << std::boolalpha
           << c1.getName() << "=" << d1.intValue() << " (" 
             << d1.isNull() << ", " << d1.isTruncated() 

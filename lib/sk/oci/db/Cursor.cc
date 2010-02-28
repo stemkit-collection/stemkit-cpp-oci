@@ -222,19 +222,6 @@ updateRowcount()
   return delta;
 }
 
-uint32_t
-sk::oci::db::Cursor::
-fetchIgnoreTruncate()
-{
-  uint32_t preservedRowCount = _rowCount;
-  try {
-    fetch();
-  }
-  catch(const sk::oci::TruncatedColumnException& exception) {}
-
-  return _rowCount - preservedRowCount;
-}
-
 const sk::oci::Data& 
 sk::oci::db::Cursor::
 boundDataAt(int index) const

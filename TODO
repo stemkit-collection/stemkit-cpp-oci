@@ -13,8 +13,8 @@
 
 + Implemented methods useTruncate() for db::Statement and db::Cursor.
 
-- Get rid of fetchIgnoreTruncate() -- fetch() must check the ignore flag
-  instead.
++ Got rid of fetchIgnoreTruncate() -- db::Statement#fetch() now map 1406 to 0
+  when useTruncate flag is set.
 
 - Add methods sk::oci::Data#getSize() and sk::oci::Data#getColumnCode().
 

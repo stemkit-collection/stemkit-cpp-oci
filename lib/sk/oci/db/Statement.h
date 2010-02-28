@@ -80,6 +80,9 @@ namespace sk {
           Statement(const Statement& other);
           Statement& operator = (const Statement& other);
 
+          // sk::db::Handle re-implementation.
+          sb4 mapOracleError(sb4 code) const;
+
           // sk::oci::db::bind::Provider implementation.
           void bindDataPosition(db::bind::Data& data);
           void bindDataTag(db::bind::Data& data);

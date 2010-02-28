@@ -149,6 +149,13 @@ toOraText(std::vector<char>& buffer) const
   return reinterpret_cast<OraText*>(&buffer.front());
 }
 
+sb4
+sk::oci::db::Handle::
+mapOracleError(sb4 code) const
+{
+  return code;
+}
+
 void
 sk::oci::db::Handle::
 ensureSuccess(int status, const char* origin) const 
@@ -169,13 +176,19 @@ ensureSuccess(int status, const char* origin) const
 
     case OCI_ERROR: {
       std::vector<char> buffer(1024, 0);
-      sb4 code = _error.getError(buffer);
+      sb4 code = mapOracleError(_error.getError(buffer));
 
       switch(code) {
+        case 0:
+          break;
+
         case 1406:
           throw sk::oci::TruncatedColumnException(origin);
+
+        default:
+          throw sk::oci::ErrorException(origin, code, &buffer.front());
       }
-      throw sk::oci::ErrorException(origin, code, &buffer.front());
+      break;
     }
 
     case OCI_INVALID_HANDLE: 

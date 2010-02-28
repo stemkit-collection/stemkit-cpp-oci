@@ -30,7 +30,6 @@ namespace sk {
         virtual void forEachColumn(const sk::util::Processor<const info::Column>& processor) = 0;
 
         virtual uint32_t fetch() = 0;
-        virtual uint32_t fetchIgnoreTruncate() = 0;
 
         virtual void setCapacity(uint32_t capacity) = 0;
         virtual void useTruncate(bool state) = 0;

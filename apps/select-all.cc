@@ -57,15 +57,16 @@ int main(int argc, const char* const argv[])
 namespace {
   struct ContentPrinter : public sk::oci::abstract::Director {
     void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.useColumnLevelCodes(true);
+      cursor.useTruncate(true);
+
       const sk::oci::info::Column c1 = cursor.columnAt(0);
       const sk::oci::info::Column c2 = cursor.columnAt(1);
-      
-      cursor.useColumnLevelCodes(true);
 
       const sk::oci::Data& d1 = cursor.boundDataAt(cursor.bindIntAt(1));
       const sk::oci::Data& d2 = cursor.boundDataAt(cursor.bindStringAt(2, c2.getSize()));
 
-      while(cursor.fetchIgnoreTruncate() != 0) {
+      while(cursor.fetch() != 0) {
         std::cout 
           << c1.getName() << "=" << d1.info() << ", "
           << c2.getName() << "=" << d2.info()

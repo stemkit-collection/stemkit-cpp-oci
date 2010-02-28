@@ -49,6 +49,9 @@ namespace sk {
 
           void ensureSuccess(int status, const char* origin) const;
 
+        protected:
+          virtual sb4 mapOracleError(sb4 code) const;
+
         private:
           Handle(const Handle& other);
           Handle& operator = (const Handle& other);
