@@ -20,7 +20,7 @@ static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
 Data(uint32_t position, ub2 type, int size)
-  : _position(position), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size)
+  : _position(position), _type(type), _indicator(0), _columnCode(0), _size(size)
 {
   _value.resize(size, 0);
 
