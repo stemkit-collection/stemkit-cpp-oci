@@ -45,26 +45,21 @@ int
 sk::oci::db::bind::Registry::
 bindString(db::bind::Provider& provider, int position, int size, const sk::util::String& value)
 {
-  if(provider.datasetSize() > 1) {
-    throw sk::util::UnsupportedOperationException("array bind");
-  }
-  sk::util::Holder<db::bind::Data> holder(new db::bind::StringData(position, size, value));
-  provider.bindDataPosition(holder.getMutable());
-
-  int index = _depot.size();
-  _depot.add(holder.release());
-
-  return index;
+  return bindData(provider, position, new db::bind::StringData(provider.datasetSize(), position, size, value));
 }
 
 int 
 sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, int position, uint32_t value)
 {
-  if(provider.datasetSize() > 1) {
-    throw sk::util::UnsupportedOperationException("array bind");
-  }
-  sk::util::Holder<db::bind::Data> holder(new db::bind::IntData(position, value));
+  return bindData(provider, position, new db::bind::IntData(provider.datasetSize(), position, value));
+}
+
+int
+sk::oci::db::bind::Registry::
+bindData(db::bind::Provider& provider, int position, db::bind::Data* data)
+{
+  sk::util::Holder<db::bind::Data> holder(data);
   provider.bindDataPosition(holder.getMutable());
 
   int index = _depot.size();

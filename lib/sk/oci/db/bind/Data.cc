@@ -19,9 +19,12 @@
 static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
-Data(uint32_t position, ub2 type, int size)
-  : _position(position), _type(type), _indicator(0), _columnCode(0), _size(size)
+Data(int capacity, uint32_t position, ub2 type, int size)
+  : _position(position), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size)
 {
+  if(capacity > 1) {
+    throw sk::util::UnsupportedOperationException("array bind");
+  }
   _value.resize(size, 0);
 
   _handle.oci_define = 0;
@@ -98,7 +101,7 @@ type() const
   return _type;
 }
 
-dvoid* 
+sb2* 
 sk::oci::db::bind::Data::
 indicatorPointer()
 {

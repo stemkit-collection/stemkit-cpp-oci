@@ -42,6 +42,8 @@ namespace sk {
             Registry(const Registry& other);
             Registry& operator = (const Registry& other);
 
+            int bindData(db::bind::Provider& provider, int position, db::bind::Data* data);
+
             sk::util::ArrayList<db::bind::Data> _depot;
         };
       }

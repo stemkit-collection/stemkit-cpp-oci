@@ -21,7 +21,7 @@ namespace sk {
           : public bind::Data
         {
           public:
-            IntData(uint32_t position, uint32_t value);
+            IntData(int capacity, uint32_t position, uint32_t value);
         
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;

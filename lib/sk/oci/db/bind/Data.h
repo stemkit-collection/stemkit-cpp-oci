@@ -25,7 +25,7 @@ namespace sk {
           typedef OCIDefine* oci_define_handle;
 
           public:
-            Data(uint32_t position, ub2 type, int size);
+            Data(int capacity, uint32_t position, ub2 type, int size);
 
             oci_bind_handle& bindHandle();
             oci_define_handle& defineHandle();
@@ -35,7 +35,7 @@ namespace sk {
             dvoid* valuePointer();
             sb4 valueSize() const;
             ub2 type() const;
-            dvoid* indicatorPointer();
+            sb2* indicatorPointer();
             const text* tagPointer() const;
             sb4 tagSize() const;
             ub2* columnCodePointer();
