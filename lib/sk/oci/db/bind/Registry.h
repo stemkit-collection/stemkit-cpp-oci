@@ -28,9 +28,9 @@ namespace sk {
             Registry();
             virtual ~Registry();
 
-            int bindString(db::bind::Provider& provider, int position, int sze, const sk::util::String& value);
+            int bindString(db::bind::Provider& provider, int position, int size, const sk::util::String& value);
             int bindInteger(db::bind::Provider& provider, int position, uint32_t value);
-            int bindString(db::bind::Provider& provider, const sk::util::String& tag, int sze, const sk::util::String& value);
+            int bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::String& value);
             int bindInteger(db::bind::Provider& provider, const sk::util::String& tag, uint32_t value);
 
             const sk::oci::Data& boundDataAt(int index) const;
