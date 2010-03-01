@@ -22,6 +22,7 @@ namespace sk {
         {
           public:
             StringData(int capacity, uint32_t position, int size, const sk::util::String& value);
+            StringData(int capacity, uint32_t position, int size);
             virtual ~StringData();
         
             // sk::util::Object re-implementation.

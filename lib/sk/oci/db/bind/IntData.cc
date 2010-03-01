@@ -17,10 +17,16 @@ static const sk::util::String __className("sk::oci::db::bind::IntData");
 
 sk::oci::db::bind::IntData::
 IntData(int capacity, uint32_t position, uint32_t value)
-  : bind::Data(capacity, position, SQLT_INT, sizeof(value))
+  : bind::Data(capacity, position, SQLT_INT, sizeof(uint32_t))
 {
   intValue() = value;
   *indicatorPointer() = 0;
+}
+
+sk::oci::db::bind::IntData::
+IntData(int capacity, uint32_t position)
+  : bind::Data(capacity, position, SQLT_INT, sizeof(uint32_t))
+{
 }
 
 const sk::util::Class

@@ -24,6 +24,12 @@ StringData(int capacity, uint32_t position, int size, const sk::util::String& va
 }
 
 sk::oci::db::bind::StringData::
+StringData(int capacity, uint32_t position, int size)
+  : bind::Data(capacity, position, SQLT_STR, size)
+{
+}
+
+sk::oci::db::bind::StringData::
 ~StringData()
 {
 }

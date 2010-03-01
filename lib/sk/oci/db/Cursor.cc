@@ -240,14 +240,14 @@ int
 sk::oci::db::Cursor::
 bindIntAt(int position)
 {
-  return _statement.bindRegistry().bindInteger(*this, position, 0);
+  return _statement.bindRegistry().bindInteger(*this, position);
 }
 
 int 
 sk::oci::db::Cursor::
 bindStringAt(int position, int size)
 {
-  return _statement.bindRegistry().bindString(*this, position, size, "");
+  return _statement.bindRegistry().bindString(*this, position, size);
 }
 
 void 

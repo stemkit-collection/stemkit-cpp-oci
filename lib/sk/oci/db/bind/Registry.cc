@@ -50,9 +50,23 @@ bindString(db::bind::Provider& provider, int position, int size, const sk::util:
 
 int 
 sk::oci::db::bind::Registry::
+bindString(db::bind::Provider& provider, int position, int size)
+{
+  return bindData(provider, position, new db::bind::StringData(provider.datasetSize(), position, size));
+}
+
+int 
+sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, int position, uint32_t value)
 {
   return bindData(provider, position, new db::bind::IntData(provider.datasetSize(), position, value));
+}
+
+int 
+sk::oci::db::bind::Registry::
+bindInteger(db::bind::Provider& provider, int position)
+{
+  return bindData(provider, position, new db::bind::IntData(provider.datasetSize(), position));
 }
 
 int
@@ -77,7 +91,21 @@ bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, 
 
 int 
 sk::oci::db::bind::Registry::
+bindString(db::bind::Provider& provider, const sk::util::String& tag, int size)
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}
+
+int 
+sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, const sk::util::String& tag, uint32_t value)
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}
+
+int 
+sk::oci::db::bind::Registry::
+bindInteger(db::bind::Provider& provider, const sk::util::String& tag)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }

@@ -22,6 +22,7 @@ namespace sk {
         {
           public:
             IntData(int capacity, uint32_t position, uint32_t value);
+            IntData(int capacity, uint32_t position);
         
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;
