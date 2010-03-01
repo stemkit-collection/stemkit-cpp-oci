@@ -20,7 +20,7 @@ static const sk::util::String __className("sk::oci::db::Statement");
 sk::oci::db::Statement::
 Statement(db::handle::Error& error, const sk::util::String& sql)
   : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT), _iterations(0), _offset(0),
-    _useColumnCodes(false), _useTruncate(false)
+    _useColumnCodes(false), _useTruncate(false), _info(false)
 {
   init();
   SK_OCI_ENSURE_SUCCESS(OCIStmtPrepare(getHandle(), error.getHandle(), toOraText(sql), sql.length(), OCI_NTV_SYNTAX, OCI_DEFAULT));
@@ -281,9 +281,25 @@ fetch(uint32_t amount)
     OCI_DEFAULT
   );
 
-  if(status != OCI_NO_DATA) {
-    ensureSuccess(status, "fetch");
+  _info = false;
+  switch(status) {
+    case OCI_NO_DATA:
+      break;
+
+    case OCI_SUCCESS_WITH_INFO:
+      _info = true;
+      break;
+
+    default:
+      ensureSuccess(status, "fetch");
   }
+}
+
+bool
+sk::oci::db::Statement::
+hasInfo() const
+{
+  return _info;
 }
 
 sb4

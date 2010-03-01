@@ -38,9 +38,6 @@ namespace sk {
         virtual void setDescribeOnly(bool state) = 0;
         virtual void setIterations(uint32_t number) = 0;
         virtual void setRowOffset(uint32_t number) = 0;
-
-        virtual void useTruncate(bool state) = 0;
-        virtual void useColumnCodes(bool state) = 0;
     };
   }
 }

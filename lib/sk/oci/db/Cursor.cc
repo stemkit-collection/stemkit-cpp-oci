@@ -196,6 +196,13 @@ datasetSize() const
   return _capacity;
 }
 
+bool
+sk::oci::db::Cursor::
+hasInfo() const
+{
+  return _statement.hasInfo();
+}
+
 uint32_t
 sk::oci::db::Cursor::
 fetch()

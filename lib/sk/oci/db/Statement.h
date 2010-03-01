@@ -35,9 +35,12 @@ namespace sk {
 
           void execute(db::handle::Service& service);
           void fetch(uint32_t amount);
+          bool hasInfo() const;
           uint32_t obtainRowCount();
           db::bind::Registry& bindRegistry();
           void defineDataPosition(db::bind::Data& data);
+          void useTruncate(bool state);
+          void useColumnCodes(bool state);
 
           // sk::oci::Statement implementation.
           bool isSelect() const;
@@ -54,10 +57,6 @@ namespace sk {
           void setDescribeOnly(bool state);
           void setIterations(uint32_t number);
           void setRowOffset(uint32_t offset);
-
-          // sk::oci::Statement implementation.
-          void useTruncate(bool state);
-          void useColumnCodes(bool state);
 
           // sk::oci::InputPositionBinder implementation.
           int bindStringAt(int position, int size, const sk::util::String& value);
@@ -96,6 +95,7 @@ namespace sk {
 
           bool _useColumnCodes;
           bool _useTruncate;
+          bool _info;
       };
     }
   }

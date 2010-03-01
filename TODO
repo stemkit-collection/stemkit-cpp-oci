@@ -18,9 +18,9 @@
 
 + Added methods sk::oci::Data#getSize() and sk::oci::Data#getColumnCode().
 
-- Implement control for SUCCESS_WITH_INFO. Ability to query if info is
-  available after fetch(). NOTE: it is always the case when column level
-  return codes are used.
++ Implemented control for SUCCESS_WITH_INFO after fetch(). Added method 
+  sk::oci::Cursor#hasInfo() to query whether info was available. 
+  NOTE: it is always the case when column level return codes are used.
 
 [2010-02-27]
 ============
