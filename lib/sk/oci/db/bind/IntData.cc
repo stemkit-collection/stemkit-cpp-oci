@@ -20,13 +20,14 @@ IntData(int capacity, uint32_t position, uint32_t value)
   : bind::Data(capacity, position, SQLT_INT, sizeof(uint32_t))
 {
   intValue() = value;
-  *indicatorPointer() = 0;
+  null(false);
 }
 
 sk::oci::db::bind::IntData::
 IntData(int capacity, uint32_t position)
   : bind::Data(capacity, position, SQLT_INT, sizeof(uint32_t))
 {
+  null(true);
 }
 
 const sk::util::Class

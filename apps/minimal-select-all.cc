@@ -46,7 +46,7 @@ namespace {
           << c1.getName() << "=" << d1.intValue() << " (" 
             << d1.isNull() << ", " << d1.isTruncated() 
           << "), " 
-          << c2.getName() << "=" << sk::util::String(d2.stringValue().getChars(), d2.getSize()).inspect() << " ("  
+          << c2.getName() << "=" << sk::util::String(d2.stringValue().getChars(), d2.size()).inspect() << " ("  
             << d2.isNull() << ", " << d2.isTruncated() 
           << ")"
           << std::endl

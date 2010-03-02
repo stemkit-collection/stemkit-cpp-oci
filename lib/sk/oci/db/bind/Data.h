@@ -52,8 +52,9 @@ namespace sk {
             const sk::util::Container& stringValue() const;
             bool isNull() const;
             bool isTruncated() const;
-            uint32_t getSize() const;
-            uint32_t getColumnCode() const;
+            uint32_t size() const;
+            uint32_t columnCode() const;
+            void null(bool state);
 
           private:
             Data(const Data& other);

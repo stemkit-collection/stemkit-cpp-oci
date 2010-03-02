@@ -30,8 +30,9 @@ namespace sk {
 
         virtual bool isNull() const = 0;
         virtual bool isTruncated() const = 0;
-        virtual uint32_t getSize() const = 0;
-        virtual uint32_t getColumnCode() const = 0;
+        virtual uint32_t size() const = 0;
+        virtual uint32_t columnCode() const = 0;
+        virtual void null(bool state) = 0;
     };
   }
 }

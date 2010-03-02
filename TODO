@@ -1,4 +1,10 @@
 
+[2010-03-01]
+============
+
+- Added ability to specify NULL value for the data to be bound. For that,
+  sk::oci::Data#null(bool) is now available.
+
 [2010-02-28]
 ============
 

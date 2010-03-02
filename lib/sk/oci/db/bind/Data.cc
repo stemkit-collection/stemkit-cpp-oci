@@ -110,7 +110,7 @@ indicatorPointer()
 
 uint32_t
 sk::oci::db::bind::Data::
-getColumnCode() const
+columnCode() const
 {
   return _columnCode;
 }
@@ -124,7 +124,7 @@ columnCodePointer()
 
 uint32_t
 sk::oci::db::bind::Data::
-getSize() const
+size() const
 {
   return _size;
 }
@@ -200,7 +200,14 @@ bool
 sk::oci::db::bind::Data::
 isNull() const
 {
-  return _indicator == -1;
+  return _indicator == OCI_IND_NULL;
+}
+
+void 
+sk::oci::db::bind::Data::
+null(bool state)
+{
+  _indicator = (state == true ? OCI_IND_NULL : 0);
 }
 
 bool 

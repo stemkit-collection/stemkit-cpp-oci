@@ -20,13 +20,14 @@ StringData(int capacity, uint32_t position, int size, const sk::util::String& va
   : bind::Data(capacity, position, SQLT_STR, size)
 {
   std::copy(value.begin(), value.begin() + std::min(size - 1, value.size()), stringValue().begin());
-  *indicatorPointer() = 0;
+  null(false);
 }
 
 sk::oci::db::bind::StringData::
 StringData(int capacity, uint32_t position, int size)
   : bind::Data(capacity, position, SQLT_STR, size)
 {
+  null(true);
 }
 
 sk::oci::db::bind::StringData::
@@ -45,12 +46,12 @@ const sk::util::String
 sk::oci::db::bind::StringData::
 toString() const
 {
-  return isNull() ? "" : sk::util::String(stringValue().getChars(), getSize());
+  return isNull() ? "" : sk::util::String(stringValue().getChars(), size());
 }
 
 const sk::util::String
 sk::oci::db::bind::StringData::
 inspect() const
 {
-  return isNull() ? "NULL" : sk::util::String(stringValue().getChars(), getSize()).inspect(); 
+  return isNull() ? "NULL" : sk::util::String(stringValue().getChars(), size()).inspect(); 
 }
