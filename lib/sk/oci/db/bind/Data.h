@@ -26,6 +26,7 @@ namespace sk {
 
           public:
             Data(int capacity, uint32_t position, ub2 type, int size);
+            Data(int capacity, const sk::util::String& tag, ub2 type, int size);
 
             oci_bind_handle& bindHandle();
             oci_define_handle& defineHandle();
@@ -71,6 +72,7 @@ namespace sk {
             ub2 _columnCode;
             ub2 _size;
             sk::util::Container _value;
+            sk::util::Container _tag;
         };
       }
     }

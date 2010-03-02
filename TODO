@@ -1,8 +1,16 @@
 
+[2010-03-02]
+============
+
+- Rename StringData to CharsData.
+
+- Consider splitting bind::Data into 2 parts -- one that deals with position,
+  another for tag.
+
 [2010-03-01]
 ============
 
-- Added ability to specify NULL value for the data to be bound. For that,
++ Added ability to specify NULL value for the data to be bound. For that,
   sk::oci::Data#null(bool) is now available.
 
 [2010-02-28]
@@ -53,7 +61,10 @@
 - db::oci::Statement must have boundMutableDataAt() to make it possible to modify bound
   data (say, for the new iterations).
 
-- Bind by tag, retrieve by tag.
+[2010-03-02]
++ Bind by tag.
+
+- retrieve by tag.
 
 - Array capable data binds.
 

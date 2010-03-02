@@ -31,6 +31,19 @@ Data(int capacity, uint32_t position, ub2 type, int size)
   _handle.oci_bind = 0;
 }
 
+sk::oci::db::bind::Data::
+Data(int capacity, const sk::util::String& tag, ub2 type, int size)
+  : _tag(tag), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size)
+{
+  if(capacity > 1) {
+    throw sk::util::UnsupportedOperationException("array bind");
+  }
+  _value.resize(size, 0);
+
+  _handle.oci_define = 0;
+  _handle.oci_bind = 0;
+}
+
 const sk::util::Class
 sk::oci::db::bind::Data::
 getClass() const
@@ -140,14 +153,17 @@ const text*
 sk::oci::db::bind::Data::
 tagPointer() const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  if(_tag.size() == 0) {
+    throw sk::util::IllegalStateException("Bind tag not set");
+  }
+  return reinterpret_cast<const text*>(&_tag.front());
 }
 
 sb4 
 sk::oci::db::bind::Data::
 tagSize() const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  return _tag.size();
 }
 
 uint32_t&

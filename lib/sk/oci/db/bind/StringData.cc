@@ -16,6 +16,21 @@
 static const sk::util::String __className("sk::oci::db::bind::StringData");
 
 sk::oci::db::bind::StringData::
+StringData(int capacity, const sk::util::String& tag, int size, const sk::util::String& value)
+  : bind::Data(capacity, tag, SQLT_STR, size)
+{
+  std::copy(value.begin(), value.begin() + std::min(size - 1, value.size()), stringValue().begin());
+  null(false);
+}
+
+sk::oci::db::bind::StringData::
+StringData(int capacity, const sk::util::String& tag, int size)
+  : bind::Data(capacity, tag, SQLT_STR, size)
+{
+  null(true);
+}
+
+sk::oci::db::bind::StringData::
 StringData(int capacity, uint32_t position, int size, const sk::util::String& value)
   : bind::Data(capacity, position, SQLT_STR, size)
 {

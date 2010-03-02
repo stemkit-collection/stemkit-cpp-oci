@@ -57,7 +57,8 @@ int main(int argc, const char* const argv[])
 namespace {
   struct ContentPrinter : public sk::oci::abstract::Director {
     void prepareStatement(sk::oci::Statement& statement) const {
-      statement.bindIntAt(1, 3);
+      statement.bindIntTag(":upper", 9);
+      statement.bindIntTag(":lower", 2);
     }
 
     void processCursor(sk::oci::Cursor& cursor) const {
@@ -83,5 +84,5 @@ namespace {
 }
 
 void printContent(sk::oci::Accessor& accessor, const sk::util::String& table) {
-  accessor.execute("select * from " + table + " where c1 > :1", ContentPrinter());
+  accessor.execute("select * from " + table + " where c1 >= :lower and c1 < :upper", ContentPrinter());
 }

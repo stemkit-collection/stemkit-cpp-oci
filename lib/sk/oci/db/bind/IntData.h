@@ -21,6 +21,8 @@ namespace sk {
           : public bind::Data
         {
           public:
+            IntData(int capacity, const sk::util::String& tag, uint32_t value);
+            IntData(int capacity, const sk::util::String& tag);
             IntData(int capacity, uint32_t position, uint32_t value);
             IntData(int capacity, uint32_t position);
         
