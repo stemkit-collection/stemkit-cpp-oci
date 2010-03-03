@@ -11,6 +11,7 @@
 #ifndef _SK_OCI_DB_BIND_INTDATA_H_
 #define _SK_OCI_DB_BIND_INTDATA_H_
 
+#include <sk/util/Integers.h>
 #include "Data.h"
 
 namespace sk {
@@ -21,9 +22,9 @@ namespace sk {
           : public bind::Data
         {
           public:
-            IntData(int capacity, const sk::util::String& tag, uint32_t value);
+            IntData(int capacity, const sk::util::String& tag, const sk::util::Integers& values);
             IntData(int capacity, const sk::util::String& tag);
-            IntData(int capacity, uint32_t position, uint32_t value);
+            IntData(int capacity, uint32_t position, const sk::util::Integers& values);
             IntData(int capacity, uint32_t position);
         
             // sk::util::Object re-implementation.

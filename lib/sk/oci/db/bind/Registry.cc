@@ -43,9 +43,9 @@ getClass() const
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, int position, int size, const sk::util::String& value)
+bindString(db::bind::Provider& provider, int position, int size, const sk::util::Strings& values)
 {
-  return bindData(provider, position, new db::bind::StringData(provider.datasetSize(), position, size, value));
+  return bindData(provider, position, new db::bind::StringData(provider.datasetSize(), position, size, values));
 }
 
 int 
@@ -57,9 +57,9 @@ bindString(db::bind::Provider& provider, int position, int size)
 
 int 
 sk::oci::db::bind::Registry::
-bindInteger(db::bind::Provider& provider, int position, uint32_t value)
+bindInteger(db::bind::Provider& provider, int position, const sk::util::Integers& values)
 {
-  return bindData(provider, position, new db::bind::IntData(provider.datasetSize(), position, value));
+  return bindData(provider, position, new db::bind::IntData(provider.datasetSize(), position, values));
 }
 
 int 
@@ -71,9 +71,9 @@ bindInteger(db::bind::Provider& provider, int position)
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::String& value)
+bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::Strings& values)
 {
-  return bindData(provider, tag, new db::bind::StringData(provider.datasetSize(), tag, size, value));
+  return bindData(provider, tag, new db::bind::StringData(provider.datasetSize(), tag, size, values));
 }
 
 int 
@@ -85,9 +85,9 @@ bindString(db::bind::Provider& provider, const sk::util::String& tag, int size)
 
 int 
 sk::oci::db::bind::Registry::
-bindInteger(db::bind::Provider& provider, const sk::util::String& tag, uint32_t value)
+bindInteger(db::bind::Provider& provider, const sk::util::String& tag, const sk::util::Integers& values)
 {
-  return bindData(provider, tag, new db::bind::IntData(provider.datasetSize(), tag, value));
+  return bindData(provider, tag, new db::bind::IntData(provider.datasetSize(), tag, values));
 }
 
 int 

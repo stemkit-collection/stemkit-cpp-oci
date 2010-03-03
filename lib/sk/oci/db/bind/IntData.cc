@@ -16,10 +16,10 @@
 static const sk::util::String __className("sk::oci::db::bind::IntData");
 
 sk::oci::db::bind::IntData::
-IntData(int capacity, const sk::util::String& tag, uint32_t value)
+IntData(int capacity, const sk::util::String& tag, const sk::util::Integers& values)
   : bind::Data(capacity, tag, SQLT_INT, sizeof(uint32_t))
 {
-  intValue() = value;
+  intValue() = values.first();
   null(false);
 }
 
@@ -31,10 +31,10 @@ IntData(int capacity, const sk::util::String& tag)
 }
 
 sk::oci::db::bind::IntData::
-IntData(int capacity, uint32_t position, uint32_t value)
+IntData(int capacity, uint32_t position, const sk::util::Integers& values)
   : bind::Data(capacity, position, SQLT_INT, sizeof(uint32_t))
 {
-  intValue() = value;
+  intValue() = values.first();
   null(false);
 }
 

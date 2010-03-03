@@ -10,16 +10,17 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
+#include <sk/util/Strings.h>
 
 #include "StringData.h"
 
 static const sk::util::String __className("sk::oci::db::bind::StringData");
 
 sk::oci::db::bind::StringData::
-StringData(int capacity, const sk::util::String& tag, int size, const sk::util::String& value)
+StringData(int capacity, const sk::util::String& tag, int size, const sk::util::Strings& values)
   : bind::Data(capacity, tag, SQLT_STR, size)
 {
-  std::copy(value.begin(), value.begin() + std::min(size - 1, value.size()), stringValue().begin());
+  std::copy(values.first().begin(), values.first().begin() + std::min(size - 1, values.first().size()), stringValue().begin());
   null(false);
 }
 
@@ -31,10 +32,10 @@ StringData(int capacity, const sk::util::String& tag, int size)
 }
 
 sk::oci::db::bind::StringData::
-StringData(int capacity, uint32_t position, int size, const sk::util::String& value)
+StringData(int capacity, uint32_t position, int size, const sk::util::Strings& values)
   : bind::Data(capacity, position, SQLT_STR, size)
 {
-  std::copy(value.begin(), value.begin() + std::min(size - 1, value.size()), stringValue().begin());
+  std::copy(values.first().begin(), values.first().begin() + std::min(size - 1, values.first().size()), stringValue().begin());
   null(false);
 }
 

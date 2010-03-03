@@ -12,6 +12,8 @@
 #define _SK_OCI_INPUTTAGBINDER_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/Strings.h>
+#include <sk/util/Integers.h>
 
 namespace sk {
   namespace oci {
@@ -19,8 +21,8 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        virtual int bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value) = 0;
-        virtual int bindIntTag(const sk::util::String& tag, uint32_t value) = 0;
+        virtual int bindStringTag(const sk::util::String& tag, int size, const sk::util::Strings& values) = 0;
+        virtual int bindIntTag(const sk::util::String& tag, const sk::util::Integers& values) = 0;
     };
   }
 }

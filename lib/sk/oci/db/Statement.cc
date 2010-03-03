@@ -169,30 +169,30 @@ boundDataAt(int index) const
 
 int
 sk::oci::db::Statement::
-bindStringAt(int position, int size, const sk::util::String& value)
+bindStringAt(int position, int size, const sk::util::Strings& values)
 {
-  return _bindRegistry.bindString(*this, position, size, value);
+  return _bindRegistry.bindString(*this, position, size, values);
 }
 
 int
 sk::oci::db::Statement::
-bindIntAt(int position, uint32_t value)
+bindIntAt(int position, const sk::util::Integers& values)
 {
-  return _bindRegistry.bindInteger(*this, position, value);
+  return _bindRegistry.bindInteger(*this, position, values);
 }
 
 int
 sk::oci::db::Statement::
-bindStringTag(const sk::util::String& tag, int size, const sk::util::String& value)
+bindStringTag(const sk::util::String& tag, int size, const sk::util::Strings& values)
 {
-  return _bindRegistry.bindString(*this, tag, size, value);
+  return _bindRegistry.bindString(*this, tag, size, values);
 }
 
 int
 sk::oci::db::Statement::
-bindIntTag(const sk::util::String& tag, uint32_t value)
+bindIntTag(const sk::util::String& tag, const sk::util::Integers& values)
 {
-  return _bindRegistry.bindInteger(*this, tag, value);
+  return _bindRegistry.bindInteger(*this, tag, values);
 }
 
 void

@@ -12,6 +12,7 @@
 #define _SK_OCI_DB_BIND_REGISTRY_H_
 
 #include <sk/util/ArrayList.hxx>
+#include <sk/util/Integers.h>
 #include <sk/oci/BindRegistry.h>
 #include "Provider.h"
 
@@ -28,16 +29,16 @@ namespace sk {
             Registry();
             virtual ~Registry();
 
-            int bindString(db::bind::Provider& provider, int position, int size, const sk::util::String& value);
+            int bindString(db::bind::Provider& provider, int position, int size, const sk::util::Strings& values);
             int bindString(db::bind::Provider& provider, int position, int size);
 
-            int bindInteger(db::bind::Provider& provider, int position, uint32_t value);
+            int bindInteger(db::bind::Provider& provider, int position, const sk::util::Integers& values);
             int bindInteger(db::bind::Provider& provider, int position);
 
-            int bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::String& value);
+            int bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::Strings& values);
             int bindString(db::bind::Provider& provider, const sk::util::String& tag, int size);
 
-            int bindInteger(db::bind::Provider& provider, const sk::util::String& tag, uint32_t value);
+            int bindInteger(db::bind::Provider& provider, const sk::util::String& tag, const sk::util::Integers& values);
             int bindInteger(db::bind::Provider& provider, const sk::util::String& tag);
 
             const sk::oci::Data& boundDataAt(int index) const;
