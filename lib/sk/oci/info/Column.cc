@@ -10,7 +10,7 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
-#include <sk/util/StringArray.h>
+#include <sk/util/Strings.h>
 
 #include <sk/oci/info/Column.h>
 
@@ -38,7 +38,7 @@ const sk::util::String
 sk::oci::info::Column::
 inspect() const
 {
-  sk::util::StringArray depot;
+  sk::util::Strings depot;
 
   depot << "name=" + _name.inspect();
   depot << "type=" + _type.inspect();

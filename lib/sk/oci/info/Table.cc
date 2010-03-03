@@ -11,7 +11,7 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/UnsupportedOperationException.h>
-#include <sk/util/StringArray.h>
+#include <sk/util/Strings.h>
 #include <sk/util/ArrayList.cxx>
 
 #include <sk/oci/info/Table.h>
@@ -54,7 +54,7 @@ const sk::util::String
 sk::oci::info::Table::
 inspect() const
 {
-  sk::util::StringArray depot;
+  sk::util::Strings depot;
 
   depot << "name=" + _name.inspect();
   depot << "columns=" + _columns.inspect();

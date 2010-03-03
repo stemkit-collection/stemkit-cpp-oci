@@ -12,7 +12,7 @@
 #include <sk/util/String.h>
 #include <sk/util/UnsupportedOperationException.h>
 #include <sk/util/IllegalStateException.h>
-#include <sk/util/StringArray.h>
+#include <sk/util/Strings.h>
 
 #include "Data.h"
 
@@ -55,7 +55,7 @@ const sk::util::String
 sk::oci::db::bind::Data::
 info() const
 {
-  sk::util::StringArray depot;
+  sk::util::Strings depot;
   depot << inspect();
 
   if(isTruncated() == true) {
