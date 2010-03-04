@@ -29,19 +29,20 @@ namespace sk {
             Registry();
             virtual ~Registry();
 
-            int bindString(db::bind::Provider& provider, int position, int size, const sk::util::Strings& values);
-            int bindString(db::bind::Provider& provider, int position, int size);
+            int bindChars(db::bind::Provider& provider, int position, int size, const sk::util::Strings& values);
+            int bindChars(db::bind::Provider& provider, int position, int size);
 
             int bindInteger(db::bind::Provider& provider, int position, const sk::util::Integers& values);
             int bindInteger(db::bind::Provider& provider, int position);
 
-            int bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::Strings& values);
-            int bindString(db::bind::Provider& provider, const sk::util::String& tag, int size);
+            int bindChars(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::Strings& values);
+            int bindChars(db::bind::Provider& provider, const sk::util::String& tag, int size);
 
             int bindInteger(db::bind::Provider& provider, const sk::util::String& tag, const sk::util::Integers& values);
             int bindInteger(db::bind::Provider& provider, const sk::util::String& tag);
 
-            const sk::oci::Data& boundDataAt(int index) const;
+            const sk::oci::Data& boundData(int bid) const;
+            sk::oci::Data& boundMutableData(int bid);
         
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;

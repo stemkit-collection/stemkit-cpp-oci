@@ -21,7 +21,7 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        virtual int bindStringAt(int position, int size, const sk::util::Strings& values) = 0;
+        virtual int bindCharsAt(int position, int size, const sk::util::Strings& values) = 0;
         virtual int bindIntAt(int position, const sk::util::Integers& values) = 0;
     };
   }

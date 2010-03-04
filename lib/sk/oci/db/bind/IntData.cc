@@ -19,30 +19,26 @@ sk::oci::db::bind::IntData::
 IntData(int capacity, const sk::util::String& tag, const sk::util::Integers& values)
   : bind::Data(capacity, tag, SQLT_INT, sizeof(uint32_t))
 {
-  intValue() = values.first();
-  null(false);
+  setValues(values);
 }
 
 sk::oci::db::bind::IntData::
 IntData(int capacity, const sk::util::String& tag)
   : bind::Data(capacity, tag, SQLT_INT, sizeof(uint32_t))
 {
-  null(true);
 }
 
 sk::oci::db::bind::IntData::
 IntData(int capacity, uint32_t position, const sk::util::Integers& values)
   : bind::Data(capacity, position, SQLT_INT, sizeof(uint32_t))
 {
-  intValue() = values.first();
-  null(false);
+  setValues(values);
 }
 
 sk::oci::db::bind::IntData::
 IntData(int capacity, uint32_t position)
   : bind::Data(capacity, position, SQLT_INT, sizeof(uint32_t))
 {
-  null(true);
 }
 
 const sk::util::Class
@@ -52,16 +48,31 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-const sk::util::String
+void
 sk::oci::db::bind::IntData::
-toString() const
+setValues(const sk::util::Integers& values)
 {
-  return isNull() ? "0" : sk::util::String::valueOf(intValue());
+  int expected = capacity();
+  int size = values.size();
+
+  if(size != expected) {
+    throw sk::util::IllegalStateException("Wrong number of bind values: need " + sk::util::String::valueOf(expected) + ", got " + sk::util::String::valueOf(size));
+  }
+  for(int index=0; index < size; ++index) {
+    setIntValue(index, values.get(index));
+  }
 }
 
 const sk::util::String
 sk::oci::db::bind::IntData::
-inspect() const
+toString(int index) const
 {
-  return isNull() ? "NULL" : sk::util::String::valueOf(intValue());
+  return isNull(index) ? "0" : sk::util::String::valueOf(intValue(index));
+}
+
+const sk::util::String
+sk::oci::db::bind::IntData::
+inspect(int index) const
+{
+  return isNull(index) ? "NULL" : sk::util::String::valueOf(intValue(index));
 }

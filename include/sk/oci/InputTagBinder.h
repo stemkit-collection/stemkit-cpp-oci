@@ -21,7 +21,7 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        virtual int bindStringTag(const sk::util::String& tag, int size, const sk::util::Strings& values) = 0;
+        virtual int bindCharsTag(const sk::util::String& tag, int size, const sk::util::Strings& values) = 0;
         virtual int bindIntTag(const sk::util::String& tag, const sk::util::Integers& values) = 0;
     };
   }

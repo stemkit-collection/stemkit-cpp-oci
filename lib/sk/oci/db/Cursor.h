@@ -45,10 +45,11 @@ namespace sk {
 
           // sk::oci::OutputPositionBind implementation.
           int bindIntAt(int position);
-          int bindStringAt(int position, int size);
+          int bindCharsAt(int position, int size);
 
           // sk::oci::BindRegistry implementation.
-          const sk::oci::Data& boundDataAt(int index) const;
+          const sk::oci::Data& boundData(int bid) const;
+          sk::oci::Data& boundMutableData(int bid);
 
         private:
           Cursor(const Cursor& other);

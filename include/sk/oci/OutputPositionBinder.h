@@ -19,7 +19,7 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
-        virtual int bindStringAt(int position, int size) = 0;
+        virtual int bindCharsAt(int position, int size) = 0;
         virtual int bindIntAt(int position) = 0;
     };
   }

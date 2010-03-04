@@ -59,15 +59,24 @@ namespace sk {
           void setRowOffset(uint32_t offset);
 
           // sk::oci::InputPositionBinder implementation.
-          int bindStringAt(int position, int size, const sk::util::Strings& values);
+          int bindCharsAt(int position, int size, const sk::util::Strings& values);
           int bindIntAt(int position, const sk::util::Integers& values);
 
           // sk::oci::InputTagBinder implementation.
-          int bindStringTag(const sk::util::String& tag, int size, const sk::util::Strings& values);
+          int bindCharsTag(const sk::util::String& tag, int size, const sk::util::Strings& values);
           int bindIntTag(const sk::util::String& tag, const sk::util::Integers& values);
 
+          // sk::oci::OutputPositionBinder implementation.
+          int bindCharsAt(int position, int size);
+          int bindIntAt(int position);
+
+          // sk::oci::OutputTagBinder implementation.
+          int bindCharsTag(const sk::util::String& tag, int size);
+          int bindIntTag(const sk::util::String& tag);
+
           // sk::oci::BindRegistry implementation.
-          const sk::oci::Data& boundDataAt(int index) const;
+          const sk::oci::Data& boundData(int bid) const;
+          sk::oci::Data& boundMutableData(int bid);
 
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

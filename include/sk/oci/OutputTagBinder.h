@@ -8,23 +8,23 @@
  *  Author: Gennady Bystritsky
 */
 
-#ifndef _SK_OCI_BINDREGISTRY_H_
-#define _SK_OCI_BINDREGISTRY_H_
+#ifndef _SK_OCI_OUTPUTTAGBINDER_H_
+#define _SK_OCI_OUTPUTTAGBINDER_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/Strings.h>
+#include <sk/util/Integers.h>
 
 namespace sk {
   namespace oci {
-    class Data;
-
-    class BindRegistry 
+    class OutputTagBinder 
       : public virtual sk::util::Object
     {
       public:
-        virtual const sk::oci::Data& boundData(int bid) const = 0;
-        virtual sk::oci::Data& boundMutableData(int bid) = 0;
+        virtual int bindCharsTag(const sk::util::String& tag, int size) = 0;
+        virtual int bindIntTag(const sk::util::String& tag) = 0;
     };
   }
 }
 
-#endif /* _SK_OCI_BINDREGISTRY_H_ */
+#endif /* _SK_OCI_OUTPUTTAGBINDER_H_ */

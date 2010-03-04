@@ -231,9 +231,16 @@ updateRowcount()
 
 const sk::oci::Data& 
 sk::oci::db::Cursor::
-boundDataAt(int index) const
+boundData(int bid) const
 {
-  return _statement.bindRegistry().boundDataAt(index);
+  return _statement.bindRegistry().boundData(bid);
+}
+
+sk::oci::Data& 
+sk::oci::db::Cursor::
+boundMutableData(int bid)
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 int 
@@ -245,9 +252,9 @@ bindIntAt(int position)
 
 int 
 sk::oci::db::Cursor::
-bindStringAt(int position, int size)
+bindCharsAt(int position, int size)
 {
-  return _statement.bindRegistry().bindString(*this, position, size);
+  return _statement.bindRegistry().bindChars(*this, position, size);
 }
 
 void 

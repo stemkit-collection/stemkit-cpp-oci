@@ -8,24 +8,24 @@
  *  Author: Gennady Bystritsky
 */
 
-#ifndef _SK_OCI_DB_BIND_INTDATA_H_
-#define _SK_OCI_DB_BIND_INTDATA_H_
+#ifndef _SK_OCI_DB_BIND_CHARSDATA_H_
+#define _SK_OCI_DB_BIND_CHARSDATA_H_
 
-#include <sk/util/Integers.h>
 #include "Data.h"
 
 namespace sk {
   namespace oci {
     namespace db {
       namespace bind {
-        class IntData 
+        class CharsData 
           : public bind::Data
         {
           public:
-            IntData(int capacity, const sk::util::String& tag, const sk::util::Integers& values);
-            IntData(int capacity, const sk::util::String& tag);
-            IntData(int capacity, uint32_t position, const sk::util::Integers& values);
-            IntData(int capacity, uint32_t position);
+            CharsData(int capacity, const sk::util::String& tag, int size, const sk::util::Strings& values);
+            CharsData(int capacity, const sk::util::String& tag, int size);
+            CharsData(int capacity, uint32_t position, int size, const sk::util::Strings& values);
+            CharsData(int capacity, uint32_t position, int size);
+            virtual ~CharsData();
         
             // sk::oci::db::bind::Data implementation.
             const sk::util::String toString(int index) const;
@@ -35,14 +35,14 @@ namespace sk {
             const sk::util::Class getClass() const;
         
           private:
-            IntData(const IntData& other);
-            IntData& operator = (const IntData& other);
+            CharsData(const CharsData& other);
+            CharsData& operator = (const CharsData& other);
 
-            void setValues(const sk::util::Integers& values);
+            void setValues(const sk::util::Strings& values);
         };
       }
     }
   }
 }
 
-#endif /* _SK_OCI_DB_BIND_INTDATA_H_ */
+#endif /* _SK_OCI_DB_BIND_CHARSDATA_H_ */

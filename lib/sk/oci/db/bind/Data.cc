@@ -20,25 +20,30 @@ static const sk::util::String __className("sk::oci::db::bind::Data");
 
 sk::oci::db::bind::Data::
 Data(int capacity, uint32_t position, ub2 type, int size)
-  : _position(position), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size)
+  : _position(position), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size),
+    _piece(0, *this)
 {
-  if(capacity > 1) {
-    throw sk::util::UnsupportedOperationException("array bind");
-  }
-  _value.resize(size, 0);
-
-  _handle.oci_define = 0;
-  _handle.oci_bind = 0;
+  setup(capacity);
 }
 
 sk::oci::db::bind::Data::
 Data(int capacity, const sk::util::String& tag, ub2 type, int size)
-  : _tag(tag), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size)
+  : _tag(tag), _type(type), _indicator(OCI_IND_NULL), _columnCode(0), _size(size),
+    _piece(0, *this)
 {
-  if(capacity > 1) {
+  setup(capacity);
+}
+
+void 
+sk::oci::db::bind::Data::
+setup(int capacity)
+{                   
+  _capacity = std::max(1, capacity);
+
+  if(_capacity > 1) {
     throw sk::util::UnsupportedOperationException("array bind");
   }
-  _value.resize(size, 0);
+  _value.resize(_size, 0);
 
   _handle.oci_define = 0;
   _handle.oci_bind = 0;
@@ -51,14 +56,21 @@ getClass() const
   return sk::util::Class(__className);
 }
 
+int 
+sk::oci::db::bind::Data::
+capacity() const
+{
+  return _capacity;
+}
+
 const sk::util::String
 sk::oci::db::bind::Data::
-info() const
+info(int index) const
 {
   sk::util::Strings depot;
-  depot << inspect();
+  depot << inspect(index);
 
-  if(isTruncated() == true) {
+  if(isTruncated(index) == true) {
     if(_indicator > 0) {
       depot << "truncated(" + sk::util::String::valueOf(_indicator - _size) + ")";
     }
@@ -123,7 +135,7 @@ indicatorPointer()
 
 uint32_t
 sk::oci::db::bind::Data::
-columnCode() const
+columnCode(int index) const
 {
   return _columnCode;
 }
@@ -137,7 +149,7 @@ columnCodePointer()
 
 uint32_t
 sk::oci::db::bind::Data::
-size() const
+size(int index) const
 {
   return _size;
 }
@@ -166,25 +178,9 @@ tagSize() const
   return _tag.size();
 }
 
-uint32_t&
-sk::oci::db::bind::Data::
-intValue()
-{
-  if(_value.size() != sizeof(uint32_t)) {
-    throw sk::util::IllegalStateException(SK_METHOD);
-  }
-  union data_map_t {
-    char buffer[sizeof(uint32_t)];
-    uint32_t value;
-  };
-
-  data_map_t* data = reinterpret_cast<data_map_t*>(&_value.front());
-  return data->value;
-}
-
 const uint32_t&
 sk::oci::db::bind::Data::
-intValue() const
+intValue(int index) const
 {
   if(_value.size() != sizeof(uint32_t)) {
     throw sk::util::IllegalStateException(SK_METHOD);
@@ -198,37 +194,75 @@ intValue() const
   return data->value;
 }
 
-sk::util::Container&
+void
 sk::oci::db::bind::Data::
-stringValue()
+setIntValue(int index, uint32_t value)
 {
-  return _value;
+  if(_value.size() != sizeof(uint32_t)) {
+    throw sk::util::IllegalStateException(SK_METHOD);
+  }
+  union data_map_t {
+    char buffer[sizeof(uint32_t)];
+    uint32_t value;
+  };
+
+  data_map_t* data = reinterpret_cast<data_map_t*>(&_value.front());
+  data->value = value;
+  setNull(index, false);
 }
 
-const sk::util::Container&
+const char*
 sk::oci::db::bind::Data::
-stringValue() const
+charsValue(int index) const
 {
-  return _value;
+  return _value.getChars();
+}
+
+void
+sk::oci::db::bind::Data::
+setCharsValue(int index, const sk::util::String& value)
+{
+  std::copy(value.begin(), value.begin() + std::min(_size - 1, value.size()), _value.begin());
+  setNull(index, false);
 }
 
 bool 
 sk::oci::db::bind::Data::
-isNull() const
+isNull(int index) const
 {
   return _indicator == OCI_IND_NULL;
 }
 
 void 
 sk::oci::db::bind::Data::
-null(bool state)
+setNull(int index, bool state)
 {
   _indicator = (state == true ? OCI_IND_NULL : 0);
 }
 
 bool 
 sk::oci::db::bind::Data::
-isTruncated() const
+isTruncated(int index) const
 {
   return _indicator == -2 || _indicator > 0;
+}
+
+const sk::oci::Data& 
+sk::oci::db::bind::Data::
+piece(int index) const
+{
+  if(index != 0) {
+    throw sk::util::IllegalStateException("Index other than 0 not supported yet");
+  }
+  return _piece;
+}
+
+sk::oci::Data& 
+sk::oci::db::bind::Data::
+piece(int index)
+{
+  if(index != 0) {
+    throw sk::util::IllegalStateException("Index other than 0 not supported yet");
+  }
+  return _piece;
 }

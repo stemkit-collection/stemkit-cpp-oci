@@ -63,8 +63,8 @@ namespace {
       const sk::oci::info::Column c1 = cursor.columnAt(0);
       const sk::oci::info::Column c2 = cursor.columnAt(1);
 
-      const sk::oci::Data& d1 = cursor.boundDataAt(cursor.bindIntAt(1));
-      const sk::oci::Data& d2 = cursor.boundDataAt(cursor.bindStringAt(2, c2.getSize()));
+      const sk::oci::Data& d1 = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& d2 = cursor.boundData(cursor.bindCharsAt(2, c2.getSize()));
 
       while(cursor.fetch() != 0) {
         std::cout 

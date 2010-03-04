@@ -36,17 +36,17 @@ namespace {
       const sk::oci::info::Column c2 = cursor.columnAt(1);
 
       int p1 = cursor.bindIntAt(1);
-      int p2 = cursor.bindStringAt(2, c2.getSize());
+      int p2 = cursor.bindCharsAt(2, c2.getSize());
 
-      const sk::oci::Data& d1 = cursor.boundDataAt(p1);
-      const sk::oci::Data& d2 = cursor.boundDataAt(p2);
+      const sk::oci::Data& d1 = cursor.boundData(p1);
+      const sk::oci::Data& d2 = cursor.boundData(p2);
 
       while(cursor.fetch() != 0) {
         std::cout << std::boolalpha
           << c1.getName() << "=" << d1.intValue() << " (" 
             << d1.isNull() << ", " << d1.isTruncated() 
           << "), " 
-          << c2.getName() << "=" << sk::util::String(d2.stringValue().getChars(), d2.size()).inspect() << " ("  
+          << c2.getName() << "=" << d2.stringValue().inspect() << " ("  
             << d2.isNull() << ", " << d2.isTruncated() 
           << ")"
           << std::endl

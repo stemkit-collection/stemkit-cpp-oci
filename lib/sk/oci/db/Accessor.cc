@@ -210,7 +210,7 @@ namespace {
       int index = cursor.bindIntAt(1);
       cursor.fetch();
 
-      _counter = cursor.boundDataAt(index).intValue();
+      _counter = cursor.boundData(index).intValue();
     }
 
     uint32_t& _counter;

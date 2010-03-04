@@ -2,18 +2,24 @@
 [2010-03-02]
 ============
 
-- boundDataAt() => boundData(bid)
++ [2010-03-03]
+  boundDataAt() => boundData(bid)
 
 - boundIntData() ?
 
 - boundCharsData() ?
 
-- Rename StringData to CharsData.
++ [2010-03-03]
+  Rename StringData to CharsData. And all related methods and data names.
 
-- No intValue() returning non-const reference, setIntValue() instead (will
++ [2010-03-03]
+  No intValue() returning non-const reference, setIntValue() instead (will
   also take care of resetting null indicator).
 
-- Consider splitting bind::Data into 2 parts -- one that deals with position,
+* [2010-03-03] Decided not to do this as only 2 cases are available and
+  besides, it was possible to come up with pretty optimal internal
+  implementation.
+  Consider splitting bind::Data into 2 parts -- one that deals with position,
   another for tag.
 
 [2010-03-01]
@@ -65,19 +71,21 @@
   Specific bind data type classes, like bind::Integer and bind::String, will
   take care of construction and inspect().
 
-- bind::Registry#boundMutableDataAt() must return non-const reference to 
++ [2010-03-03]
+  bind::Registry#boundMutableData() must return non-const reference to 
   bind::Data.
 
-- db::oci::Statement must have boundMutableDataAt() to make it possible to 
++ [2010-03-03]
+  db::oci::Statement must have boundMutableData() to make it possible to 
   modify bound data (say, for the new iterations).
 
 [2010-03-02]
 + Bind by tag.
 
-[2010-03-02] Deliberetally deciding against implementing this feature as it is
-just conveniency on top of already existing functionality. Besides, it would
-take way too much resources for something not that important.
-* retrieve by tag.
+* [2010-03-02] Deliberetally deciding against implementing this feature as it is
+  just conveniency on top of already existing functionality. Besides, it would
+  take way too much resources for something not that important.
+  Retrieve by tag.
 
 - Array capable data binds.
 

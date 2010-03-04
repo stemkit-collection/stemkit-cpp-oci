@@ -20,19 +20,25 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
+        virtual const sk::oci::Data& piece(int index) const = 0;
+        virtual sk::oci::Data& piece(int index) = 0;
+
         virtual const sk::util::String info() const = 0;
 
-        virtual uint32_t& intValue() = 0;
         virtual const uint32_t& intValue() const = 0;
+        virtual const char* charsValue() const = 0;
+        virtual const sk::util::String stringValue() const = 0;
 
-        virtual sk::util::Container& stringValue() = 0;
-        virtual const sk::util::Container& stringValue() const = 0;
+        virtual uint32_t size() const = 0;
+        virtual uint32_t columnCode() const = 0;
 
         virtual bool isNull() const = 0;
         virtual bool isTruncated() const = 0;
-        virtual uint32_t size() const = 0;
-        virtual uint32_t columnCode() const = 0;
-        virtual void null(bool state) = 0;
+
+        virtual void setIntValue(uint32_t value) = 0;
+        virtual void setCharsValue(const sk::util::String& value) = 0;
+        virtual void setNull(bool state) = 0;
+
     };
   }
 }

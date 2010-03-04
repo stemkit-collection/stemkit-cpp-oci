@@ -162,16 +162,23 @@ setRowOffset(uint32_t number)
 
 const sk::oci::Data& 
 sk::oci::db::Statement::
-boundDataAt(int index) const
+boundData(int bid) const
 {
-  return _bindRegistry.boundDataAt(index);
+  return _bindRegistry.boundData(bid);
+}
+
+sk::oci::Data& 
+sk::oci::db::Statement::
+boundMutableData(int bid)
+{
+  return _bindRegistry.boundMutableData(bid);
 }
 
 int
 sk::oci::db::Statement::
-bindStringAt(int position, int size, const sk::util::Strings& values)
+bindCharsAt(int position, int size, const sk::util::Strings& values)
 {
-  return _bindRegistry.bindString(*this, position, size, values);
+  return _bindRegistry.bindChars(*this, position, size, values);
 }
 
 int
@@ -183,9 +190,9 @@ bindIntAt(int position, const sk::util::Integers& values)
 
 int
 sk::oci::db::Statement::
-bindStringTag(const sk::util::String& tag, int size, const sk::util::Strings& values)
+bindCharsTag(const sk::util::String& tag, int size, const sk::util::Strings& values)
 {
-  return _bindRegistry.bindString(*this, tag, size, values);
+  return _bindRegistry.bindChars(*this, tag, size, values);
 }
 
 int
@@ -193,6 +200,34 @@ sk::oci::db::Statement::
 bindIntTag(const sk::util::String& tag, const sk::util::Integers& values)
 {
   return _bindRegistry.bindInteger(*this, tag, values);
+}
+
+int
+sk::oci::db::Statement::
+bindCharsAt(int position, int size)
+{
+  return _bindRegistry.bindChars(*this, position, size);
+}
+
+int
+sk::oci::db::Statement::
+bindIntAt(int position)
+{
+  return _bindRegistry.bindInteger(*this, position);
+}
+
+int
+sk::oci::db::Statement::
+bindCharsTag(const sk::util::String& tag, int size)
+{
+  return _bindRegistry.bindChars(*this, tag, size);
+}
+
+int
+sk::oci::db::Statement::
+bindIntTag(const sk::util::String& tag)
+{
+  return _bindRegistry.bindInteger(*this, tag);
 }
 
 void

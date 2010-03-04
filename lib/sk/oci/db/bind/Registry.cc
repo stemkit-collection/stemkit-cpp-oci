@@ -18,7 +18,7 @@
 #include "Provider.h"
 #include "Data.h"
 #include "IntData.h"
-#include "StringData.h"
+#include "CharsData.h"
 
 #include <oci.h>
 
@@ -43,16 +43,16 @@ getClass() const
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, int position, int size, const sk::util::Strings& values)
+bindChars(db::bind::Provider& provider, int position, int size, const sk::util::Strings& values)
 {
-  return bindData(provider, position, new db::bind::StringData(provider.datasetSize(), position, size, values));
+  return bindData(provider, position, new db::bind::CharsData(provider.datasetSize(), position, size, values));
 }
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, int position, int size)
+bindChars(db::bind::Provider& provider, int position, int size)
 {
-  return bindData(provider, position, new db::bind::StringData(provider.datasetSize(), position, size));
+  return bindData(provider, position, new db::bind::CharsData(provider.datasetSize(), position, size));
 }
 
 int 
@@ -71,16 +71,16 @@ bindInteger(db::bind::Provider& provider, int position)
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::Strings& values)
+bindChars(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::Strings& values)
 {
-  return bindData(provider, tag, new db::bind::StringData(provider.datasetSize(), tag, size, values));
+  return bindData(provider, tag, new db::bind::CharsData(provider.datasetSize(), tag, size, values));
 }
 
 int 
 sk::oci::db::bind::Registry::
-bindString(db::bind::Provider& provider, const sk::util::String& tag, int size)
+bindChars(db::bind::Provider& provider, const sk::util::String& tag, int size)
 {
-  return bindData(provider, tag, new db::bind::StringData(provider.datasetSize(), tag, size));
+  return bindData(provider, tag, new db::bind::CharsData(provider.datasetSize(), tag, size));
 }
 
 int 
@@ -125,7 +125,14 @@ bindData(db::bind::Provider& provider, const sk::util::String& tag, db::bind::Da
 
 const sk::oci::Data& 
 sk::oci::db::bind::Registry::
-boundDataAt(int index) const
+boundData(int bid) const
 {
-  return _depot.get(index);
+  return _depot.get(bid).piece(0);
+}
+
+sk::oci::Data& 
+sk::oci::db::bind::Registry::
+boundMutableData(int bid)
+{
+  return _depot.getMutable(bid).piece(0);
 }
