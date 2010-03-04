@@ -79,15 +79,16 @@
   db::oci::Statement must have boundMutableData() to make it possible to 
   modify bound data (say, for the new iterations).
 
-[2010-03-02]
-+ Bind by tag.
++ [2010-03-02]
+  Bind by tag.
 
 * [2010-03-02] Deliberetally deciding against implementing this feature as it is
   just conveniency on top of already existing functionality. Besides, it would
   take way too much resources for something not that important.
   Retrieve by tag.
 
-- Array capable data binds.
++ [2010-03-03]
+  Array capable data binds.
 
 + [2010-02-28]
   Support for resulting data lengths.
