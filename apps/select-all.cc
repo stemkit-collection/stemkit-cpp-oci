@@ -57,6 +57,7 @@ int main(int argc, const char* const argv[])
 namespace {
   struct ContentPrinter : public sk::oci::abstract::Director {
     void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.setCapacity(3);
       cursor.useColumnCodes(true);
       cursor.useTruncate(true);
 
@@ -66,12 +67,18 @@ namespace {
       const sk::oci::Data& d1 = cursor.boundData(cursor.bindIntAt(1));
       const sk::oci::Data& d2 = cursor.boundData(cursor.bindCharsAt(2, c2.getSize()));
 
-      while(cursor.fetch() != 0) {
-        std::cout 
-          << c1.getName() << "=" << d1.info() << ", "
-          << c2.getName() << "=" << d2.info()
-          << std::endl
-        ;
+      while(true) {
+        uint32_t amount = cursor.fetch();
+        if(amount == 0) {
+          break;
+        }
+        for(int index=0; index < amount; ++index) {
+          std::cout 
+            << c1.getName() << "=" << d1.piece(index).info() << ", "
+            << c2.getName() << "=" << d2.piece(index).info()
+            << std::endl
+          ;
+        }
       }
       std::cerr << "Processed " << cursor.rowCount() << " row(s)" << std::endl;
     }

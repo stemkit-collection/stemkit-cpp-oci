@@ -341,8 +341,15 @@ sb4
 sk::oci::db::Statement::
 mapOracleError(sb4 code) const 
 {
-  if(code == 1406 && _useTruncate == true) {
-    return 0;
+  switch(code) {
+    case 1406:
+      if(_useTruncate == false) {
+        break;
+      }
+      return 0;
+
+    case 1002: // ORA-01002: fetch out of sequence
+      return 0;
   }
   return code;
 }

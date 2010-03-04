@@ -12,6 +12,7 @@
 #define _SK_OCI_DB_BIND_DATA_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/ArrayList.hxx>
 #include <sk/oci/Data.h>
 #include <oci.h>
 
@@ -74,22 +75,22 @@ namespace sk {
             Data& operator = (const Data& other);
 
             void setup(int capacity);
+            sb2 indicator(int index) const;
+            void setSize(int index, uint32_t size);
 
             union {
               oci_define_handle oci_define;
               oci_bind_handle oci_bind;
             } _handle;
 
+            int _capacity;
             ub4 _position;
             ub2 _type;
-            sb2 _indicator;
-            ub2 _columnCode;
-            ub2 _size;
-            sk::util::Container _value;
-            sk::util::Container _tag;
-            int _capacity;
+            int _pieceSize;
+            std::vector<ub2> _descriptors;
+            std::vector<char> _depot;
 
-            bind::Piece _piece;
+            sk::util::ArrayList<bind::Piece> _pieces;
         };
       }
     }

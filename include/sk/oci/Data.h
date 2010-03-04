@@ -12,7 +12,6 @@
 #define _SK_OCI_DATA_H_
 
 #include <sk/util/Object.h>
-#include <sk/util/Container.h>
 
 namespace sk {
   namespace oci {
