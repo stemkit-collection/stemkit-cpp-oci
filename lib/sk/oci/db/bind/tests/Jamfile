@@ -1,0 +1,15 @@
+# vim: ft=jam: sw=2:
+
+local test = sk-oci-db-bind-test ;
+
+local objects = 
+  TestSuite.cc
+  DataTest.cc
+;
+
+use-oracle $(test) $(objects) ;
+use-unit-test $(test) $(objects) ;
+use-stemkit $(test) $(objects) : sk.cppunit sk.util ;
+use-project-libraries $(test) : sk.oci.db.bind ;
+
+make-cpp-test $(test) : $(objects) ;

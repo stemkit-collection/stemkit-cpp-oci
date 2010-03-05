@@ -12,3 +12,5 @@ local objects =
 
 use-oracle $(objects) $(library). ;
 make-library $(library) : $(objects) ;
+
+make-subdirs tests ;

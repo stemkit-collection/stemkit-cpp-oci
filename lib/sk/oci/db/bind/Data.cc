@@ -282,3 +282,17 @@ indicator(int index) const
 {
   return _descriptors[index];
 }
+
+int 
+sk::oci::db::bind::Data::
+descriptorSize() const
+{
+  return _descriptors.size();
+}
+
+int 
+sk::oci::db::bind::Data::
+depotSize() const
+{
+  return _depot.size();
+}

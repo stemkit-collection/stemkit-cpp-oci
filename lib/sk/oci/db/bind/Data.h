@@ -70,6 +70,9 @@ namespace sk {
             virtual const sk::util::String inspect(int index) const = 0;
             virtual const sk::util::String toString(int index) const = 0;
 
+            int descriptorSize() const;
+            int depotSize() const;
+
           private:
             Data(const Data& other);
             Data& operator = (const Data& other);
