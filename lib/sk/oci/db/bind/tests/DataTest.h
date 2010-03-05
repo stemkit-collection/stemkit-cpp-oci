@@ -22,7 +22,8 @@ namespace sk {
           : public CppUnit::TestFixture
         {
           CPPUNIT_TEST_SUITE(sk::oci::db::bind::DataTest);
-            CPPUNIT_TEST(testBasics);
+            CPPUNIT_TEST(testBasicsSingle);
+            CPPUNIT_TEST(testBasicsCompound);
           CPPUNIT_TEST_SUITE_END();
         
           public:
@@ -31,7 +32,8 @@ namespace sk {
         
             void setUp();
             void tearDown();
-            void testBasics();
+            void testBasicsSingle();
+            void testBasicsCompound();
         
           private:
             DataTest(const DataTest& other);

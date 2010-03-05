@@ -38,18 +38,46 @@ tearDown()
 
 void
 sk::oci::db::bind::DataTest::
-testBasics()
+testBasicsSingle()
 {
   sk::oci::db::bind::CharsData data(0, 2, 10);
   CPPUNIT_ASSERT_EQUAL(1, data.capacity());
   CPPUNIT_ASSERT_EQUAL(ub4(2), data.position());
   CPPUNIT_ASSERT_EQUAL(10, data.valueSize());
   CPPUNIT_ASSERT_EQUAL(ub2(SQLT_STR), data.type());
+  
   CPPUNIT_ASSERT_EQUAL(0, data.tagSize());
+  CPPUNIT_ASSERT_THROW(data.tagPointer(), sk::util::IllegalStateException);
+
   CPPUNIT_ASSERT_EQUAL(3, data.descriptorSize());
   CPPUNIT_ASSERT_EQUAL(10, data.depotSize());
 
   CPPUNIT_ASSERT(data.piece(0).isNull() == true);
   CPPUNIT_ASSERT_EQUAL(0U, data.piece(0).size());
   CPPUNIT_ASSERT_THROW(data.piece(1), sk::util::IndexOutOfBoundsException);
+}
+
+void
+sk::oci::db::bind::DataTest::
+testBasicsCompound()
+{
+  sk::oci::db::bind::CharsData data(3, "abcd", 10);
+  CPPUNIT_ASSERT_EQUAL(3, data.capacity());
+  CPPUNIT_ASSERT_EQUAL(ub4(0), data.position());
+  CPPUNIT_ASSERT_EQUAL(10, data.valueSize());
+  CPPUNIT_ASSERT_EQUAL(ub2(SQLT_STR), data.type());
+  CPPUNIT_ASSERT_EQUAL(4, data.tagSize());
+  CPPUNIT_ASSERT_EQUAL("abcd", reinterpret_cast<const char*>(data.tagPointer()));
+
+  CPPUNIT_ASSERT_EQUAL(9, data.descriptorSize());
+  CPPUNIT_ASSERT_EQUAL(35, data.depotSize());
+
+  CPPUNIT_ASSERT(data.piece(0).isNull() == true);
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(0).size());
+  CPPUNIT_ASSERT(data.piece(1).isNull() == true);
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(1).size());
+  CPPUNIT_ASSERT(data.piece(2).isNull() == true);
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(2).size());
+
+  CPPUNIT_ASSERT_THROW(data.piece(3), sk::util::IndexOutOfBoundsException);
 }

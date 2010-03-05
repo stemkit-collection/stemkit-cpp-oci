@@ -35,17 +35,19 @@ namespace sk {
             oci_bind_handle& bindHandle();
             oci_define_handle& defineHandle();
 
+            int capacity() const;
             ub4 position() const;
+            ub2 type() const;
+
+            sb2* indicatorPointer();
+            ub2* columnCodePointer();
+            ub2* sizePointer();
 
             dvoid* valuePointer();
             sb4 valueSize() const;
-            ub2 type() const;
-            sb2* indicatorPointer();
+
             const text* tagPointer() const;
             sb4 tagSize() const;
-            ub2* columnCodePointer();
-            ub2* sizePointer();
-            int capacity() const;
         
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;
@@ -53,14 +55,14 @@ namespace sk {
             const sk::oci::Data& piece(int index) const;
             sk::oci::Data& piece(int index);
 
-            const uint32_t& intValue(int index)const;
-            const char* charsValue(int index) const;
+            bool isNull(int index) const;
+            bool isTruncated(int index) const;
             uint32_t size(int index) const;
             uint32_t columnCode(int index) const;
 
-            bool isNull(int index) const;
-            bool isTruncated(int index) const;
-
+            const uint32_t& intValue(int index)const;
+            const char* charsValue(int index) const;
+            
             void setIntValue(int index, uint32_t value);
             void setCharsValue(int index, const sk::util::String& value);
             void setNull(int index, bool state);
@@ -70,6 +72,7 @@ namespace sk {
             virtual const sk::util::String inspect(int index) const = 0;
             virtual const sk::util::String toString(int index) const = 0;
 
+            // Internal details, for testing.
             int descriptorSize() const;
             int depotSize() const;
 

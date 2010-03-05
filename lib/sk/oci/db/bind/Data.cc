@@ -31,7 +31,9 @@ Data(int capacity, const sk::util::String& tag, ub2 type, int size)
   : _position(0), _type(type), _pieceSize(size)
 {
   setup(capacity);
+
   _depot.insert(_depot.end(), tag.begin(), tag.end());
+  _depot.push_back(0);
 }
 
 void 
@@ -179,7 +181,8 @@ sb4
 sk::oci::db::bind::Data::
 tagSize() const
 {
-  return _depot.size() - (_pieceSize * _capacity);
+  int size = _depot.size() - (_pieceSize * _capacity);
+  return size > 0 ? size - 1 : 0;
 }
 
 const uint32_t&
