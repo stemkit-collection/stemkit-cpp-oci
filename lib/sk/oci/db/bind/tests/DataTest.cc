@@ -10,6 +10,7 @@
 
 #include "DataTest.h"
 #include "../CharsData.h"
+#include "../IntData.h"
 #include <sk/util/IndexOutOfBoundsException.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(sk::oci::db::bind::DataTest);
@@ -61,16 +62,16 @@ void
 sk::oci::db::bind::DataTest::
 testBasicsCompound()
 {
-  sk::oci::db::bind::CharsData data(3, "abcd", 10);
+  sk::oci::db::bind::IntData data(3, "abcd");
   CPPUNIT_ASSERT_EQUAL(3, data.capacity());
   CPPUNIT_ASSERT_EQUAL(ub4(0), data.position());
-  CPPUNIT_ASSERT_EQUAL(10, data.valueSize());
-  CPPUNIT_ASSERT_EQUAL(ub2(SQLT_STR), data.type());
+  CPPUNIT_ASSERT_EQUAL(4, data.valueSize());
+  CPPUNIT_ASSERT_EQUAL(ub2(SQLT_INT), data.type());
   CPPUNIT_ASSERT_EQUAL(4, data.tagSize());
   CPPUNIT_ASSERT_EQUAL("abcd", reinterpret_cast<const char*>(data.tagPointer()));
 
   CPPUNIT_ASSERT_EQUAL(9, data.descriptorSize());
-  CPPUNIT_ASSERT_EQUAL(35, data.depotSize());
+  CPPUNIT_ASSERT_EQUAL(17, data.depotSize());
 
   CPPUNIT_ASSERT(data.piece(0).isNull() == true);
   CPPUNIT_ASSERT_EQUAL(0U, data.piece(0).size());
