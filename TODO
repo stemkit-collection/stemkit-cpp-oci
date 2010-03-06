@@ -1,13 +1,14 @@
+[2010-03-05]
+
+- Implement more data types
+
+- Write functional tests for real Oralce access.
 
 [2010-03-02]
 ============
 
 + [2010-03-03]
   boundDataAt() => boundData(bid)
-
-- boundIntData() ?
-
-- boundCharsData() ?
 
 + [2010-03-03]
   Rename StringData to CharsData. And all related methods and data names.
