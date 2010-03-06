@@ -12,6 +12,7 @@
 #define _SK_OCI_DB_BIND_CHARSDATA_H_
 
 #include "Data.h"
+#include <sk/util/Strings.h>
 
 namespace sk {
   namespace oci {

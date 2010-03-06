@@ -181,3 +181,17 @@ testSizes()
   CPPUNIT_ASSERT_EQUAL(444U, data.piece(1).size());
   CPPUNIT_ASSERT_EQUAL(555U, data.piece(2).size());
 }
+
+void
+sk::oci::db::bind::DataTest::
+testInfo()
+{
+  CPPUNIT_ASSERT_EQUAL("NULL", sk::oci::db::bind::CharsData(0, 1, 5).piece(0).info());
+  CPPUNIT_ASSERT_EQUAL("\"zzz\"", sk::oci::db::bind::CharsData(0, 1, 5, "zzz").piece(0).info());
+
+  sk::oci::db::bind::CharsData data(0, 1, 5, "zzz");
+  *data.indicatorPointer() = 10;
+  *data.columnCodePointer() = 1406;
+
+  CPPUNIT_ASSERT_EQUAL("\"zzz\":truncated(6):code(1406)", data.piece(0).info());
+}

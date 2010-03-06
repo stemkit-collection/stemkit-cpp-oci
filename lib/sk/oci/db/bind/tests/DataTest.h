@@ -27,6 +27,7 @@ namespace sk {
             CPPUNIT_TEST(testIndicators);
             CPPUNIT_TEST(testColumnCodes);
             CPPUNIT_TEST(testSizes);
+            CPPUNIT_TEST(testInfo);
           CPPUNIT_TEST_SUITE_END();
         
           public:
@@ -40,6 +41,7 @@ namespace sk {
             void testIndicators();
             void testColumnCodes();
             void testSizes();
+            void testInfo();
         
           private:
             DataTest(const DataTest& other);
