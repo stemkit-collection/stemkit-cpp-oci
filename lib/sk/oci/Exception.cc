@@ -39,7 +39,13 @@ namespace {
 
 sk::oci::Exception::
 Exception(const sk::util::String& origin, const sk::util::String& message)
-  : sk::util::Exception(join(normalize_origin(origin), message.trim()))
+  : sk::util::Exception(join(normalize_origin(origin), message.trim())),
+    _origin(origin)
+{
+}
+
+sk::oci::Exception::
+~Exception() throw()
 {
 }
 
@@ -50,3 +56,9 @@ getClass() const
   return sk::util::Class(__className);
 }
 
+const sk::util::String
+sk::oci::Exception::
+getOrigin() const
+{
+  return normalize_origin(_origin);
+}

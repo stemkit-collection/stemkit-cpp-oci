@@ -20,10 +20,15 @@ namespace sk {
     {
       public:
         Exception(const sk::util::String& origin, const sk::util::String& message);
+        virtual ~Exception() throw();
+
+        const sk::util::String getOrigin() const;
 
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
-    
+
+      private:
+        const sk::util::String _origin;
     };
   }
 }

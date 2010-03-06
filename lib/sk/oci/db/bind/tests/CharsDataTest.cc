@@ -105,6 +105,7 @@ testLessBindValues()
   catch(const sk::oci::BindSizeException& exception) {
     CPPUNIT_ASSERT_EQUAL(3U, exception.getExpected());
     CPPUNIT_ASSERT_EQUAL(2U, exception.getActual());
+    CPPUNIT_ASSERT_EQUAL("CharsData", exception.getOrigin());
   }
 
   try {
