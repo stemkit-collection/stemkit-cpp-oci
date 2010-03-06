@@ -4,6 +4,7 @@ local test = sk-oci-test ;
 
 local objects =
   TestSuite.cc
+  App.cc
 ;
 
 use-unit-test $(test) $(objects) ;
