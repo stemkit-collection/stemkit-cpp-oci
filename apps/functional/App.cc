@@ -40,11 +40,11 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-const test::App&
+app::Fixture& 
 test::App::
-get() 
+fixture() 
 {
-  return _appHolder.get();
+  return _appHolder.getMutable();
 }
 
 
@@ -95,7 +95,7 @@ sid() const
 
 sk::oci::Accessor&
 test::App::
-getDatabase()
+dbAccessor()
 {
   return _accessorHolder.getMutable();
 }

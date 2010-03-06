@@ -1,0 +1,25 @@
+/*  vim: set sw=2:
+ *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
+ *  
+ *  Distributed under the MIT Licence.
+ *  This is free software. See 'LICENSE' for details.
+ *  You must read and accept the license prior to use.
+ *  
+ *  Author: Gennady Bystritsky
+*/
+
+#ifndef _APP_FIXTURE_H_
+#define _APP_FIXTURE_H_
+
+#include <sk/util/Object.h>
+
+namespace app {
+  class Fixture 
+    : public virtual sk::util::Object
+  {
+    public:
+      virtual sk::oci::Accessor& dbAccessor() = 0;
+  };
+}
+
+#endif /* _APP_FIXTURE_H_ */

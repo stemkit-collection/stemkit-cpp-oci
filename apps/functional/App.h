@@ -16,19 +16,21 @@
 #include <sk/util/Holder.hxx>
 #include <sk/rt/Scope.h>
 #include <sk/oci/Accessor.h>
+#include "app/Fixture.h"
 
 namespace test {
   class App 
-    : public virtual sk::util::Object
+    : public virtual app::Fixture
   {
     public:
       App();
       virtual ~App();
 
-      static const App& get();
+      static app::Fixture& fixture();
       void setup();
 
-      sk::oci::Accessor& getDatabase();
+      // app::Fixture implementation.
+      sk::oci::Accessor& dbAccessor();
   
       // sk::util::Object re-implementation.
       const sk::util::Class getClass() const;
