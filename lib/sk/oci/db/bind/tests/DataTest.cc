@@ -82,3 +82,62 @@ testBasicsCompound()
 
   CPPUNIT_ASSERT_THROW(data.piece(3), sk::util::IndexOutOfBoundsException);
 }
+
+void
+sk::oci::db::bind::DataTest::
+testIndicator()
+{
+  sk::oci::db::bind::IntData data(3, 1);
+  CPPUNIT_ASSERT_EQUAL(3, data.capacity());
+
+  CPPUNIT_ASSERT(data.piece(0).isNull() == true);
+  CPPUNIT_ASSERT(data.piece(0).isTruncated() == false);
+  CPPUNIT_ASSERT(data.piece(1).isNull() == true);
+  CPPUNIT_ASSERT(data.piece(1).isTruncated() == false);
+  CPPUNIT_ASSERT(data.piece(2).isNull() == true);
+  CPPUNIT_ASSERT(data.piece(2).isTruncated() == false);
+
+  *(data.indicatorPointer() + 0) = 0;
+  *(data.indicatorPointer() + 1) = 0;
+  *(data.indicatorPointer() + 2) = 0;
+
+  CPPUNIT_ASSERT(data.piece(0).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(0).isTruncated() == false);
+  CPPUNIT_ASSERT(data.piece(1).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(1).isTruncated() == false);
+  CPPUNIT_ASSERT(data.piece(2).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(2).isTruncated() == false);
+
+  *(data.indicatorPointer() + 0) = -2;
+  *(data.indicatorPointer() + 1) = -2;
+  *(data.indicatorPointer() + 2) = -2;
+
+  CPPUNIT_ASSERT(data.piece(0).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(0).isTruncated() == true);
+  CPPUNIT_ASSERT(data.piece(1).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(1).isTruncated() == true);
+  CPPUNIT_ASSERT(data.piece(2).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(2).isTruncated() == true);
+
+  *(data.indicatorPointer() + 0) = 3;
+  *(data.indicatorPointer() + 1) = 3;
+  *(data.indicatorPointer() + 2) = 3;
+
+  CPPUNIT_ASSERT(data.piece(0).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(0).isTruncated() == true);
+  CPPUNIT_ASSERT(data.piece(1).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(1).isTruncated() == true);
+  CPPUNIT_ASSERT(data.piece(2).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(2).isTruncated() == true);
+
+  *(data.indicatorPointer() + 0) = 0;
+  *(data.indicatorPointer() + 1) = 0;
+  *(data.indicatorPointer() + 2) = 0;
+
+  CPPUNIT_ASSERT(data.piece(0).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(0).isTruncated() == false);
+  CPPUNIT_ASSERT(data.piece(1).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(1).isTruncated() == false);
+  CPPUNIT_ASSERT(data.piece(2).isNull() == false);
+  CPPUNIT_ASSERT(data.piece(2).isTruncated() == false);
+}

@@ -24,6 +24,7 @@ namespace sk {
           CPPUNIT_TEST_SUITE(sk::oci::db::bind::DataTest);
             CPPUNIT_TEST(testBasicsSingle);
             CPPUNIT_TEST(testBasicsCompound);
+            CPPUNIT_TEST(testIndicator);
           CPPUNIT_TEST_SUITE_END();
         
           public:
@@ -34,6 +35,7 @@ namespace sk {
             void tearDown();
             void testBasicsSingle();
             void testBasicsCompound();
+            void testIndicator();
         
           private:
             DataTest(const DataTest& other);
