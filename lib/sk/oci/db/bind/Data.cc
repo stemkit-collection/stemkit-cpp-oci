@@ -40,13 +40,17 @@ void
 sk::oci::db::bind::Data::
 setup(int capacity)
 {                   
+  if(_pieceSize <= 0) {
+    throw sk::util::IllegalStateException("Wrong bind value size");
+  }
   _capacity = std::max(1, capacity);
+  _valueArraySize = _capacity * _pieceSize;
 
   for(int index=0; index < _capacity; ++index) {
     _pieces.add(new bind::Piece(index, *this));
   }
   _descriptors.resize(_capacity * 3, 0);
-  _depot.resize(_pieceSize * _capacity, 0);
+  _depot.resize(_valueArraySize, 0);
 
   std::fill_n(_descriptors.begin(), _capacity, OCI_IND_NULL);
 
@@ -157,14 +161,14 @@ uint32_t
 sk::oci::db::bind::Data::
 size(int index) const
 {
-  return _descriptors[_capacity*2 + index];
+  return _descriptors[(_capacity << 1) + index];
 }
 
 ub2*
 sk::oci::db::bind::Data::
 sizePointer()
 {
-  return &_descriptors[_capacity*2];
+  return &_descriptors[_capacity << 1];
 }
 
 const text* 
@@ -174,14 +178,14 @@ tagPointer() const
   if(tagSize() == 0) {
     throw sk::util::IllegalStateException("Bind tag not set");
   }
-  return reinterpret_cast<const text*>(&_depot[_capacity * _pieceSize]);
+  return reinterpret_cast<const text*>(&_depot[_valueArraySize]);
 }
 
 sb4 
 sk::oci::db::bind::Data::
 tagSize() const
 {
-  int size = _depot.size() - (_pieceSize * _capacity);
+  int size = _depot.size() - _valueArraySize;
   return size > 0 ? size - 1 : 0;
 }
 
@@ -240,7 +244,7 @@ void
 sk::oci::db::bind::Data::
 setSize(int index, uint32_t size)
 {
-  _descriptors[_capacity*2 + index] = size;
+  _descriptors[(_capacity << 1) + index] = size;
 }
 
 bool 

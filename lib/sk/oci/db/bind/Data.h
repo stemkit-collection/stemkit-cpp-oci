@@ -90,9 +90,10 @@ namespace sk {
             } _handle;
 
             int _capacity;
+            int _pieceSize;
+            uint32_t _valueArraySize;
             ub4 _position;
             ub2 _type;
-            int _pieceSize;
             std::vector<ub2> _descriptors;
             std::vector<char> _depot;
 
