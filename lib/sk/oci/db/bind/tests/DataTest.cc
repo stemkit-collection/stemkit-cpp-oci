@@ -85,7 +85,7 @@ testBasicsCompound()
 
 void
 sk::oci::db::bind::DataTest::
-testIndicator()
+testIndicators()
 {
   sk::oci::db::bind::IntData data(3, 1);
   CPPUNIT_ASSERT_EQUAL(3, data.capacity());
@@ -140,4 +140,44 @@ testIndicator()
   CPPUNIT_ASSERT(data.piece(1).isTruncated() == false);
   CPPUNIT_ASSERT(data.piece(2).isNull() == false);
   CPPUNIT_ASSERT(data.piece(2).isTruncated() == false);
+}
+
+void
+sk::oci::db::bind::DataTest::
+testColumnCodes()
+{
+  sk::oci::db::bind::IntData data(3, 1);
+  CPPUNIT_ASSERT_EQUAL(3, data.capacity());
+
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(0).columnCode());
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(1).columnCode());
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(2).columnCode());
+
+  *(data.columnCodePointer() + 0) = 17;
+  *(data.columnCodePointer() + 1) = 18;
+  *(data.columnCodePointer() + 2) = 19;
+
+  CPPUNIT_ASSERT_EQUAL(17U, data.piece(0).columnCode());
+  CPPUNIT_ASSERT_EQUAL(18U, data.piece(1).columnCode());
+  CPPUNIT_ASSERT_EQUAL(19U, data.piece(2).columnCode());
+}
+
+void
+sk::oci::db::bind::DataTest::
+testSizes()
+{
+  sk::oci::db::bind::IntData data(3, 1);
+  CPPUNIT_ASSERT_EQUAL(3, data.capacity());
+
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(0).size());
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(1).size());
+  CPPUNIT_ASSERT_EQUAL(0U, data.piece(2).size());
+
+  *(data.sizePointer() + 0) = 333;
+  *(data.sizePointer() + 1) = 444;
+  *(data.sizePointer() + 2) = 555;
+
+  CPPUNIT_ASSERT_EQUAL(333U, data.piece(0).size());
+  CPPUNIT_ASSERT_EQUAL(444U, data.piece(1).size());
+  CPPUNIT_ASSERT_EQUAL(555U, data.piece(2).size());
 }
