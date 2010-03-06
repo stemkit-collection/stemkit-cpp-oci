@@ -13,15 +13,18 @@
 
 #include <sk/util/Object.h>
 #include <sk/util/String.h>
+#include <sk/util/Holder.hxx>
+#include <sk/rt/Scope.h>
 
 namespace test {
   class App 
     : public virtual sk::util::Object
   {
     public:
-      App(const sk::util::String& config);
+      App();
       virtual ~App();
 
+      static const App& get();
       void setup();
   
       // sk::util::Object re-implementation.
@@ -30,6 +33,9 @@ namespace test {
     private:
       App(const App& other);
       App& operator = (const App& other);
+
+      const sk::rt::Scope _scope;
+      static sk::util::Holder<App> _appHolder;
   };
 }
 

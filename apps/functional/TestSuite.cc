@@ -11,6 +11,9 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <sk/cppunit/TestRunner.h>
 #include <sk/cppunit/SourcePath.h>
+#include <sk/rt/Scope.h>
+#include <sk/rt/config/SpotLocator.h>
+
 #include "App.h"
 
 int main(int argc, const char* argv[])
@@ -21,7 +24,9 @@ int main(int argc, const char* argv[])
   if(argc == 2) {
     sk::cppunit::SourcePath::setBase(argv[1]);
   }
-  test::App app(sk::cppunit::SourcePath::make("config.yaml"));
+  sk::rt::Scope::controller().loadXmlConfig(sk::rt::config::SpotLocator("config.yaml", sk::cppunit::SourcePath::make(".")));
+  test::App app;
+
   app.setup();
 
   runner.addTest(registry.makeTest());

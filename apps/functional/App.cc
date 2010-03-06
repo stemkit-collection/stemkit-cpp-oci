@@ -10,14 +10,21 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
+#include <sk/util/Holder.cxx>
 
 #include "App.h"
 
 static const sk::util::String __className("test::App");
+sk::util::Holder<test::App> test::App::_appHolder;
 
 test::App::
-App(const sk::util::String& config)
+App()
+  : _scope(__className)
 {
+  if(_appHolder.isEmpty() == false) {
+    throw sk::util::IllegalStateException("Only one app instance is allowed");
+  }
+  _appHolder.set(*this);
 }
 
 test::App::
@@ -31,6 +38,14 @@ getClass() const
 {
   return sk::util::Class(__className);
 }
+
+const test::App&
+test::App::
+get() 
+{
+  return _appHolder.get();
+}
+
 
 void
 test::App::
