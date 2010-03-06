@@ -11,6 +11,7 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/Strings.h>
+#include <sk/oci/BindSizeException.h>
 
 #include "CharsData.h"
 
@@ -62,7 +63,7 @@ setValues(const sk::util::Strings& values)
   int size = values.size();
 
   if(size != expected) {
-    throw sk::util::IllegalStateException("Wrong number of bind values: need " + sk::util::String::valueOf(expected) + ", got " + sk::util::String::valueOf(size));
+    throw sk::oci::BindSizeException(getClass().getName(), expected, size);
   }
   for(int index=0; index < size; ++index) {
     setCharsValue(index, values.get(index));

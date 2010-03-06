@@ -11,6 +11,6 @@ local objects =
 use-oracle $(test) $(objects) ;
 use-unit-test $(test) $(objects) ;
 use-stemkit $(test) $(objects) : sk.cppunit sk.util ;
-use-project-libraries $(test) : sk.oci.db.bind ;
+use-project-libraries $(test) : sk.oci sk.oci.db.bind ;
 
 make-cpp-test $(test) : $(objects) ;

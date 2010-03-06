@@ -23,6 +23,9 @@ namespace sk {
         {
           CPPUNIT_TEST_SUITE(sk::oci::db::bind::CharsDataTest);
             CPPUNIT_TEST(testInfo);
+            CPPUNIT_TEST(testMultiValue);
+            CPPUNIT_TEST(testMoreBindValues);
+            CPPUNIT_TEST(testLessBindValues);
           CPPUNIT_TEST_SUITE_END();
         
           public:
@@ -32,6 +35,9 @@ namespace sk {
             void setUp();
             void tearDown();
             void testInfo();
+            void testMultiValue();
+            void testMoreBindValues();
+            void testLessBindValues();
         
           private:
             CharsDataTest(const CharsDataTest& other);
