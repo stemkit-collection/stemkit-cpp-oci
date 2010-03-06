@@ -16,7 +16,7 @@
 namespace sk {
   namespace oci {
     class BindSizeException 
-      : public virtual sk::oci::Exception
+      : public sk::oci::Exception
     {
       public:
         BindSizeException(const sk::util::String& origin, uint32_t expected, uint32_t actual);

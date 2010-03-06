@@ -12,6 +12,7 @@
 #include <sk/util/String.h>
 #include <sk/util/Holder.cxx>
 #include <sk/oci/db/Accessor.h>
+#include <sk/oci/MissingObjectException.h>
 
 #include "App.h"
 
@@ -47,12 +48,15 @@ fixture()
   return _appHolder.getMutable();
 }
 
-
 void
 test::App::
 setup()
 {
   _accessorHolder.set(new sk::oci::db::Accessor(user(), password(), sid()));
+  try {
+    _accessorHolder.getMutable().execute("drop table " + table());
+  }
+  catch(const sk::oci::MissingObjectException& exception) {}
 }
 
 const sk::util::String
@@ -90,6 +94,18 @@ sid() const
   }
   catch(const sk::util::MissingResourceException& exception) {
     throw sk::util::IllegalStateException("Database SID not configured");
+  }
+}
+
+const sk::util::String
+test::App::
+table() const
+{
+  try {
+    return _scope.getProperty("table");
+  }
+  catch(const sk::util::MissingResourceException& exception) {
+    throw sk::util::IllegalStateException("Test table not configured");
   }
 }
 

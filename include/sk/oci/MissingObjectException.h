@@ -8,18 +8,18 @@
  *  Author: Gennady Bystritsky
 */
 
-#ifndef _SK_OCI_TRUNCATEDCOLUMNEXCEPTION_H_
-#define _SK_OCI_TRUNCATEDCOLUMNEXCEPTION_H_
+#ifndef _SK_OCI_MISSINGOBJECTEXCEPTION_H_
+#define _SK_OCI_MISSINGOBJECTEXCEPTION_H_
 
 #include <sk/oci/ErrorException.h>
 
 namespace sk {
   namespace oci {
-    class TruncatedColumnException 
+    class MissingObjectException 
       : public sk::oci::ErrorException
     {
       public:
-        TruncatedColumnException(const sk::util::String& origin, int code, const sk::util::String& message);
+        MissingObjectException(const sk::util::String& origin, int code, const sk::util::String& message);
     
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
@@ -27,4 +27,4 @@ namespace sk {
   }
 }
 
-#endif /* _SK_OCI_TRUNCATEDCOLUMNEXCEPTION_H_ */
+#endif /* _SK_OCI_MISSINGOBJECTEXCEPTION_H_ */

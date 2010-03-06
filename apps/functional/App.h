@@ -42,6 +42,7 @@ namespace test {
       const sk::util::String user() const;
       const sk::util::String password() const;
       const sk::util::String sid() const;
+      const sk::util::String table() const;
 
       const sk::rt::Scope _scope;
       sk::util::Holder<sk::oci::Accessor> _accessorHolder;

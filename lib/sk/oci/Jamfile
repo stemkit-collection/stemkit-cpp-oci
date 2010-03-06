@@ -13,6 +13,7 @@ local objects =
   ConnectionStateException.cc
   TruncatedColumnException.cc
   BindSizeException.cc
+  MissingObjectException.cc
 ;
 
 make-shared-library $(library) : $(objects) ;

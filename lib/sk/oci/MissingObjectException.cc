@@ -11,18 +11,18 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 
-#include <sk/oci/TruncatedColumnException.h>
+#include <sk/oci/MissingObjectException.h>
 
-static const sk::util::String __className("sk::oci::TruncatedColumnException");
+static const sk::util::String __className("sk::oci::MissingObjectException");
 
-sk::oci::TruncatedColumnException::
-TruncatedColumnException(const sk::util::String& origin, int code, const sk::util::String& message)
+sk::oci::MissingObjectException::
+MissingObjectException(const sk::util::String& origin, int code, const sk::util::String& message)
   : sk::oci::ErrorException(origin, code, message)
 {
 }
 
 const sk::util::Class
-sk::oci::TruncatedColumnException::
+sk::oci::MissingObjectException::
 getClass() const
 {
   return sk::util::Class(__className);

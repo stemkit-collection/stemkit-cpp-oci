@@ -18,6 +18,7 @@
 #include <sk/oci/StillExecutingException.h>
 #include <sk/oci/ContinueException.h>
 #include <sk/oci/TruncatedColumnException.h>
+#include <sk/oci/MissingObjectException.h>
 
 sk::oci::db::Handle::
 Handle(ub4 type, db::Environment& env, db::handle::Error& error)
@@ -182,8 +183,11 @@ ensureSuccess(int status, const char* origin) const
         case 0:
           break;
 
+        case 942:
+          throw sk::oci::MissingObjectException(origin, code, &buffer.front());
+
         case 1406:
-          throw sk::oci::TruncatedColumnException(origin);
+          throw sk::oci::TruncatedColumnException(origin, code, &buffer.front());
 
         default:
           throw sk::oci::ErrorException(origin, code, &buffer.front());

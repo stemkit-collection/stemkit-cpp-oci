@@ -7,6 +7,7 @@
   <property name="sid" value="w102a32f.alvspxl09.quest.com" />
   <property name="user" value="gfb" />
   <property name="password" value="gfb" />
+  <property name="table" value="abc" />
 
   <scope name="main">
     <log level="info" show-time="false" />
