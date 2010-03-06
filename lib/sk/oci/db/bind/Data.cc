@@ -65,11 +65,18 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-int 
+const sk::oci::Data& 
 sk::oci::db::bind::Data::
-capacity() const
+piece(int index) const
 {
-  return _capacity;
+  return _pieces.get(index);
+}
+
+sk::oci::Data& 
+sk::oci::db::bind::Data::
+piece(int index)
+{
+  return _pieces.getMutable(index);
 }
 
 const sk::util::String
@@ -107,6 +114,13 @@ defineHandle()
   return _handle.oci_define;
 }
 
+int 
+sk::oci::db::bind::Data::
+capacity() const
+{
+  return _capacity;
+}
+
 ub4 
 sk::oci::db::bind::Data::
 position() const
@@ -114,61 +128,11 @@ position() const
   return _position;
 }
 
-dvoid* 
-sk::oci::db::bind::Data::
-valuePointer()
-{
-  return _pieceSize == 0 ? 0 : &_depot[0];
-}
-
-sb4 
-sk::oci::db::bind::Data::
-valueSize() const
-{
-  return _pieceSize;
-}
-
 ub2 
 sk::oci::db::bind::Data::
 type() const
 {
   return _type;
-}
-
-sb2* 
-sk::oci::db::bind::Data::
-indicatorPointer()
-{
-  return reinterpret_cast<sb2*>(&_descriptors[0]);
-}
-
-uint32_t
-sk::oci::db::bind::Data::
-columnCode(int index) const
-{
-  ub2 code = _descriptors[_capacity + index];
-  return code;
-}
-
-ub2*
-sk::oci::db::bind::Data::
-columnCodePointer()
-{
-  return &_descriptors[_capacity];
-}
-
-uint32_t
-sk::oci::db::bind::Data::
-size(int index) const
-{
-  return _descriptors[(_capacity << 1) + index];
-}
-
-ub2*
-sk::oci::db::bind::Data::
-sizePointer()
-{
-  return &_descriptors[_capacity << 1];
 }
 
 const text* 
@@ -187,6 +151,92 @@ tagSize() const
 {
   int size = _depot.size() - _valueArraySize;
   return size > 0 ? size - 1 : 0;
+}
+
+sb2* 
+sk::oci::db::bind::Data::
+indicatorPointer()
+{
+  return reinterpret_cast<sb2*>(&_descriptors[0]);
+}
+
+sb2
+sk::oci::db::bind::Data::
+indicator(int index) const 
+{
+  return _descriptors[index];
+}
+
+bool 
+sk::oci::db::bind::Data::
+isNull(int index) const
+{
+  return indicator(index) == OCI_IND_NULL;
+}
+
+bool 
+sk::oci::db::bind::Data::
+isTruncated(int index) const
+{
+  sb2 value = indicator(index);
+  return value == -2 || value > 0;
+}
+
+void 
+sk::oci::db::bind::Data::
+setNull(int index, bool state)
+{
+  _descriptors[index] = (state == true ? OCI_IND_NULL : 0);
+}
+
+ub2*
+sk::oci::db::bind::Data::
+columnCodePointer()
+{
+  return &_descriptors[_capacity];
+}
+
+uint32_t
+sk::oci::db::bind::Data::
+columnCode(int index) const
+{
+  ub2 code = _descriptors[_capacity + index];
+  return code;
+}
+
+ub2*
+sk::oci::db::bind::Data::
+sizePointer()
+{
+  return &_descriptors[_capacity << 1];
+}
+
+uint32_t
+sk::oci::db::bind::Data::
+size(int index) const
+{
+  return _descriptors[(_capacity << 1) + index];
+}
+
+void 
+sk::oci::db::bind::Data::
+setSize(int index, uint32_t size)
+{
+  _descriptors[(_capacity << 1) + index] = size;
+}
+
+dvoid* 
+sk::oci::db::bind::Data::
+valuePointer()
+{
+  return _pieceSize == 0 ? 0 : &_depot[0];
+}
+
+sb4 
+sk::oci::db::bind::Data::
+valueSize() const
+{
+  return _pieceSize;
 }
 
 const uint32_t&
@@ -238,56 +288,6 @@ setCharsValue(int index, const sk::util::String& value)
   std::copy(value.begin(), value.begin() + length, &_depot[_pieceSize * index]);
   setSize(index, length + 1);
   setNull(index, false);
-}
-
-void 
-sk::oci::db::bind::Data::
-setSize(int index, uint32_t size)
-{
-  _descriptors[(_capacity << 1) + index] = size;
-}
-
-bool 
-sk::oci::db::bind::Data::
-isNull(int index) const
-{
-  return indicator(index) == OCI_IND_NULL;
-}
-
-void 
-sk::oci::db::bind::Data::
-setNull(int index, bool state)
-{
-  _descriptors[index] = (state == true ? OCI_IND_NULL : 0);
-}
-
-bool 
-sk::oci::db::bind::Data::
-isTruncated(int index) const
-{
-  sb2 value = indicator(index);
-  return value == -2 || value > 0;
-}
-
-const sk::oci::Data& 
-sk::oci::db::bind::Data::
-piece(int index) const
-{
-  return _pieces.get(index);
-}
-
-sk::oci::Data& 
-sk::oci::db::bind::Data::
-piece(int index)
-{
-  return _pieces.getMutable(index);
-}
-
-sb2
-sk::oci::db::bind::Data::
-indicator(int index) const 
-{
-  return _descriptors[index];
 }
 
 int 
