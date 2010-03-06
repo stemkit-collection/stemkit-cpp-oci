@@ -25,10 +25,20 @@ int main(int argc, const char* argv[])
     sk::cppunit::SourcePath::setBase(argv[1]);
   }
   sk::rt::Scope::controller().loadXmlConfig(sk::rt::config::SpotLocator("config.yaml", sk::cppunit::SourcePath::make(".")));
+  sk::rt::Scope scope("main");
   test::App app;
 
-  app.setup();
-
+  try {
+    app.setup();
+  }
+  catch(const sk::util::Exception& exception) {
+    scope.error() << exception.getMessage();
+    return 2;
+  }
+  catch(const std::exception& exception) {
+    scope.error() << exception.what();
+    return 2;
+  }
   runner.addTest(registry.makeTest());
   return !runner.run();
 }

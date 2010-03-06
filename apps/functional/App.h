@@ -15,6 +15,7 @@
 #include <sk/util/String.h>
 #include <sk/util/Holder.hxx>
 #include <sk/rt/Scope.h>
+#include <sk/oci/Accessor.h>
 
 namespace test {
   class App 
@@ -26,6 +27,8 @@ namespace test {
 
       static const App& get();
       void setup();
+
+      sk::oci::Accessor& getDatabase();
   
       // sk::util::Object re-implementation.
       const sk::util::Class getClass() const;
@@ -34,7 +37,13 @@ namespace test {
       App(const App& other);
       App& operator = (const App& other);
 
+      const sk::util::String user() const;
+      const sk::util::String password() const;
+      const sk::util::String sid() const;
+
       const sk::rt::Scope _scope;
+      sk::util::Holder<sk::oci::Accessor> _accessorHolder;
+
       static sk::util::Holder<App> _appHolder;
   };
 }

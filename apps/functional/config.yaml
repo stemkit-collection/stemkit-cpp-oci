@@ -1,4 +1,14 @@
+<!-- vim: ft=xml: sw=2:
+-->
 
 <scope>
-  <log level="detail" show-time="true" />
+  <log level="info" show-time="true" />
+
+  <property name="sid" value="w102a32f.alvspxl09.quest.com" />
+  <property name="user" value="gfb" />
+  <property name="password" value="gfb" />
+
+  <scope name="main">
+    <log level="info" show-time="false" />
+  </scope>
 </scope>

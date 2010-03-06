@@ -11,6 +11,7 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/Holder.cxx>
+#include <sk/oci/db/Accessor.h>
 
 #include "App.h"
 
@@ -51,4 +52,50 @@ void
 test::App::
 setup()
 {
+  _accessorHolder.set(new sk::oci::db::Accessor(user(), password(), sid()));
+}
+
+const sk::util::String
+test::App::
+user() const
+{
+  const sk::util::String name = sid();
+  try {
+    return _scope.getProperty("user");
+  }
+  catch(const sk::util::MissingResourceException& exception) {
+    throw sk::util::IllegalStateException("User name for accessing sid " + name.inspect() + " not configured");
+  }
+}
+
+const sk::util::String
+test::App::
+password() const
+{
+  const sk::util::String username = user();
+  try {
+    return _scope.getProperty("password");
+  }
+  catch(const sk::util::MissingResourceException& exception) {
+    throw sk::util::IllegalStateException("Password for user " + username.inspect() + " not configured");
+  }
+}
+
+const sk::util::String
+test::App::
+sid() const
+{
+  try {
+    return _scope.getProperty("sid");
+  }
+  catch(const sk::util::MissingResourceException& exception) {
+    throw sk::util::IllegalStateException("Database SID not configured");
+  }
+}
+
+sk::oci::Accessor&
+test::App::
+getDatabase()
+{
+  return _accessorHolder.getMutable();
 }
