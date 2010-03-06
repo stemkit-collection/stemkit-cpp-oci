@@ -14,3 +14,5 @@ local program ;
 for program in $(programs) {
   make-program $(program) : $(program).cc ;
 }
+
+make-subdirs functional ;
