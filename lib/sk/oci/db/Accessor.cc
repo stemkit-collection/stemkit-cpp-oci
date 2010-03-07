@@ -132,7 +132,7 @@ sk::oci::db::Accessor::
 commit()
 {
   ensureConnected(_connected, __FUNCTION__);
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  _data.service.commit();
 }
 
 void 
@@ -140,7 +140,7 @@ sk::oci::db::Accessor::
 rollback()
 {
   ensureConnected(_connected, __FUNCTION__);
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  _data.service.rollback();
 }
 
 uint64_t 

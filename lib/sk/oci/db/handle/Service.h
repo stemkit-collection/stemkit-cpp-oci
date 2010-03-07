@@ -35,6 +35,14 @@ namespace sk {
               setAttr(_session.getHandle(), 0, OCI_ATTR_SESSION);
             }
 
+            void commit() {
+              SK_OCI_ENSURE_SUCCESS(OCITransCommit(getHandle(), error().getHandle(), OCI_DEFAULT));
+            }
+
+            void rollback() {
+              SK_OCI_ENSURE_SUCCESS(OCITransRollback(getHandle(), error().getHandle(), OCI_DEFAULT));
+            }
+
             void reset() {
               if(haveHandle() == false) {
                 return;
