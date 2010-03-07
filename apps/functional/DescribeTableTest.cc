@@ -51,9 +51,13 @@ testDefaultTable()
 
   CPPUNIT_ASSERT_EQUAL("ID", table.columnAt(0).getName());
   CPPUNIT_ASSERT_EQUAL("NUMBER", table.columnAt(0).getType().inspect());
+  CPPUNIT_ASSERT(table.columnAt(0).getType().isNumber() == true);
+  CPPUNIT_ASSERT(table.columnAt(0).getType().isVarChar() == false);
   CPPUNIT_ASSERT_EQUAL(22, table.columnAt(0).getSize());
 
   CPPUNIT_ASSERT_EQUAL("NAME", table.columnAt(1).getName());
   CPPUNIT_ASSERT_EQUAL("VARCHAR", table.columnAt(1).getType().inspect());
+  CPPUNIT_ASSERT(table.columnAt(1).getType().isNumber() == false);
+  CPPUNIT_ASSERT(table.columnAt(1).getType().isVarChar() == true);
   CPPUNIT_ASSERT_EQUAL(40, table.columnAt(1).getSize());
 }
