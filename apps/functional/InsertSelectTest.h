@@ -20,7 +20,8 @@ class InsertSelectTest
   CPPUNIT_TEST_SUITE(InsertSelectTest);
     CPPUNIT_TEST(testSelectList);
     CPPUNIT_TEST(testRowCountAfterInsert);
-    CPPUNIT_TEST(testInsertSelect);
+    CPPUNIT_TEST(testInsertAsIterations);
+    CPPUNIT_TEST(testInsertAsArray);
   CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -31,7 +32,8 @@ class InsertSelectTest
     void tearDown();
     void testSelectList();
     void testRowCountAfterInsert();
-    void testInsertSelect();
+    void testInsertAsIterations();
+    void testInsertAsArray();
 
   private:
     InsertSelectTest(const InsertSelectTest& other);
