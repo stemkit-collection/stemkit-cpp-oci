@@ -186,7 +186,7 @@ rule platform-macos
   project.MAKE_DLL = false ;
 
   TOOLS_HOME = /opt/sk/platform/$(JAMCONFIG_PRODUCT_PLATFORM) ;
-  project.ORACLE_HOME = /Users/oracle/app/10.2.0.4/instant-client ;
+  project.ORACLE_HOME = /opt/sk/oracle-client/darwin/10.2.0.4 ;
 
   GCC_VERSION = 4.2 ;
   CPPUNIT_VERSION = 1.12 ;
