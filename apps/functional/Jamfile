@@ -6,6 +6,7 @@ local objects =
   TestSuite.cc
   App.cc
   DescribeTableTest.cc
+  InsertSelectTest.cc
 ;
 
 use-unit-test $(test) $(objects) ;

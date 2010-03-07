@@ -91,7 +91,9 @@ test::App::
 reset()
 {
   if(_accessorHolder.isEmpty() == false) {
-    dropTestTable();
+    if(_scope.getProperty("reset-drops-table", sk::util::Boolean::B_TRUE) == true) {
+      dropTestTable();
+    }
     _accessorHolder.clear();
   }
 }
