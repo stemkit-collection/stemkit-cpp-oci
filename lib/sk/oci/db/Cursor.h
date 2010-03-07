@@ -39,7 +39,6 @@ namespace sk {
           void forEachColumn(const sk::util::Processor<const info::Column>& processor);
           uint32_t fetch();
           bool hasInfo() const;
-          void setCapacity(uint32_t capacity);
           void useTruncate(bool state);
           void useColumnCodes(bool state);
 
@@ -48,6 +47,7 @@ namespace sk {
           int bindCharsAt(int position, int size);
 
           // sk::oci::BindRegistry implementation.
+          void setCapacity(uint32_t capacity);
           const sk::oci::Data& boundData(int bid) const;
           sk::oci::Data& boundMutableData(int bid);
 

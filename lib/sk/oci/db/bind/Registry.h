@@ -13,7 +13,7 @@
 
 #include <sk/util/ArrayList.hxx>
 #include <sk/util/Integers.h>
-#include <sk/oci/BindRegistry.h>
+#include <sk/oci/Data.h>
 #include "Provider.h"
 
 namespace sk {
@@ -23,7 +23,7 @@ namespace sk {
         class Data;
 
         class Registry 
-          : public virtual sk::oci::BindRegistry
+          : public virtual sk::util::Object
         {
           public:
             Registry();

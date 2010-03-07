@@ -40,7 +40,6 @@ namespace sk {
         virtual bool isDeclare() const = 0;
 
         virtual void setDescribeOnly(bool state) = 0;
-        virtual void setIterations(uint32_t number) = 0;
         virtual void setRowOffset(uint32_t number) = 0;
 
         // Resolving ambiguity between input and output binders.

@@ -82,7 +82,7 @@ testRowCountAfterInsert()
 
   struct Director : public sk::oci::abstract::Director {
     void prepareStatement(sk::oci::Statement& statement) const {
-      statement.setIterations(5);
+      statement.setCapacity(5);
     }
   };
   accessor().execute("insert into " + testTable() + " values (3, 'uuu')", Director());

@@ -55,7 +55,6 @@ namespace sk {
 
           // sk::oci::Statement implementation.
           void setDescribeOnly(bool state);
-          void setIterations(uint32_t number);
           void setRowOffset(uint32_t offset);
 
           // sk::oci::InputPositionBinder implementation.
@@ -75,6 +74,7 @@ namespace sk {
           int bindIntTag(const sk::util::String& tag);
 
           // sk::oci::BindRegistry implementation.
+          void setCapacity(uint32_t number);
           const sk::oci::Data& boundData(int bid) const;
           sk::oci::Data& boundMutableData(int bid);
 
@@ -99,7 +99,7 @@ namespace sk {
           db::bind::Registry _bindRegistry;
           ub4 _mode;
           ub4 _type;
-          ub4 _iterations;
+          ub4 _capacity;
           ub4 _offset;
 
           bool _useColumnCodes;

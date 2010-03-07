@@ -32,7 +32,6 @@ namespace sk {
         virtual uint32_t fetch() = 0;
         virtual bool hasInfo() const = 0;
 
-        virtual void setCapacity(uint32_t capacity) = 0;
         virtual void useTruncate(bool state) = 0;
         virtual void useColumnCodes(bool state) = 0;
     };

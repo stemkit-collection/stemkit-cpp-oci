@@ -19,7 +19,7 @@ static const sk::util::String __className("sk::oci::db::Statement");
 
 sk::oci::db::Statement::
 Statement(db::handle::Error& error, const sk::util::String& sql)
-  : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT), _iterations(1), _offset(0),
+  : db::Handle(OCI_HTYPE_STMT, error.environment(), error), _mode(OCI_DEFAULT), _capacity(1), _offset(0),
     _useColumnCodes(false), _useTruncate(false), _info(false)
 {
   init();
@@ -27,7 +27,7 @@ Statement(db::handle::Error& error, const sk::util::String& sql)
   _type = getIntAttr(OCI_ATTR_STMT_TYPE);
 
   if(isSelect() == true) {
-    _iterations = 0;
+    _capacity = 0;
   }
 }
 
@@ -55,7 +55,7 @@ void
 sk::oci::db::Statement::
 execute(db::handle::Service& service) 
 {
-  SK_OCI_ENSURE_SUCCESS(OCIStmtExecute(service.getHandle(), getHandle(), error().getHandle(), _iterations, _offset, 0, 0, _mode));
+  SK_OCI_ENSURE_SUCCESS(OCIStmtExecute(service.getHandle(), getHandle(), error().getHandle(), _capacity, _offset, 0, 0, _mode));
 }
 
 void
@@ -144,16 +144,16 @@ setDescribeOnly(bool state)
 
 void
 sk::oci::db::Statement::
-setIterations(uint32_t number)
+setCapacity(uint32_t number)
 {
-  _iterations = number;
+  _capacity = number;
 }
 
 uint32_t
 sk::oci::db::Statement::
 datasetSize() const
 {
-  return _iterations;
+  return _capacity;
 }
 
 void

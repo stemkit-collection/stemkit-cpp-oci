@@ -21,6 +21,7 @@ namespace sk {
       : public virtual sk::util::Object
     {
       public:
+        virtual void setCapacity(uint32_t number) = 0;
         virtual const sk::oci::Data& boundData(int bid) const = 0;
         virtual sk::oci::Data& boundMutableData(int bid) = 0;
     };
