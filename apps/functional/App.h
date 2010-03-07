@@ -31,6 +31,9 @@ namespace test {
 
       // app::Fixture implementation.
       sk::oci::Accessor& dbAccessor();
+      void dropTestTable();
+      void createTestTable();
+      void truncateTestTable();
   
       // sk::util::Object re-implementation.
       const sk::util::Class getClass() const;
@@ -38,6 +41,8 @@ namespace test {
     private:
       App(const App& other);
       App& operator = (const App& other);
+
+      void reset();
 
       const sk::util::String user() const;
       const sk::util::String password() const;

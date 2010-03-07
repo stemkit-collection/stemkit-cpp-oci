@@ -32,6 +32,7 @@ App()
 test::App::
 ~App()
 {
+  reset();
 }
 
 const sk::util::Class
@@ -53,10 +54,46 @@ test::App::
 setup()
 {
   _accessorHolder.set(new sk::oci::db::Accessor(user(), password(), sid()));
+  dropTestTable();
+  createTestTable();
+  truncateTestTable();
+}
+
+void
+test::App::
+dropTestTable()
+{
   try {
-    _accessorHolder.getMutable().execute("drop table " + table());
+    dbAccessor().execute("drop table " + table());
+    _scope.notice() << "Table " + table().inspect() + " dropped";
   }
   catch(const sk::oci::MissingObjectException& exception) {}
+}
+
+void
+test::App::
+createTestTable()
+{
+  dbAccessor().execute("create table " + table() + " (id integer, name varchar2(40))");
+  _scope.notice() << "Table " + table().inspect() + " created";
+}
+
+void
+test::App::
+truncateTestTable()
+{
+  dbAccessor().execute("truncate table " + table());
+  _scope.notice() << "Table " + table().inspect() + " truncated";
+}
+
+void
+test::App::
+reset()
+{
+  if(_accessorHolder.isEmpty() == false) {
+    dropTestTable();
+    _accessorHolder.clear();
+  }
 }
 
 const sk::util::String
