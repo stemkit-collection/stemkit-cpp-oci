@@ -56,7 +56,6 @@ setup()
   _accessorHolder.set(new sk::oci::db::Accessor(user(), password(), sid()));
   dropTestTable();
   createTestTable();
-  truncateTestTable();
 }
 
 void
