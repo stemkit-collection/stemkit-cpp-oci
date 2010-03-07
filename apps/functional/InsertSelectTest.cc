@@ -12,6 +12,7 @@
 #include "App.h"
 #include <sk/oci/abstract/Director.h>
 #include <sk/util/IndexOutOfBoundsException.h>
+#include <sk/oci/Data.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(InsertSelectTest);
 
@@ -86,4 +87,55 @@ testRowCountAfterInsert()
   };
   accessor().execute("insert into " + testTable() + " values (3, 'uuu')", Director());
   CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+}
+
+void
+InsertSelectTest::
+testInsertSelect()
+{
+  struct InsertingDirector : public sk::oci::abstract::Director {
+    InsertingDirector(int iterations)
+      : _iterations(iterations), _counter(0) {}
+
+    void prepareStatement(sk::oci::Statement& statement) const {
+      if(_counter == 0) {
+        statement.bindIntTag(":num");
+        statement.bindCharsTag(":str", 40);
+      }
+      statement.boundMutableData(0).setIntValue(++_counter);
+      statement.boundMutableData(1).setCharsValue(sk::util::String("a") * _counter);
+    }
+
+    bool nextIteration() const {
+      return _counter < _iterations;
+    }
+
+    mutable int _counter;
+    const int _iterations;
+  };
+  accessor().execute("insert into " + testTable() + " values (:num, :str)", InsertingDirector(5));
+
+  sk::util::Strings depot;
+  struct SelectingDirector : public sk::oci::abstract::Director {
+    SelectingDirector(sk::util::Strings& depot) 
+      : _depot(depot) {}
+
+    void processCursor(sk::oci::Cursor& cursor) const {
+      const sk::oci::Data& num = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& str = cursor.boundData(cursor.bindCharsAt(2, 40));
+
+      while(cursor.fetch() != 0) {
+        _depot << sk::util::String::valueOf(num.intValue()) + ':' + str.stringValue();
+      }
+    }
+    sk::util::Strings& _depot;
+  };
+  accessor().execute("select * from " + testTable(), SelectingDirector(depot));
+
+  CPPUNIT_ASSERT_EQUAL(5, depot.size());
+  CPPUNIT_ASSERT_EQUAL("1:a", depot.get(0));
+  CPPUNIT_ASSERT_EQUAL("2:aa", depot.get(1));
+  CPPUNIT_ASSERT_EQUAL("3:aaa", depot.get(2));
+  CPPUNIT_ASSERT_EQUAL("4:aaaa", depot.get(3));
+  CPPUNIT_ASSERT_EQUAL("5:aaaaa", depot.get(4));
 }

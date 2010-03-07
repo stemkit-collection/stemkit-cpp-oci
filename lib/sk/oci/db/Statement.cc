@@ -56,7 +56,6 @@ sk::oci::db::Statement::
 execute(db::handle::Service& service) 
 {
   SK_OCI_ENSURE_SUCCESS(OCIStmtExecute(service.getHandle(), getHandle(), error().getHandle(), _iterations, _offset, 0, 0, _mode));
-  _offset += _iterations;
 }
 
 void
