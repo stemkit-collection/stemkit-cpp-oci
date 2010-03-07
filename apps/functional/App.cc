@@ -64,8 +64,8 @@ test::App::
 dropTestTable()
 {
   try {
-    dbAccessor().execute("drop table " + table());
-    _scope.notice() << "Table " + table().inspect() + " dropped";
+    dbAccessor().execute("drop table " + testTable());
+    _scope.notice() << "Table " + testTable().inspect() + " dropped";
   }
   catch(const sk::oci::MissingObjectException& exception) {}
 }
@@ -74,16 +74,16 @@ void
 test::App::
 createTestTable()
 {
-  dbAccessor().execute("create table " + table() + " (id integer, name varchar2(40))");
-  _scope.notice() << "Table " + table().inspect() + " created";
+  dbAccessor().execute("create table " + testTable() + " (id integer, name varchar2(40))");
+  _scope.notice() << "Table " + testTable().inspect() + " created";
 }
 
 void
 test::App::
 truncateTestTable()
 {
-  dbAccessor().execute("truncate table " + table());
-  _scope.notice() << "Table " + table().inspect() + " truncated";
+  dbAccessor().execute("truncate table " + testTable());
+  _scope.notice() << "Table " + testTable().inspect() + " truncated";
 }
 
 void
@@ -136,7 +136,7 @@ sid() const
 
 const sk::util::String
 test::App::
-table() const
+testTable() const
 {
   try {
     return _scope.getProperty("table");

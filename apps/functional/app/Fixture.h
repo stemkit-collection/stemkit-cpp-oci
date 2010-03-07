@@ -19,6 +19,8 @@ namespace app {
   {
     public:
       virtual sk::oci::Accessor& dbAccessor() = 0;
+      virtual const sk::util::String testTable() const = 0;
+
       virtual void dropTestTable() = 0;
       virtual void createTestTable() = 0;
       virtual void truncateTestTable() = 0;

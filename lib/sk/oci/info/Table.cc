@@ -61,3 +61,17 @@ inspect() const
 
   return "<Table: " + depot.join(", ") + ">";
 }
+
+int
+sk::oci::info::Table::
+columnCount() const
+{
+  return _columns.size();
+}
+
+const sk::oci::info::Column&
+sk::oci::info::Table::
+columnAt(int index) const
+{
+  return _columns.get(index);
+}

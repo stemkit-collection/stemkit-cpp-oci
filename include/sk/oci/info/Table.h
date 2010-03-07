@@ -29,6 +29,9 @@ namespace sk {
 
           void add(const info::Column& column);
           const sk::util::String getName() const;
+
+          int columnCount() const;
+          const info::Column& columnAt(int index) const;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
