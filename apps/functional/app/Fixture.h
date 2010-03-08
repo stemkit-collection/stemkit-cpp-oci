@@ -24,6 +24,10 @@ namespace app {
       virtual void dropTestTable() = 0;
       virtual void createTestTable(const sk::util::String& content) = 0;
       virtual void truncateTestTable() = 0;
+
+      virtual const sk::util::String user() const = 0;
+      virtual const sk::util::String password() const = 0;
+      virtual const sk::util::String sid() const = 0;
   };
 }
 
