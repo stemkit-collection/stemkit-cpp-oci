@@ -239,16 +239,16 @@ valueSize() const
   return _pieceSize;
 }
 
-const uint32_t&
+const int32_t&
 sk::oci::db::bind::Data::
 intValue(int index) const
 {
-  if(_pieceSize != sizeof(uint32_t)) {
+  if(_pieceSize != sizeof(int32_t)) {
     throw sk::util::IllegalStateException(SK_METHOD);
   }
   union data_map_t {
-    char buffer[sizeof(uint32_t)];
-    uint32_t value;
+    char buffer[sizeof(int32_t)];
+    int32_t value;
   };
 
   const data_map_t* data = reinterpret_cast<const data_map_t*>(&_depot[_pieceSize * index]);
@@ -257,14 +257,14 @@ intValue(int index) const
 
 void
 sk::oci::db::bind::Data::
-setIntValue(int index, uint32_t value)
+setIntValue(int index, int32_t value)
 {
-  if(_pieceSize != sizeof(uint32_t)) {
+  if(_pieceSize != sizeof(int32_t)) {
     throw sk::util::IllegalStateException(SK_METHOD);
   }
   union data_map_t {
-    char buffer[sizeof(uint32_t)];
-    uint32_t value;
+    char buffer[sizeof(int32_t)];
+    int32_t value;
   };
 
   data_map_t* data = reinterpret_cast<data_map_t*>(&_depot[_pieceSize * index]);

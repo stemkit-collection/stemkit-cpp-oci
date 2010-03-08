@@ -24,7 +24,7 @@ namespace sk {
 
         virtual const sk::util::String info() const = 0;
 
-        virtual const uint32_t& intValue() const = 0;
+        virtual const int32_t& intValue() const = 0;
         virtual const char* charsValue() const = 0;
         virtual const sk::util::String stringValue() const = 0;
 
@@ -34,7 +34,7 @@ namespace sk {
         virtual bool isNull() const = 0;
         virtual bool isTruncated() const = 0;
 
-        virtual void setIntValue(uint32_t value) = 0;
+        virtual void setIntValue(int32_t value) = 0;
         virtual void setCharsValue(const sk::util::String& value) = 0;
         virtual void setNull(bool state) = 0;
     };

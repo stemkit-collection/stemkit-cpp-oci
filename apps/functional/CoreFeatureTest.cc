@@ -282,8 +282,8 @@ testReadNull()
 
       CPPUNIT_ASSERT_EQUAL(3U, cursor.fetch());
 
-      CPPUNIT_ASSERT_EQUAL(7U, id.piece(0).intValue());
-      CPPUNIT_ASSERT_EQUAL(9U, id.piece(2).intValue());
+      CPPUNIT_ASSERT_EQUAL(7, id.piece(0).intValue());
+      CPPUNIT_ASSERT_EQUAL(9, id.piece(2).intValue());
       CPPUNIT_ASSERT_EQUAL("aaa", name.piece(0).stringValue());
       CPPUNIT_ASSERT_EQUAL("zzz", name.piece(1).stringValue());
 
@@ -328,7 +328,7 @@ testWriteNull()
       CPPUNIT_ASSERT(name.piece(0).isNull() == false);
       CPPUNIT_ASSERT(name.piece(1).isNull() == true);
 
-      CPPUNIT_ASSERT_EQUAL(8U, id.piece(1).intValue());
+      CPPUNIT_ASSERT_EQUAL(8, id.piece(1).intValue());
       CPPUNIT_ASSERT_EQUAL("abc", name.piece(0).stringValue());
     }
   };

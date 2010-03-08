@@ -69,7 +69,7 @@ inspect() const
   return _data.inspect(_index);
 }
 
-const uint32_t& 
+const int32_t& 
 sk::oci::db::bind::Piece::
 intValue() const
 {
@@ -78,7 +78,7 @@ intValue() const
 
 void 
 sk::oci::db::bind::Piece::
-setIntValue(uint32_t value)
+setIntValue(int32_t value)
 {
   _data.setIntValue(_index, value);
 }

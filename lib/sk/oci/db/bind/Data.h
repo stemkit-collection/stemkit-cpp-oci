@@ -60,10 +60,10 @@ namespace sk {
             uint32_t size(int index) const;
             uint32_t columnCode(int index) const;
 
-            const uint32_t& intValue(int index)const;
+            const int32_t& intValue(int index)const;
             const char* charsValue(int index) const;
             
-            void setIntValue(int index, uint32_t value);
+            void setIntValue(int index, int32_t value);
             void setCharsValue(int index, const sk::util::String& value);
             void setNull(int index, bool state);
 

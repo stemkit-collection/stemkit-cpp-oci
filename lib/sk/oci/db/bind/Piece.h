@@ -32,11 +32,11 @@ namespace sk {
 
             const sk::util::String info() const;
 
-            const uint32_t& intValue() const;
+            const int32_t& intValue() const;
             const char* charsValue() const;
             const sk::util::String stringValue() const;
 
-            void setIntValue(uint32_t value);
+            void setIntValue(int32_t value);
             void setCharsValue(const sk::util::String& value);
             void setNull(bool state);
 
