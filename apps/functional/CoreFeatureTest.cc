@@ -264,3 +264,73 @@ testCommit()
 
   CPPUNIT_ASSERT_EQUAL(uint64_t(7), another.tableSize(testTable()));
 }
+
+void 
+CoreFeatureTest::
+testReadNull()
+{
+  accessor().execute("insert into " + testTable() + " values (7, 'aaa')");
+  accessor().execute("insert into " + testTable() + " values (NULL, 'zzz')");
+  accessor().execute("insert into " + testTable() + " values (9, NULL)");
+
+  struct Director : public sk::oci::abstract::Director {
+    void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.setCapacity(5);
+
+      const sk::oci::Data& id = cursor.boundData((cursor.bindIntAt(1)));
+      const sk::oci::Data& name = cursor.boundData((cursor.bindCharsAt(2, 40)));
+
+      CPPUNIT_ASSERT_EQUAL(3U, cursor.fetch());
+
+      CPPUNIT_ASSERT_EQUAL(7U, id.piece(0).intValue());
+      CPPUNIT_ASSERT_EQUAL(9U, id.piece(2).intValue());
+      CPPUNIT_ASSERT_EQUAL("aaa", name.piece(0).stringValue());
+      CPPUNIT_ASSERT_EQUAL("zzz", name.piece(1).stringValue());
+
+      CPPUNIT_ASSERT(id.piece(0).isNull() == false);
+      CPPUNIT_ASSERT(id.piece(1).isNull() == true);
+
+      CPPUNIT_ASSERT(name.piece(1).isNull() == false);
+      CPPUNIT_ASSERT(name.piece(2).isNull() == true);
+    }
+  };
+  accessor().execute("select * from " + testTable(), Director());
+}
+
+void
+CoreFeatureTest::
+testWriteNull()
+{
+  struct InsertingDirector : public sk::oci::abstract::Director {
+    void prepareStatement(sk::oci::Statement& statement) const {
+      statement.setCapacity(2);
+
+      sk::oci::Data& id = statement.boundMutableData(statement.bindIntTag(":id", sk::util::Integers() << 0 << 8));
+      sk::oci::Data& name = statement.boundMutableData(statement.bindCharsTag(":name", 40, sk::util::Strings() << "abc" << ""));
+
+      id.piece(0).setNull(true);
+      name.piece(1).setNull(true);
+    }
+  };
+  accessor().execute("insert into " + testTable() + " values (:id, :name)", InsertingDirector());
+
+  struct SelectingDirector : public sk::oci::abstract::Director {
+    void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.setCapacity(4);
+
+      const sk::oci::Data& id = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& name = cursor.boundData(cursor.bindCharsAt(2, 40));
+
+      CPPUNIT_ASSERT_EQUAL(2U, cursor.fetch());
+
+      CPPUNIT_ASSERT(id.piece(0).isNull() == true);
+      CPPUNIT_ASSERT(id.piece(1).isNull() == false);
+      CPPUNIT_ASSERT(name.piece(0).isNull() == false);
+      CPPUNIT_ASSERT(name.piece(1).isNull() == true);
+
+      CPPUNIT_ASSERT_EQUAL(8U, id.piece(1).intValue());
+      CPPUNIT_ASSERT_EQUAL("abc", name.piece(0).stringValue());
+    }
+  };
+  accessor().execute("select * from " + testTable(), SelectingDirector());
+}

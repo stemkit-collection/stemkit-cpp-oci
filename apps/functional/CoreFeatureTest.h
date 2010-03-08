@@ -26,6 +26,8 @@ class CoreFeatureTest
     CPPUNIT_TEST(testRollback);
     CPPUNIT_TEST(testRollbackAfterCommit);
     CPPUNIT_TEST(testCommit);
+    CPPUNIT_TEST(testReadNull);
+    CPPUNIT_TEST(testWriteNull);
   CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -43,6 +45,8 @@ class CoreFeatureTest
     void testRollback();
     void testRollbackAfterCommit();
     void testCommit();
+    void testReadNull();
+    void testWriteNull();
 
   private:
     CoreFeatureTest(const CoreFeatureTest& other);

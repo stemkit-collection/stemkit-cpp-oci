@@ -37,7 +37,6 @@ namespace sk {
         virtual void setIntValue(uint32_t value) = 0;
         virtual void setCharsValue(const sk::util::String& value) = 0;
         virtual void setNull(bool state) = 0;
-
     };
   }
 }
