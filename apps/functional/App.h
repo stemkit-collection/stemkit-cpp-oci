@@ -33,7 +33,7 @@ namespace test {
       sk::oci::Accessor& dbAccessor();
       const sk::util::String testTable() const;
       void dropTestTable();
-      void createTestTable();
+      void createTestTable(const sk::util::String& content);
       void truncateTestTable();
   
       // sk::util::Object re-implementation.

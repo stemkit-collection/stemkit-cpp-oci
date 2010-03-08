@@ -22,7 +22,7 @@ namespace app {
       virtual const sk::util::String testTable() const = 0;
 
       virtual void dropTestTable() = 0;
-      virtual void createTestTable() = 0;
+      virtual void createTestTable(const sk::util::String& content) = 0;
       virtual void truncateTestTable() = 0;
   };
 }

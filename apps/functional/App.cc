@@ -55,7 +55,6 @@ setup()
 {
   _accessorHolder.set(new sk::oci::db::Accessor(user(), password(), sid()));
   dropTestTable();
-  createTestTable();
 }
 
 void
@@ -71,9 +70,9 @@ dropTestTable()
 
 void
 test::App::
-createTestTable()
+createTestTable(const sk::util::String& content)
 {
-  dbAccessor().execute("create table " + testTable() + " (id integer, name varchar2(40))");
+  dbAccessor().execute("create table " + testTable() + " (" + content + ")");
   _scope.notice() << "Table " + testTable().inspect() + " created";
 }
 
