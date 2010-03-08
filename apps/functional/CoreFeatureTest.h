@@ -23,6 +23,9 @@ class CoreFeatureTest
     CPPUNIT_TEST(testRowCountAfterInsert);
     CPPUNIT_TEST(testInsertAsIterations);
     CPPUNIT_TEST(testInsertAsArray);
+    CPPUNIT_TEST(testRollback);
+    CPPUNIT_TEST(testRollbackAfterCommit);
+    CPPUNIT_TEST(testCommit);
   CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -37,6 +40,9 @@ class CoreFeatureTest
     void testRowCountAfterInsert();
     void testInsertAsIterations();
     void testInsertAsArray();
+    void testRollback();
+    void testRollbackAfterCommit();
+    void testCommit();
 
   private:
     CoreFeatureTest(const CoreFeatureTest& other);

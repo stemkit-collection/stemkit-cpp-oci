@@ -20,6 +20,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CoreFeatureTest);
 #include <sk/util/IndexOutOfBoundsException.h>
 #include <sk/oci/Data.h>
 
+#include <sk/oci/db/Accessor.h>
+
 CoreFeatureTest::
 CoreFeatureTest()
 {
@@ -218,4 +220,47 @@ testInsertAsArray()
   CPPUNIT_ASSERT_EQUAL("1:b", depot.get(0));
   CPPUNIT_ASSERT_EQUAL("2:bb", depot.get(1));
   CPPUNIT_ASSERT_EQUAL("3:bbb", depot.get(2));
+}
+
+void 
+CoreFeatureTest::
+testRollback()
+{
+  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  insertAsArray(7, "z");
+  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+
+  accessor().rollback();
+
+  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+}
+
+void 
+CoreFeatureTest::
+testRollbackAfterCommit()
+{
+  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  insertAsArray(7, "z");
+  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+
+  accessor().commit();
+  accessor().rollback();
+
+  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+}
+
+void 
+CoreFeatureTest::
+testCommit()
+{
+  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  insertAsArray(7, "z");
+  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+
+  sk::oci::db::Accessor another(fixture().user(), fixture().password(), fixture().sid());
+  CPPUNIT_ASSERT_EQUAL(uint64_t(0), another.tableSize(testTable()));
+
+  accessor().commit();
+
+  CPPUNIT_ASSERT_EQUAL(uint64_t(7), another.tableSize(testTable()));
 }
