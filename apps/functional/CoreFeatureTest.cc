@@ -118,84 +118,117 @@ testRowCountAfterInsert()
   CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
 }
 
-namespace {
-  void insertAsIterations(int amount, const sk::util::String& data) {
-    struct Director : public sk::oci::abstract::Director {
-      Director(int amount, const sk::util::String& data)
-        : _amount(amount), _data(data), _counter(0) {}
+void 
+CoreFeatureTest::
+generateInsertsOneByOne(int amount, const sk::util::String& data) 
+{
+  struct Director : public sk::oci::abstract::Director {
+    Director(int amount, const sk::util::String& data)
+      : _amount(amount), _data(data), _counter(0) {}
 
-      void prepareStatement(sk::oci::Statement& statement) const {
-        if(_counter == 0) {
-          statement.bindIntTag(":id");
-          statement.bindCharsTag(":name", 40);
+    void prepareStatement(sk::oci::Statement& statement) const {
+      if(_counter == 0) {
+        statement.bindIntTag(":id");
+        statement.bindCharsTag(":name", 40);
+      }
+      statement.boundMutableData(0).setIntValue(++_counter);
+      statement.boundMutableData(1).setCharsValue(_data * _counter);
+    }
+
+    bool nextIteration() const {
+      return _counter < _amount;
+    }
+
+    const int _amount;
+    const sk::util::String& _data;
+    mutable int _counter;
+  };
+  accessor().execute("insert into " + testTable() + " values (:id, :name)", Director(amount, data));
+}
+
+void 
+CoreFeatureTest::
+generateInsertsAsArray(int amount, const sk::util::String& data) 
+{
+  struct Director : public sk::oci::abstract::Director {
+    Director(int amount, const sk::util::String& data)
+      : _amount(amount), _data(data) {}
+
+    void prepareStatement(sk::oci::Statement& statement) const {
+      statement.setCapacity(_amount);
+
+      sk::util::Integers ids;
+      sk::util::Strings names;
+
+      for(int counter=1; counter <= _amount; ++counter) {
+        ids << counter;
+        names << _data * counter;
+      }
+      statement.bindIntTag(":id", ids);
+      statement.bindCharsTag(":name", 40, names);
+    }
+
+    const int _amount;
+    const sk::util::String& _data;
+  };
+  accessor().execute("insert into " + testTable() + " values (:id, :name)", Director(amount, data));
+}
+
+void 
+CoreFeatureTest::
+selectAllOneByOne(sk::util::Strings& depot) 
+{
+  struct Director : public sk::oci::abstract::Director {
+    Director(sk::util::Strings& depot) 
+      : _depot(depot) {}
+
+    void processCursor(sk::oci::Cursor& cursor) const {
+      const sk::oci::Data& num = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& str = cursor.boundData(cursor.bindCharsAt(2, 40));
+
+      while(cursor.fetch() != 0) {
+        _depot << sk::util::String::valueOf(num.intValue()) + ':' + str.stringValue();
+      }
+    }
+    sk::util::Strings& _depot;
+  };
+  accessor().execute("select * from " + testTable(), Director(depot));
+}
+
+void 
+CoreFeatureTest::
+selectAllAsArray(int chunkSize, sk::util::Strings& depot) 
+{
+  struct Director : public sk::oci::abstract::Director {
+    Director(int chunkSize, sk::util::Strings& depot) 
+      : _chunkSize(chunkSize), _depot(depot) {}
+
+    void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.setCapacity(_chunkSize);
+
+      const sk::oci::Data& num = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& str = cursor.boundData(cursor.bindCharsAt(2, 40));
+
+      for(uint32_t rows = cursor.fetch(); rows != 0; rows = cursor.fetch()) {
+        for(int index=0; index < rows; ++index) {
+          _depot << sk::util::String::valueOf(num.piece(index).intValue()) + ':' + str.piece(index).stringValue();
         }
-        statement.boundMutableData(0).setIntValue(++_counter);
-        statement.boundMutableData(1).setCharsValue(_data * _counter);
       }
-
-      bool nextIteration() const {
-        return _counter < _amount;
-      }
-
-      const int _amount;
-      const sk::util::String& _data;
-      mutable int _counter;
-    };
-    accessor().execute("insert into " + testTable() + " values (:id, :name)", Director(amount, data));
-  }
-
-  void insertAsArray(int amount, const sk::util::String& data) {
-    struct Director : public sk::oci::abstract::Director {
-      Director(int amount, const sk::util::String& data)
-        : _amount(amount), _data(data) {}
-
-      void prepareStatement(sk::oci::Statement& statement) const {
-        statement.setCapacity(_amount);
-
-        sk::util::Integers ids;
-        sk::util::Strings names;
-
-        for(int counter=1; counter <= _amount; ++counter) {
-          ids << counter;
-          names << _data * counter;
-        }
-        statement.bindIntTag(":id", ids);
-        statement.bindCharsTag(":name", 40, names);
-      }
-
-      const int _amount;
-      const sk::util::String& _data;
-    };
-    accessor().execute("insert into " + testTable() + " values (:id, :name)", Director(amount, data));
-  }
-
-  void selectAll(sk::util::Strings& depot) {
-    struct Director : public sk::oci::abstract::Director {
-      Director(sk::util::Strings& depot) 
-        : _depot(depot) {}
-
-      void processCursor(sk::oci::Cursor& cursor) const {
-        const sk::oci::Data& num = cursor.boundData(cursor.bindIntAt(1));
-        const sk::oci::Data& str = cursor.boundData(cursor.bindCharsAt(2, 40));
-
-        while(cursor.fetch() != 0) {
-          _depot << sk::util::String::valueOf(num.intValue()) + ':' + str.stringValue();
-        }
-      }
-      sk::util::Strings& _depot;
-    };
-    accessor().execute("select * from " + testTable(), Director(depot));
-  }
+    }
+    const int _chunkSize;
+    sk::util::Strings& _depot;
+  };
+  accessor().execute("select * from " + testTable(), Director(chunkSize, depot));
 }
 
 void
 CoreFeatureTest::
 testInsertAsIterations()
 {
-  insertAsIterations(5, "a");
+  generateInsertsOneByOne(5, "a");
 
   sk::util::Strings depot;
-  selectAll(depot);
+  selectAllAsArray(3, depot);
 
   CPPUNIT_ASSERT_EQUAL(5, depot.size());
 
@@ -210,10 +243,10 @@ void
 CoreFeatureTest::
 testInsertAsArray()
 {
-  insertAsArray(3, "b");
+  generateInsertsAsArray(3, "b");
 
   sk::util::Strings depot;
-  selectAll(depot);
+  selectAllOneByOne(depot);
 
   CPPUNIT_ASSERT_EQUAL(3, depot.size());
 
@@ -227,7 +260,7 @@ CoreFeatureTest::
 testRollback()
 {
   CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
-  insertAsArray(7, "z");
+  generateInsertsOneByOne(7, "z");
   CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
 
   accessor().rollback();
@@ -240,7 +273,7 @@ CoreFeatureTest::
 testRollbackAfterCommit()
 {
   CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
-  insertAsArray(7, "z");
+  generateInsertsAsArray(7, "z");
   CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
 
   accessor().commit();
@@ -254,7 +287,7 @@ CoreFeatureTest::
 testCommit()
 {
   CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
-  insertAsArray(7, "z");
+  generateInsertsAsArray(7, "z");
   CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
 
   sk::oci::db::Accessor another(fixture().user(), fixture().password(), fixture().sid());

@@ -51,6 +51,11 @@ class CoreFeatureTest
   private:
     CoreFeatureTest(const CoreFeatureTest& other);
     CoreFeatureTest& operator = (const CoreFeatureTest& other);
+
+    void generateInsertsOneByOne(int amount, const sk::util::String& data);
+    void generateInsertsAsArray(int amount, const sk::util::String& data);
+    void selectAllOneByOne(sk::util::Strings& depot);
+    void selectAllAsArray(int chunkSize, sk::util::Strings& depot);
 };
 
 #endif /* _COREFEATURETEST_H_ */
