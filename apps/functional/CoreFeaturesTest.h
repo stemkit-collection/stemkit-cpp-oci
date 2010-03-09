@@ -28,6 +28,7 @@ class CoreFeaturesTest
     CPPUNIT_TEST(testCommit);
     CPPUNIT_TEST(testReadNull);
     CPPUNIT_TEST(testWriteNull);
+    CPPUNIT_TEST(testNullColumCodes);
   CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -47,6 +48,7 @@ class CoreFeaturesTest
     void testCommit();
     void testReadNull();
     void testWriteNull();
+    void testNullColumCodes();
 
   private:
     CoreFeaturesTest(const CoreFeaturesTest& other);

@@ -209,17 +209,17 @@ fetch()
 {
   try {
     _statement.fetch(_capacity);
-    return updateRowcount();
+    return updateRowCount();
   }
   catch(const sk::oci::Exception& exception) {
-    updateRowcount();
+    updateRowCount();
     throw;
   }
 }
 
 uint32_t
 sk::oci::db::Cursor::
-updateRowcount()
+updateRowCount()
 {
   uint32_t db_row_count = _statement.obtainRowCount();
   uint32_t delta = db_row_count - _rowCount;

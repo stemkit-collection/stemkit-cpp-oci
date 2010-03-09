@@ -55,7 +55,7 @@ namespace sk {
           Cursor(const Cursor& other);
           Cursor& operator = (const Cursor& other);
 
-          uint32_t updateRowcount();
+          uint32_t updateRowCount();
 
           // sk::oci::db::bind::Provider implementation.
           void bindDataPosition(db::bind::Data& data);
