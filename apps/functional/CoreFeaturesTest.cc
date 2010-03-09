@@ -18,6 +18,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CoreFeaturesTest);
 #include <sk/oci/info/Column.h>
 #include <sk/oci/abstract/Director.h>
 #include <sk/util/IndexOutOfBoundsException.h>
+#include <sk/oci/TruncatedColumnException.h>
 #include <sk/oci/Data.h>
 
 #include <sk/oci/db/Accessor.h>
@@ -405,6 +406,91 @@ testNullColumCodes()
         CPPUNIT_ASSERT_EQUAL(0u, id.columnCode());
       }
       CPPUNIT_ASSERT_EQUAL(0u, cursor.fetch());
+      CPPUNIT_ASSERT_EQUAL(2u, cursor.rowCount());
+    }
+  };
+  accessor().execute("select * from " + testTable(), Director());
+}
+
+void
+CoreFeaturesTest::
+testTruncateException()
+{
+  accessor().execute("insert into " + testTable() + " values (1, '12345678901234567890')");
+
+  struct Director : public sk::oci::abstract::Director {
+    void processCursor(sk::oci::Cursor& cursor) const {
+      const sk::oci::Data& id = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& name = cursor.boundData(cursor.bindCharsAt(2, 15));
+
+      try {
+        cursor.fetch();
+        CPPUNIT_FAIL("No expected exception");
+      }
+      catch(const sk::oci::TruncatedColumnException& exception) {
+        CPPUNIT_ASSERT(id.isTruncated() == false);
+        CPPUNIT_ASSERT(name.isTruncated() == true);
+        CPPUNIT_ASSERT_EQUAL(14u, name.size());
+        CPPUNIT_ASSERT_EQUAL(0u, name.columnCode());
+      }
+      CPPUNIT_ASSERT_EQUAL(1u, cursor.rowCount());
+    }
+  };
+  accessor().execute("select * from " + testTable(), Director());
+}
+
+void
+CoreFeaturesTest::
+testTruncateNoException()
+{
+  accessor().execute("insert into " + testTable() + " values (1, '12345678901234567890')");
+
+  struct Director : public sk::oci::abstract::Director {
+    void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.useTruncate(true);
+
+      const sk::oci::Data& id = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& name = cursor.boundData(cursor.bindCharsAt(2, 15));
+
+      CPPUNIT_ASSERT_EQUAL(1u, cursor.fetch());
+
+      CPPUNIT_ASSERT(id.isTruncated() == false);
+      CPPUNIT_ASSERT(name.isTruncated() == true);
+      CPPUNIT_ASSERT_EQUAL(14u, name.size());
+      
+      CPPUNIT_ASSERT(cursor.hasInfo() == false);
+      CPPUNIT_ASSERT_EQUAL(0u, name.columnCode());
+
+      CPPUNIT_ASSERT_EQUAL(1u, cursor.rowCount());
+    }
+  };
+  accessor().execute("select * from " + testTable(), Director());
+}
+
+void
+CoreFeaturesTest::
+testTruncateColumnCodes()
+{
+  accessor().execute("insert into " + testTable() + " values (1, '12345678901234567890')");
+
+  struct Director : public sk::oci::abstract::Director {
+    void processCursor(sk::oci::Cursor& cursor) const {
+      cursor.useTruncate(true);
+      cursor.useColumnCodes(true);
+
+      const sk::oci::Data& id = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& name = cursor.boundData(cursor.bindCharsAt(2, 15));
+
+      CPPUNIT_ASSERT_EQUAL(1u, cursor.fetch());
+
+      CPPUNIT_ASSERT(id.isTruncated() == false);
+      CPPUNIT_ASSERT(name.isTruncated() == true);
+      CPPUNIT_ASSERT_EQUAL(14u, name.size());
+      
+      CPPUNIT_ASSERT(cursor.hasInfo() == true);
+      CPPUNIT_ASSERT_EQUAL(1406u, name.columnCode());
+
+      CPPUNIT_ASSERT_EQUAL(1u, cursor.rowCount());
     }
   };
   accessor().execute("select * from " + testTable(), Director());
