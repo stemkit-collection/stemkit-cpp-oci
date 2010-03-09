@@ -8,16 +8,16 @@
  *  Author: Gennady Bystritsky
 */
 
-#ifndef _COREFEATURETEST_H_
-#define _COREFEATURETEST_H_
+#ifndef _COREFEATURESTEST_H_
+#define _COREFEATURESTEST_H_
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-class CoreFeatureTest
+class CoreFeaturesTest
   : public CppUnit::TestFixture
 {
-  CPPUNIT_TEST_SUITE(CoreFeatureTest);
+  CPPUNIT_TEST_SUITE(CoreFeaturesTest);
     CPPUNIT_TEST(testDescribeTable);
     CPPUNIT_TEST(testSelectList);
     CPPUNIT_TEST(testRowCountAfterInsert);
@@ -31,8 +31,8 @@ class CoreFeatureTest
   CPPUNIT_TEST_SUITE_END();
 
   public:
-    CoreFeatureTest();
-    virtual ~CoreFeatureTest();
+    CoreFeaturesTest();
+    virtual ~CoreFeaturesTest();
 
     void setUp();
     void tearDown();
@@ -49,8 +49,8 @@ class CoreFeatureTest
     void testWriteNull();
 
   private:
-    CoreFeatureTest(const CoreFeatureTest& other);
-    CoreFeatureTest& operator = (const CoreFeatureTest& other);
+    CoreFeaturesTest(const CoreFeaturesTest& other);
+    CoreFeaturesTest& operator = (const CoreFeaturesTest& other);
 
     void generateInsertsOneByOne(int amount, const sk::util::String& data);
     void generateInsertsAsArray(int amount, const sk::util::String& data);
@@ -58,4 +58,4 @@ class CoreFeatureTest
     void selectAllAsArray(int chunkSize, sk::util::Strings& depot);
 };
 
-#endif /* _COREFEATURETEST_H_ */
+#endif /* _COREFEATURESTEST_H_ */

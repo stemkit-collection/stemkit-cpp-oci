@@ -5,7 +5,7 @@ local test = sk-oci-test ;
 local objects =
   TestSuite.cc
   App.cc
-  CoreFeatureTest.cc
+  CoreFeaturesTest.cc
 ;
 
 use-unit-test $(test) $(objects) ;

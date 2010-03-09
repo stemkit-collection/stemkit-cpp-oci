@@ -8,9 +8,9 @@
  *  Author: Gennady Bystritsky
 */
 
-#include "CoreFeatureTest.h"
+#include "CoreFeaturesTest.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(CoreFeatureTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(CoreFeaturesTest);
 
 #include "App.h"
 #include "app/Fixture.h"
@@ -22,13 +22,13 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CoreFeatureTest);
 
 #include <sk/oci/db/Accessor.h>
 
-CoreFeatureTest::
-CoreFeatureTest()
+CoreFeaturesTest::
+CoreFeaturesTest()
 {
 }
 
-CoreFeatureTest::
-~CoreFeatureTest()
+CoreFeaturesTest::
+~CoreFeaturesTest()
 {
 }
 
@@ -47,7 +47,7 @@ namespace {
 }
 
 void
-CoreFeatureTest::
+CoreFeaturesTest::
 setUp()
 {
   fixture().dropTestTable();
@@ -55,13 +55,13 @@ setUp()
 }
 
 void
-CoreFeatureTest::
+CoreFeaturesTest::
 tearDown()
 {
 }
 
 void
-CoreFeatureTest::
+CoreFeaturesTest::
 testDescribeTable()
 {
   const sk::oci::info::Table table = accessor().describeTable(testTable());
@@ -83,7 +83,7 @@ testDescribeTable()
 }
 
 void
-CoreFeatureTest::
+CoreFeaturesTest::
 testSelectList()
 {
   struct Director : public sk::oci::abstract::Director {
@@ -101,7 +101,7 @@ testSelectList()
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 testRowCountAfterInsert()
 {
   CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
@@ -119,7 +119,7 @@ testRowCountAfterInsert()
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 generateInsertsOneByOne(int amount, const sk::util::String& data) 
 {
   struct Director : public sk::oci::abstract::Director {
@@ -147,7 +147,7 @@ generateInsertsOneByOne(int amount, const sk::util::String& data)
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 generateInsertsAsArray(int amount, const sk::util::String& data) 
 {
   struct Director : public sk::oci::abstract::Director {
@@ -175,7 +175,7 @@ generateInsertsAsArray(int amount, const sk::util::String& data)
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 selectAllOneByOne(sk::util::Strings& depot) 
 {
   struct Director : public sk::oci::abstract::Director {
@@ -196,7 +196,7 @@ selectAllOneByOne(sk::util::Strings& depot)
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 selectAllAsArray(int chunkSize, sk::util::Strings& depot) 
 {
   struct Director : public sk::oci::abstract::Director {
@@ -222,7 +222,7 @@ selectAllAsArray(int chunkSize, sk::util::Strings& depot)
 }
 
 void
-CoreFeatureTest::
+CoreFeaturesTest::
 testInsertAsIterations()
 {
   generateInsertsOneByOne(5, "a");
@@ -240,7 +240,7 @@ testInsertAsIterations()
 }
 
 void
-CoreFeatureTest::
+CoreFeaturesTest::
 testInsertAsArray()
 {
   generateInsertsAsArray(3, "b");
@@ -256,7 +256,7 @@ testInsertAsArray()
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 testRollback()
 {
   CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
@@ -269,7 +269,7 @@ testRollback()
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 testRollbackAfterCommit()
 {
   CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
@@ -283,7 +283,7 @@ testRollbackAfterCommit()
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 testCommit()
 {
   CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
@@ -299,7 +299,7 @@ testCommit()
 }
 
 void 
-CoreFeatureTest::
+CoreFeaturesTest::
 testReadNull()
 {
   accessor().execute("insert into " + testTable() + " values (7, 'aaa')");
@@ -331,7 +331,7 @@ testReadNull()
 }
 
 void
-CoreFeatureTest::
+CoreFeaturesTest::
 testWriteNull()
 {
   struct InsertingDirector : public sk::oci::abstract::Director {
