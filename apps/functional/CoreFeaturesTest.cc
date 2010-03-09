@@ -495,3 +495,18 @@ testTruncateColumnCodes()
   };
   accessor().execute("select * from " + testTable(), Director());
 }
+
+void 
+CoreFeaturesTest::
+testNoData()
+{
+  struct Director : public sk::oci::abstract::Director {
+    void processCursor(sk::oci::Cursor& cursor) const {
+      const sk::oci::Data& id = cursor.boundData(cursor.bindIntAt(1));
+      const sk::oci::Data& name = cursor.boundData(cursor.bindCharsAt(2, 15));
+
+      CPPUNIT_ASSERT_EQUAL(0u, cursor.fetch());
+    }
+  };
+  accessor().execute("select * from " + testTable(), Director());
+}

@@ -32,6 +32,7 @@ class CoreFeaturesTest
     CPPUNIT_TEST(testTruncateException);
     CPPUNIT_TEST(testTruncateNoException);
     CPPUNIT_TEST(testTruncateColumnCodes);
+    CPPUNIT_TEST(testNoData);
   CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -55,6 +56,7 @@ class CoreFeaturesTest
     void testTruncateException();
     void testTruncateNoException();
     void testTruncateColumnCodes();
+    void testNoData();
 
   private:
     CoreFeaturesTest(const CoreFeaturesTest& other);
