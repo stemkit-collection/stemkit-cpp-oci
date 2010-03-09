@@ -143,14 +143,14 @@ rollback()
   _data.service.rollback();
 }
 
-uint64_t 
+uint32_t 
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql)
 {
   return execute(sql, sk::oci::abstract::Director());
 }
 
-uint64_t 
+uint32_t 
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql, const sk::oci::Director& director)
 {
@@ -217,7 +217,7 @@ namespace {
   };
 }
 
-uint64_t
+uint32_t
 sk::oci::db::Accessor::
 tableSize(const sk::util::String& name)
 {

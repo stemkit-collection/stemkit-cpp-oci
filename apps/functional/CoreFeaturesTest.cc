@@ -106,10 +106,10 @@ void
 CoreFeaturesTest::
 testRowCountAfterInsert()
 {
-  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(0u, accessor().tableSize(testTable()));
   accessor().execute("insert into " + testTable() + " values (1, 'abc')");
   accessor().execute("insert into " + testTable() + " values (2, 'zzz')");
-  CPPUNIT_ASSERT_EQUAL(uint64_t(2), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(2u, accessor().tableSize(testTable()));
 
   struct Director : public sk::oci::abstract::Director {
     void prepareStatement(sk::oci::Statement& statement) const {
@@ -117,7 +117,7 @@ testRowCountAfterInsert()
     }
   };
   accessor().execute("insert into " + testTable() + " values (3, 'uuu')", Director());
-  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(7u, accessor().tableSize(testTable()));
 }
 
 void 
@@ -261,43 +261,43 @@ void
 CoreFeaturesTest::
 testRollback()
 {
-  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(0u, accessor().tableSize(testTable()));
   generateInsertsOneByOne(7, "z");
-  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(7u, accessor().tableSize(testTable()));
 
   accessor().rollback();
 
-  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(0u, accessor().tableSize(testTable()));
 }
 
 void 
 CoreFeaturesTest::
 testRollbackAfterCommit()
 {
-  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(0u, accessor().tableSize(testTable()));
   generateInsertsAsArray(7, "z");
-  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(7u, accessor().tableSize(testTable()));
 
   accessor().commit();
   accessor().rollback();
 
-  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(7u, accessor().tableSize(testTable()));
 }
 
 void 
 CoreFeaturesTest::
 testCommit()
 {
-  CPPUNIT_ASSERT_EQUAL(uint64_t(0), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(0u, accessor().tableSize(testTable()));
   generateInsertsAsArray(7, "z");
-  CPPUNIT_ASSERT_EQUAL(uint64_t(7), accessor().tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(7u, accessor().tableSize(testTable()));
 
   sk::oci::db::Accessor another(fixture().user(), fixture().password(), fixture().sid());
-  CPPUNIT_ASSERT_EQUAL(uint64_t(0), another.tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(0u, another.tableSize(testTable()));
 
   accessor().commit();
 
-  CPPUNIT_ASSERT_EQUAL(uint64_t(7), another.tableSize(testTable()));
+  CPPUNIT_ASSERT_EQUAL(7u, another.tableSize(testTable()));
 }
 
 void 

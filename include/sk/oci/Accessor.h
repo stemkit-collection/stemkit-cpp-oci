@@ -26,9 +26,9 @@ namespace sk {
         virtual void rollback() = 0;
 
         virtual const sk::oci::info::Table describeTable(const sk::util::String& name) = 0;
-        virtual uint64_t tableSize(const sk::util::String& name) = 0;
-        virtual uint64_t execute(const sk::util::String& sql) = 0;
-        virtual uint64_t execute(const sk::util::String& sql, const sk::oci::Director& director) = 0;
+        virtual uint32_t tableSize(const sk::util::String& name) = 0;
+        virtual uint32_t execute(const sk::util::String& sql) = 0;
+        virtual uint32_t execute(const sk::util::String& sql, const sk::oci::Director& director) = 0;
     };
   }
 }

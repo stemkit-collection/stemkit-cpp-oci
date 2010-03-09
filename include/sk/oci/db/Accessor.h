@@ -32,9 +32,9 @@ namespace sk {
           void rollback();
 
           const sk::oci::info::Table describeTable(const sk::util::String& name);
-          uint64_t tableSize(const sk::util::String& name);
-          uint64_t execute(const sk::util::String& sql);
-          uint64_t execute(const sk::util::String& sql, const sk::oci::Director& director);
+          uint32_t tableSize(const sk::util::String& name);
+          uint32_t execute(const sk::util::String& sql);
+          uint32_t execute(const sk::util::String& sql, const sk::oci::Director& director);
 
           const sk::util::String getConnectString() const;
 
