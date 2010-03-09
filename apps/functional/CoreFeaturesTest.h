@@ -33,6 +33,7 @@ class CoreFeaturesTest
     CPPUNIT_TEST(testTruncateNoException);
     CPPUNIT_TEST(testTruncateColumnCodes);
     CPPUNIT_TEST(testNoData);
+    CPPUNIT_TEST(testBindSizeMatch);
   CPPUNIT_TEST_SUITE_END();
 
   public:
@@ -57,6 +58,7 @@ class CoreFeaturesTest
     void testTruncateNoException();
     void testTruncateColumnCodes();
     void testNoData();
+    void testBindSizeMatch();
 
   private:
     CoreFeaturesTest(const CoreFeaturesTest& other);

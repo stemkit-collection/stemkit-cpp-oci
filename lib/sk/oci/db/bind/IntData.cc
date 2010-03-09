@@ -10,6 +10,7 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
+#include <sk/oci/BindSizeException.h>
 
 #include "IntData.h"
 
@@ -56,7 +57,7 @@ setValues(const sk::util::Integers& values)
   int size = values.size();
 
   if(size != expected) {
-    throw sk::util::IllegalStateException("Wrong number of bind values: need " + sk::util::String::valueOf(expected) + ", got " + sk::util::String::valueOf(size));
+    throw sk::oci::BindSizeException(getClass().getName(), expected, size);
   }
   for(int index=0; index < size; ++index) {
     setIntValue(index, values.get(index));

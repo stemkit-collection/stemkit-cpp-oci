@@ -19,6 +19,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CoreFeaturesTest);
 #include <sk/oci/abstract/Director.h>
 #include <sk/util/IndexOutOfBoundsException.h>
 #include <sk/oci/TruncatedColumnException.h>
+#include <sk/oci/BindSizeException.h>
 #include <sk/oci/Data.h>
 
 #include <sk/oci/db/Accessor.h>
@@ -509,4 +510,45 @@ testNoData()
     }
   };
   accessor().execute("select * from " + testTable(), Director());
+}
+
+void
+CoreFeaturesTest::
+testBindSizeMatch()
+{
+  struct Director : public sk::oci::abstract::Director {
+    void prepareStatement(sk::oci::Statement& statement) const {
+      statement.setCapacity(3);
+
+      try {
+        statement.bindIntAt(1, sk::util::Integers() << 1 << 2 << 3 << 4);
+        CPPUNIT_FAIL("No expected exception");
+      }
+      catch(const sk::oci::BindSizeException& exception) {
+        CPPUNIT_ASSERT_EQUAL(3u, exception.getExpected());
+        CPPUNIT_ASSERT_EQUAL(4u, exception.getActual());
+      }
+
+      try {
+        statement.bindCharsAt(2, 15, sk::util::Strings() << "aaa" << "bbb");;
+        CPPUNIT_FAIL("No expected exception");
+      }
+      catch(const sk::oci::BindSizeException& exception) {
+        CPPUNIT_ASSERT_EQUAL(3u, exception.getExpected());
+        CPPUNIT_ASSERT_EQUAL(2u, exception.getActual());
+      }
+
+      statement.bindIntAt(1, sk::util::Integers() << 1 << 2 << 3);
+      statement.bindCharsAt(2, 15, sk::util::Strings() << "aaa" << "bbb" << "ccc");;
+    }
+  };
+  accessor().execute("insert into " + testTable() + " values (:id, :name)", Director());
+
+  sk::util::Strings depot;
+  selectAllOneByOne(depot);
+
+  CPPUNIT_ASSERT_EQUAL(3, depot.size());
+  CPPUNIT_ASSERT_EQUAL("1:aaa", depot.get(0));
+  CPPUNIT_ASSERT_EQUAL("2:bbb", depot.get(1));
+  CPPUNIT_ASSERT_EQUAL("3:ccc", depot.get(2));
 }
