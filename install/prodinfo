@@ -1,19 +1,23 @@
 # vim: set ft=ruby sw=2:
 
-cache.platform = TSC::Platform.current.name
+platform = TSC::Platform.current
+ 
+cache.platform = platform.name
 cache.os = TSC::Platform.current.driver
 cache.lib = Pathname.new ENV['BUILD_ABILIB'] || 'lib'
+
+Module.library_archive_append = false if platform.os == 'aix'
 
 product {
   name 'SK'
   description 'Stemkit'
 
-  top ENV['CONTRIB_ROOT'] || '/usr/local'
-  base "stemkit-0.19"
+  top ENV['STEMKIT_INSTALL_ROOT'] || '/usr/local'
+  base "stemkit-#{ENV['STEMKIT_VERSION']}"
 
   package {
-    name 'cpp'
-    description 'C++ ojbect libraries'
+    name 'oci'
+    description 'Oracle OCI C++ access libraries'
 
     tasks %w{
       system-query-top
@@ -21,232 +25,24 @@ product {
       system-set-permissions
     }
     filesets %w{
-      main util sys io net other rt ruby-rt java-rt cppunit preload
+      oci
     }
   }
 }
 
 fileset {
-  name "main"
-
-  directory %w{
-    bin
-  }
-  generate.as('bin/stemkit-info').source {
-    program 'install/make-info.rb'
-  }
-}
-
-fileset {
-  name 'util'
+  name 'oci'
 
   directory [
-    'include/sk/util',
+    'include/sk/oci',
     cache.lib
   ]
-  install.as('include/sk/util').source.tree 'include/sk/util', :follow => true
-  install.as('include/sk/C').source.tree 'include/sk/C', :follow => true
+  install.as('include/sk/oci').source.tree 'include/sk/oci', :follow => true
 
   install.into(cache.lib).binary {
-    list = %w{
-      sk.util
-      sk.C
+    library 'lib' => %w{
+      sk.oci
+      sk.oci.db
     }
-    if ENV['MAKE_DLL'] == 'true'
-      library 'lib' => list
-    else
-      static_library 'lib' => list
-    end
   }
 }
-
-fileset {
-  name 'io'
-
-  directory [
-    'include/sk/io',
-    cache.lib
-  ]
-  install.as('include/sk/io').source.tree 'include/sk/io', :follow => true
-
-  install.into(cache.lib).binary {
-    list = %w{
-      sk.io
-    }
-    if ENV['MAKE_DLL'] == 'true'
-      library 'lib' => list
-    else
-      static_library 'lib' => list
-    end
-  }
-}
-
-fileset {
-  name 'net'
-
-  directory [
-    'include/sk/net',
-    cache.lib
-  ]
-  install.as('include/sk/net').source.tree 'include/sk/net', :follow => true
-
-  install.into(cache.lib).binary {
-    list = %w{
-      sk.net
-    }
-    if ENV['MAKE_DLL'] == 'true'
-      library 'lib' => list
-    else
-      static_library 'lib' => list
-    end
-  }
-}
-
-fileset {
-  name 'preload'
-
-  directory [
-    cache.lib
-  ]
-  install.into(cache.lib).binary {
-    if ENV['MAKE_DLL'] == 'true'
-      program 'lib/sk/preload' => [
-        "sk.preload.control.#{Module.library_extension}",
-        "sk.preload.print.#{Module.library_extension}"
-      ]
-    end
-  }
-}
-
-fileset {
-  name 'ruby-rt'
-
-  next if ENV['DO_NOT_BUILD'].to_s.include? 'ruby'
-
-  directory [
-    cache.lib,
-    cache.lib.join('sk'),
-    cache.lib.join('sk').join('rt')
-  ]
-  install.as(cache.lib.join('sk').join('rt')).source.tree 'extensions/ruby/sk/rt', :follow => true
-  install.into(cache.lib.join('sk')).binary.program 'extensions/ruby/sk/rt.so'
-}
-
-fileset {
-  name 'java-rt'
-
-  next if ENV['DO_NOT_BUILD'].to_s.include? 'ruby'
-
-  directory [
-    cache.lib,
-    cache.lib.join('net'),
-    cache.lib.join('net').join('sf'),
-    cache.lib.join('net').join('sf').join('sk'),
-    cache.lib.join('net').join('sf').join('sk').join('rt')
-  ]
-  install.into(cache.lib.join('net').join('sf').join('sk')).source.file 'extensions/java/net/sf/sk/rt.rb'
-  install.into(cache.lib.join('net').join('sf').join('sk').join('rt')).source.file 'extensions/java/net/sf/sk/rt/scope.rb'
-
-  install.into(cache.lib).binary {
-    program 'extensions/java/net/sf/sk/libnet.sf.sk.rt.rt.so'
-    file 'extensions/java/net/sf/sk/net.sf.sk.rt.rt.jar'
-  }
-}
-
-fileset {
-  name 'rt'
-
-  directory [
-    cache.lib,
-    'include',
-    'include/sk',
-    'include/sk/rt'
-  ]
-  install.as('include/sk/rt').source.tree 'include/sk/rt', :follow => true
-
-  install.into(cache.lib).binary {
-    list = %w{
-      sk.rt.bundle
-      sk.rt.thread
-      sk.rt.thread.pthreads
-    }
-    if ENV['MAKE_DLL'] == 'true'
-      library 'lib' => list
-    else
-      static_library 'lib' => list
-    end
-  }
-}
-
-fileset {
-  name 'other'
-
-  directory [
-    'include',
-    'include/sk',
-    'include/sk/other',
-    'include/sk/other/tinyxml',
-    'include/sk/other/yaml-cpp',
-    cache.lib
-  ]
-  install.as('include/sk/other').source.tree 'include/sk/other', :follow => true
-
-  install.into(cache.lib).binary {
-    list = %w{
-      sk.other.tinyxml
-      sk.other.yaml-cpp
-    }
-    if ENV['MAKE_DLL'] == 'true'
-      library 'lib' => list
-    else
-      static_library 'lib' => list
-    end
-  }
-}
-
-fileset {
-  name 'sys'
-
-  directory [
-    'include/sk/sys',
-    cache.lib
-  ]
-  install.as('include/sk/sys').source.tree 'include/sk/sys', :follow => true
-
-  install.into(cache.lib).binary {
-    list = %w{
-      sk.sys
-    }
-    if ENV['MAKE_DLL'] == 'true'
-      library 'lib' => list
-    else
-      static_library 'lib' => list
-    end
-  }
-}
-
-fileset {
-  name 'cppunit'
-
-  directory [
-    'include',
-    'include/sk',
-    'include/sk/cppunit',
-    'include/hooks/cppunit',
-    cache.lib
-  ]
-  install.as('include/sk/cppunit').source.tree 'include/sk/cppunit', :follow => true
-  install.as('include/hooks/cppunit').source.tree 'include/hooks/cppunit', :follow => true
-
-  install.into(cache.lib).binary {
-    list = %w{
-      sk.cppunit
-    }
-    if ENV['MAKE_DLL'] == 'true'
-      library 'lib' => list
-    else
-      static_library 'lib' => list
-    end
-  }
-}
-

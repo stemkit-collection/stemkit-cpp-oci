@@ -374,9 +374,7 @@ C++ALLFLAGS = $(C++FLAGS) $(CCDFLAGS) $(CCOFLAGS) ;
 CCALLFLAGS = $(CCFLAGS) $(CCDFLAGS) $(CCOFLAGS) ;
 C++LDALLFLAGS = $(CCFLAGS) $(CCDFLAGS) $(CCOFLAGS) $(C++LDFLAGS) ;
 
-system.export-to-env GCC_LIB_PATHLIST : $(GCC_ROOT)/lib/$(GCC_STDLIBS) ;
-system.export-to-env CONTRIB_ROOT : $(CONTRIB_ROOT) ;
-system.export-to-env MAKE_DLL : $(project.MAKE_DLL) ;
 system.export-to-env BUILD_ABILIB : $(BUILD_ABILIB) ;
-system.export-to-env DO_NOT_BUILD : $(project.DO_NOT_BUILD) ;
 system.export-to-env ORACLE_HOME : $(project.ORACLE_HOME) ;
+system.export-to-env STEMKIT_VERSION : $(project.STEMKIT_VERSION) ;
+system.export-to-env STEMKIT_INSTALL_ROOT : $(install.top:E=$(CONTRIB_ROOT)) ;
