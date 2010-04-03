@@ -1,0 +1,11 @@
+# vim: ft=jam: sw=2:
+
+local library = sk.oci.bind ;
+
+local objects = 
+  ../Bind.cc
+  in.cc
+  out.cc
+;
+
+make-shared-library $(library) : $(objects) ;

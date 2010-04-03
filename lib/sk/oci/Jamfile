@@ -20,6 +20,7 @@ make-shared-library $(library) : $(objects) ;
 
 add-project-library $(library) : 
   $(library).info
+  $(library).bind
 ;
 
-make-subdirs info db mock tests ;
+make-subdirs info db bind mock tests ;
