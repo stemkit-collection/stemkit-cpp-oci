@@ -1,0 +1,13 @@
+# vim: ft=jam: sw=2:
+
+local test = sk-oci-bind-test ;
+
+local test-objects = 
+  TestSuite.cc
+;
+
+use-stemkit $(test) : sk.cppunit ;
+use-project-libraries $(test) : sk.oci ;
+use-unit-test $(test) $(test-objects) ;
+
+make-cpp-test $(test) : $(test-objects) ;

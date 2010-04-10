@@ -9,3 +9,4 @@ local objects =
 ;
 
 make-shared-library $(library) : $(objects) ;
+make-subdirs tests ;

@@ -169,6 +169,13 @@ execute(const sk::util::String& sql, const sk::oci::Director& director)
   return cursor.rowCount();
 }
 
+const sk::oci::bind::out 
+sk::oci::db::Accessor::
+execute(const sk::util::String& sql, const sk::oci::Bind& bind)
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}
+
 namespace {
   struct TableDescriber : public sk::oci::abstract::Director, public virtual sk::util::Processor<const sk::oci::info::Column> {
     TableDescriber(sk::oci::info::Table& table)
