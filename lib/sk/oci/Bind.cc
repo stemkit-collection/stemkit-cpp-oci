@@ -11,6 +11,7 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/UnsupportedOperationException.h>
+#include <sk/util/ArrayList.cxx>
 
 #include <sk/oci/Bind.h>
 
@@ -37,12 +38,47 @@ void
 sk::oci::Bind::
 accept(sk::oci::Statement& statement) const
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  struct Acceptor : public virtual sk::util::Processor<const sk::oci::Bind> {
+    Acceptor(sk::oci::Statement& statement) 
+      : _statement(statement) {}
+
+    void process(const sk::oci::Bind& bind) const {
+      bind.accept(_statement);
+    }
+    sk::oci::Statement& _statement;
+  };
+  _binds.forEach(Acceptor(statement));
+  prepareStatement(statement);
 }
 
 void 
 sk::oci::Bind::
 accept(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
+{
+  struct Acceptor : public virtual sk::util::Processor<const sk::oci::Bind> {
+    Acceptor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) 
+      : _cursor(cursor), _data(data) {}
+
+    void process(const sk::oci::Bind& bind) const {
+      bind.accept(_cursor, _data);
+    }
+    sk::oci::Cursor& _cursor;
+    sk::oci::bind::Data& _data;
+  };
+  _binds.forEach(Acceptor(cursor, data));
+  processCursor(cursor, data);
+}
+
+void 
+sk::oci::Bind::
+prepareStatement(sk::oci::Statement& statement) const
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}
+
+void 
+sk::oci::Bind::
+processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }

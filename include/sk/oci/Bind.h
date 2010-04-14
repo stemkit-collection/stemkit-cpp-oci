@@ -15,6 +15,7 @@
 #include <sk/oci/bind/Data.h>
 #include <sk/oci/Statement.h>
 #include <sk/oci/Cursor.h>
+#include <sk/util/ArrayList.hxx>
 
 namespace sk {
   namespace oci {
@@ -28,12 +29,16 @@ namespace sk {
 
         void accept(sk::oci::Statement& statement) const;
         void accept(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
-    
+
+        virtual void prepareStatement(sk::oci::Statement& statement) const;
+        virtual void processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
+
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
     
       private:
         Bind& operator = (const Bind& other);
+        sk::util::ArrayList<sk::oci::Bind> _binds;
     };
   }
 }
