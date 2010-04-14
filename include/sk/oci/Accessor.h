@@ -15,7 +15,7 @@
 #include <sk/oci/Director.h>
 #include <sk/oci/info/Table.h>
 #include <sk/oci/Bind.h>
-#include <sk/oci/bind/out.h>
+#include <sk/oci/bind/Data.h>
 
 namespace sk {
   namespace oci {
@@ -32,7 +32,7 @@ namespace sk {
         virtual uint32_t execute(const sk::util::String& sql) = 0;
         virtual uint32_t execute(const sk::util::String& sql, const sk::oci::Director& director) = 0;
 
-        virtual const sk::oci::bind::out execute(const sk::util::String& sql, const sk::oci::Bind& bind) = 0;
+        virtual const sk::oci::bind::Data execute(const sk::util::String& sql, const sk::oci::Bind& bind) = 0;
     };
   }
 }

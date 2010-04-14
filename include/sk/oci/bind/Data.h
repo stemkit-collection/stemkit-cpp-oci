@@ -8,30 +8,29 @@
  *  Author: Gennady Bystritsky
 */
 
-#ifndef _SK_OCI_BIND_OUT_H_
-#define _SK_OCI_BIND_OUT_H_
+#ifndef _SK_OCI_BIND_DATA_H_
+#define _SK_OCI_BIND_DATA_H_
 
 #include <sk/util/Object.h>
 
 namespace sk {
   namespace oci {
     namespace bind {
-      class out 
+      class Data 
         : public virtual sk::util::Object
       {
         public:
-          out();
-          out(const out& other);
-          virtual ~out();
+          Data();
+          virtual ~Data();
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       
         private:
-          out& operator = (const out& other);
+          Data& operator = (const Data& other);
       };
     }
   }
 }
 
-#endif /* _SK_OCI_BIND_OUT_H_ */
+#endif /* _SK_OCI_BIND_DATA_H_ */

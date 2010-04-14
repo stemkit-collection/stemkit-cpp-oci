@@ -29,6 +29,7 @@
 
 #include "Statement.h"
 #include "Cursor.h"
+#include "BindingDirector.h"
 
 #include <iostream>
 
@@ -169,11 +170,14 @@ execute(const sk::util::String& sql, const sk::oci::Director& director)
   return cursor.rowCount();
 }
 
-const sk::oci::bind::out 
+const sk::oci::bind::Data
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql, const sk::oci::Bind& bind)
 {
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  db::BindingDirector director(bind);
+  execute(sql, director);
+
+  return director.data();
 }
 
 namespace {

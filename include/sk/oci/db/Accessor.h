@@ -35,7 +35,7 @@ namespace sk {
           uint32_t tableSize(const sk::util::String& name);
           uint32_t execute(const sk::util::String& sql);
           uint32_t execute(const sk::util::String& sql, const sk::oci::Director& director);
-          const sk::oci::bind::out execute(const sk::util::String& sql, const sk::oci::Bind& bind);
+          const sk::oci::bind::Data execute(const sk::util::String& sql, const sk::oci::Bind& bind);
 
           const sk::util::String getConnectString() const;
 

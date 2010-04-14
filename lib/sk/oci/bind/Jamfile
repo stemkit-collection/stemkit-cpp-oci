@@ -6,6 +6,7 @@ local objects =
   ../Bind.cc
   in.cc
   out.cc
+  Data.cc
 ;
 
 make-shared-library $(library) : $(objects) ;
