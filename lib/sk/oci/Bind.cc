@@ -82,3 +82,11 @@ processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
+
+sk::oci::Bind& 
+sk::oci::Bind::
+operator<<(const sk::oci::Bind& other)
+{
+  _binds.add(other);
+  return *this;
+}

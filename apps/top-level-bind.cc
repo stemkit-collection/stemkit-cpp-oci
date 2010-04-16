@@ -13,6 +13,8 @@
 #include <sk/rt/Scope.h>
 #include <sk/rt/config/InlineLocator.h>
 #include <sk/util/Pathname.h>
+#include <sk/oci/bind/in.h>
+#include <sk/oci/bind/out.h>
 
 #include <iostream>
 #include <iomanip>
@@ -53,5 +55,10 @@ int main(int argc, const char* const argv[])
 }
 
 void printContent(sk::oci::Accessor& accessor, const sk::util::String& table) {
-  accessor.execute("select * from " + table, sk::oci::Bind());
+  accessor.execute(
+    "select * from " + table, 
+    sk::oci::Bind()
+      << sk::oci::bind::in()
+      << sk::oci::bind::out()
+  );
 }

@@ -12,18 +12,23 @@
 #define _SK_OCI_BIND_OUT_H_
 
 #include <sk/util/Object.h>
+#include <sk/oci/Bind.h>
 
 namespace sk {
   namespace oci {
     namespace bind {
       class out 
-        : public virtual sk::util::Object
+        : public sk::oci::Bind
       {
         public:
           out();
           out(const out& other);
           virtual ~out();
       
+          // sk::oci::Bind implementation.
+          void prepareStatement(sk::oci::Statement& statement) const;
+          void processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       

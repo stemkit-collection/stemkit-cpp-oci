@@ -31,3 +31,15 @@ getClass() const
 {
   return sk::util::Class(__className);
 }
+
+void 
+sk::oci::bind::out::
+prepareStatement(sk::oci::Statement& statement) const
+{
+}
+
+void 
+sk::oci::bind::out::
+processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
+{
+}

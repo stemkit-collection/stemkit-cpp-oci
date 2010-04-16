@@ -33,6 +33,8 @@ namespace sk {
         virtual void prepareStatement(sk::oci::Statement& statement) const;
         virtual void processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
 
+        sk::oci::Bind& operator<<(const sk::oci::Bind& other);
+
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
     

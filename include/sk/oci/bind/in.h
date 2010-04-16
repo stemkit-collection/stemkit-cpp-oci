@@ -12,22 +12,27 @@
 #define _SK_OCI_BIND_IN_H_
 
 #include <sk/util/Object.h>
+#include <sk/oci/Bind.h>
 
 namespace sk {
   namespace oci {
     namespace bind {
       class in 
-        : public virtual sk::util::Object
+        : public sk::oci::Bind
       {
         public:
           in();
+          in(const in& other);
           virtual ~in();
       
+          // sk::oci::Bind implementation.
+          void prepareStatement(sk::oci::Statement& statement) const;
+          void processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       
         private:
-          in(const in& other);
           in& operator = (const in& other);
       };
     }
