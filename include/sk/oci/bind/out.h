@@ -12,6 +12,8 @@
 #define _SK_OCI_BIND_OUT_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/Integers.h>
+#include <sk/util/Strings.h>
 #include <sk/oci/Bind.h>
 
 namespace sk {
@@ -22,9 +24,15 @@ namespace sk {
       {
         public:
           out();
-          out(const out& other);
+          out(uint32_t amount);
+          out(uint32_t amount, uint32_t skip);
           virtual ~out();
       
+          sk::oci::bind::out& operator<<(const sk::util::Integers& values);
+          sk::oci::bind::out& operator<<(const sk::util::Strings& values);
+
+          using sk::oci::Bind::operator<<;
+
           // sk::oci::Bind implementation.
           void prepareStatement(sk::oci::Statement& statement) const;
           void processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
@@ -34,6 +42,8 @@ namespace sk {
       
         private:
           out& operator = (const out& other);
+          const uint32_t _amount;
+          const uint32_t _skip;
       };
     }
   }

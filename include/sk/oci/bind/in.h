@@ -12,6 +12,8 @@
 #define _SK_OCI_BIND_IN_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/Integers.h>
+#include <sk/util/Strings.h>
 #include <sk/oci/Bind.h>
 
 namespace sk {
@@ -22,8 +24,14 @@ namespace sk {
       {
         public:
           in();
-          in(const in& other);
           virtual ~in();
+
+          sk::oci::bind::in& operator<<(const sk::util::Integers& values);
+          sk::oci::bind::in& operator<<(const sk::util::Strings& values);
+          sk::oci::bind::in& operator<<(const sk::util::String& tag);
+          sk::oci::bind::in& operator<<(const char* tag);
+
+          using sk::oci::Bind::operator<<;
       
           // sk::oci::Bind implementation.
           void prepareStatement(sk::oci::Statement& statement) const;

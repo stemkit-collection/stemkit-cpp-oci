@@ -31,3 +31,31 @@ getClass() const
 {
   return sk::util::Class(__className);
 }
+
+const sk::util::String& 
+sk::oci::bind::Data::
+string(int position) const
+{
+  return strings(position).get(0);
+}
+
+uint32_t 
+sk::oci::bind::Data::
+integer(int position) const
+{
+  return integers(position).get(0);
+}
+
+const sk::util::Integers& 
+sk::oci::bind::Data::
+integers(int position) const
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}
+
+const sk::util::Strings& 
+sk::oci::bind::Data::
+strings(int position) const
+{
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
+}

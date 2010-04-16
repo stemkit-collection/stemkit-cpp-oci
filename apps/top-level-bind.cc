@@ -15,6 +15,8 @@
 #include <sk/util/Pathname.h>
 #include <sk/oci/bind/in.h>
 #include <sk/oci/bind/out.h>
+#include <sk/util/Integers.h>
+#include <sk/util/Strings.h>
 
 #include <iostream>
 #include <iomanip>
@@ -26,7 +28,7 @@ int main(int argc, const char* const argv[])
   sk::rt::Scope::controller().loadXmlConfig(
     sk::rt::config::InlineLocator(
       "<scope>\n"
-      "  <log level='info' show-time='true' />\n"
+      "  <log level='info' show-time='true' show-object='false'/>\n"
       "</scope>\n"
     )
   );
@@ -55,10 +57,18 @@ int main(int argc, const char* const argv[])
 }
 
 void printContent(sk::oci::Accessor& accessor, const sk::util::String& table) {
-  accessor.execute(
+  sk::rt::Scope scope(__FUNCTION__);
+
+  const sk::oci::bind::Data result = accessor.execute(
     "select * from " + table, 
     sk::oci::Bind()
       << sk::oci::bind::in()
-      << sk::oci::bind::out()
+        << ":id" << (sk::util::Integers() << 1 << 2 << 3)
+        << ":name" << (sk::util::Strings() << "aaa" << "bbb" << "ccc")
+      << sk::oci::bind::out(25)
+        << sk::util::Integers()
+        << sk::util::Strings()
   );
+  scope.info() << result.integers(1);
+  scope.info() << result.strings(2);
 }

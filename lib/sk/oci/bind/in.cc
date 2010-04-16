@@ -8,6 +8,7 @@
  *  Author: Gennady Bystritsky
 */
 
+#include <sk/util/UnsupportedOperationException.h>
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 
@@ -36,6 +37,8 @@ void
 sk::oci::bind::in::
 prepareStatement(sk::oci::Statement& statement) const
 {
+  getScope().notice(SK_METHOD) << "in";
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 void 
@@ -43,3 +46,32 @@ sk::oci::bind::in::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
 }
+
+sk::oci::bind::in& 
+sk::oci::bind::in::
+operator<<(const sk::util::Integers& values)
+{
+  return *this;
+}
+
+sk::oci::bind::in& 
+sk::oci::bind::in::
+operator<<(const sk::util::Strings& values)
+{
+  return *this;
+}
+
+sk::oci::bind::in& 
+sk::oci::bind::in::
+operator<<(const sk::util::String& tag)
+{
+  return *this;
+}
+
+sk::oci::bind::in& 
+sk::oci::bind::in::
+operator<<(const char* tag)
+{
+  return *this;
+}
+

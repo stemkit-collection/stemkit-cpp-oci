@@ -12,6 +12,8 @@
 #define _SK_OCI_BIND_DATA_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/Integers.h>
+#include <sk/util/Strings.h>
 
 namespace sk {
   namespace oci {
@@ -22,6 +24,12 @@ namespace sk {
         public:
           Data();
           virtual ~Data();
+
+          const sk::util::String& string(int position = 1) const;
+          uint32_t integer(int position = 1) const;
+
+          const sk::util::Integers& integers(int position = 1) const;
+          const sk::util::Strings& strings(int position = 1) const;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

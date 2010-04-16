@@ -16,9 +16,14 @@
 #include <sk/oci/Statement.h>
 #include <sk/oci/Cursor.h>
 #include <sk/util/ArrayList.hxx>
+#include <sk/rt/Scope.h>
 
 namespace sk {
   namespace oci {
+    namespace bind {
+      class in;
+      class out;
+    }
     class Bind 
       : public virtual sk::util::Object
     {
@@ -34,13 +39,20 @@ namespace sk {
         virtual void processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
 
         sk::oci::Bind& operator<<(const sk::oci::Bind& other);
+        sk::oci::bind::in operator<<(const sk::oci::bind::in& other);
+        sk::oci::bind::out operator<<(const sk::oci::bind::out& other);
 
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
+
+      protected:
+        const sk::rt::Scope& getScope() const;
     
       private:
         Bind& operator = (const Bind& other);
         sk::util::ArrayList<sk::oci::Bind> _binds;
+
+        sk::rt::Scope _scope;
     };
   }
 }

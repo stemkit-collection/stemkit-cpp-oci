@@ -10,6 +10,7 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
+#include <sk/util/UnsupportedOperationException.h>
 
 #include <sk/oci/bind/out.h>
 
@@ -17,6 +18,19 @@ static const sk::util::String __className("sk::oci::bind::out");
 
 sk::oci::bind::out::
 out()
+  : _amount(1), _skip(0)
+{
+}
+
+sk::oci::bind::out::
+out(uint32_t amount)
+  : _amount(amount), _skip(0)
+{
+}
+
+sk::oci::bind::out::
+out(uint32_t amount, uint32_t skip)
+  : _amount(amount), _skip(skip)
 {
 }
 
@@ -42,4 +56,23 @@ void
 sk::oci::bind::out::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
+  getScope().notice(SK_METHOD) << "in";
+  throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
+
+sk::oci::bind::out& 
+sk::oci::bind::out::
+operator<<(const sk::util::Integers& values)
+{
+  getScope().notice(SK_METHOD) << "Integers";
+  return *this;
+}
+
+sk::oci::bind::out& 
+sk::oci::bind::out::
+operator<<(const sk::util::Strings& values)
+{
+  getScope().notice(SK_METHOD) << "Strings";
+  return *this;
+}
+

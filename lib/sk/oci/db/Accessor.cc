@@ -174,6 +174,7 @@ const sk::oci::bind::Data
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql, const sk::oci::Bind& bind)
 {
+  sk::rt::Scope scope = _scope.scope(__FUNCTION__);
   db::BindingDirector director(bind);
   execute(sql, director);
 
