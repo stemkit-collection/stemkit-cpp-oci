@@ -60,11 +60,12 @@ void printContent(sk::oci::Accessor& accessor, const sk::util::String& table) {
   sk::rt::Scope scope(__FUNCTION__);
 
   const sk::oci::bind::Data result = accessor.execute(
-    "select * from " + table, 
+    "select * from where name = :name and id = :id and zip = :3" + table, 
     sk::oci::Bind()
       << sk::oci::bind::in()
         << ":id" << (sk::util::Integers() << 1 << 2 << 3)
         << ":name" << (sk::util::Strings() << "aaa" << "bbb" << "ccc")
+        << 3 << (sk::util::Integers() << 11111 << 22222 << 33333)
       << sk::oci::bind::out(25)
         << sk::util::Integers()
         << sk::util::Strings()

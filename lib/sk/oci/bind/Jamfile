@@ -9,6 +9,7 @@ local objects =
   Data.cc
   Place.cc
   TaggedPlace.cc
+  PositionalPlace.cc
   Value.cc
   IntegerValue.cc
   StringValue.cc

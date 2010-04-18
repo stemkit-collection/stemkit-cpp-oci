@@ -16,6 +16,7 @@
 
 #include <sk/oci/bind/in.h>
 #include "TaggedPlace.h"
+#include "PositionalPlace.h"
 #include "IntegerValue.h"
 #include "StringValue.h"
 
@@ -132,6 +133,19 @@ operator<<(const sk::util::String& tag)
   }
   else {
     (*this) << sk::util::Strings(tag);
+  }
+  return *this;
+}
+
+sk::oci::bind::in& 
+sk::oci::bind::in::
+operator<<(int position)
+{
+  if(_data.cooker.isEmpty() == true) {
+    _data.cooker.set(new PositionalPlace(position));
+  }
+  else {
+    (*this) << sk::util::Integers(position);
   }
   return *this;
 }

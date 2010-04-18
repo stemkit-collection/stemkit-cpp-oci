@@ -40,3 +40,10 @@ bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
 {
   statement.bindIntTag(tag, _data);
 }
+
+void 
+sk::oci::bind::IntegerValue::
+bindPosition(int position, sk::oci::Statement& statement) const
+{
+  statement.bindIntAt(position, _data);
+}

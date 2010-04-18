@@ -26,6 +26,7 @@ namespace sk {
           virtual ~Value();
 
           virtual void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const = 0;
+          virtual void bindPosition(int position, sk::oci::Statement& statement) const = 0;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

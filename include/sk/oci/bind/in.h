@@ -31,6 +31,7 @@ namespace sk {
           sk::oci::bind::in& operator<<(const sk::util::Strings& data);
           sk::oci::bind::in& operator<<(const sk::util::String& tag);
           sk::oci::bind::in& operator<<(const char* tag);
+          sk::oci::bind::in& operator<<(int position);
 
           using sk::oci::Bind::operator<<;
       

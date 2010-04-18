@@ -27,6 +27,7 @@ namespace sk {
       
           // sk::oci::bind::Value implementation.
           void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const;
+          void bindPosition(int position, sk::oci::Statement& statement) const;
 
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

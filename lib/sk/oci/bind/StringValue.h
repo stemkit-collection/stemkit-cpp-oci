@@ -27,6 +27,7 @@ namespace sk {
       
           // sk::oci::bind::Value implementation.
           void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const;
+          void bindPosition(int position, sk::oci::Statement& statement) const;
 
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
@@ -34,6 +35,8 @@ namespace sk {
         private:
           StringValue(const StringValue& other);
           StringValue& operator = (const StringValue& other);
+
+          int maxDataItem() const;
           
           const sk::util::Strings _data;
       };

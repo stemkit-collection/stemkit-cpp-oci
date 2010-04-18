@@ -41,6 +41,21 @@ void
 sk::oci::bind::StringValue::
 bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
 {
-  int size = sk::util::Injector<sk::util::String, int>(_data).inject(sk::util::mapper::Sizing<sk::util::String>(), sk::util::reducer::Max<sk::util::String, int>());
-  statement.bindCharsTag(tag, size, _data);
+  statement.bindCharsTag(tag, maxDataItem(), _data);
+}
+
+void 
+sk::oci::bind::StringValue::
+bindPosition(int position, sk::oci::Statement& statement) const
+{
+  statement.bindCharsAt(position, maxDataItem(), _data);
+}
+
+int
+sk::oci::bind::StringValue::
+maxDataItem() const
+{
+  return sk::util::Injector<sk::util::String, int>(_data).inject(
+    sk::util::mapper::Sizing<sk::util::String>(), sk::util::reducer::Max<sk::util::String, int>()
+  );
 }
