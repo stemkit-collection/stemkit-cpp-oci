@@ -7,6 +7,11 @@ local objects =
   in.cc
   out.cc
   Data.cc
+  Place.cc
+  TaggedPlace.cc
+  Value.cc
+  IntegerValue.cc
+  StringValue.cc
 ;
 
 make-shared-library $(library) : $(objects) ;

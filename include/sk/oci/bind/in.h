@@ -15,6 +15,7 @@
 #include <sk/util/Integers.h>
 #include <sk/util/Strings.h>
 #include <sk/oci/Bind.h>
+#include <sk/util/Holder.hxx>
 
 namespace sk {
   namespace oci {
@@ -26,8 +27,8 @@ namespace sk {
           in();
           virtual ~in();
 
-          sk::oci::bind::in& operator<<(const sk::util::Integers& values);
-          sk::oci::bind::in& operator<<(const sk::util::Strings& values);
+          sk::oci::bind::in& operator<<(const sk::util::Integers& data);
+          sk::oci::bind::in& operator<<(const sk::util::Strings& data);
           sk::oci::bind::in& operator<<(const sk::util::String& tag);
           sk::oci::bind::in& operator<<(const char* tag);
 
@@ -42,6 +43,12 @@ namespace sk {
       
         private:
           in& operator = (const in& other);
+
+          void analyzeCardinality(int cardinality);
+
+          struct Data;
+          sk::util::Holder<Data>::Sharing _dataHolder;
+          Data& _data;
       };
     }
   }
