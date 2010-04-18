@@ -15,6 +15,8 @@
 
 namespace sk {
   namespace oci {
+    class Statement;
+
     namespace bind {
       class Value 
         : public virtual sk::util::Object
@@ -22,6 +24,8 @@ namespace sk {
         public:
           Value();
           virtual ~Value();
+
+          virtual void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const = 0;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

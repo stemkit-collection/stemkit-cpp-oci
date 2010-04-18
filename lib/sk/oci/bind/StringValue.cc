@@ -10,6 +10,10 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
+#include <sk/oci/Statement.h>
+#include <sk/util/Injector.cxx>
+#include <sk/util/reducer/Max.hxx>
+#include <sk/util/mapper/Sizing.hxx>
 
 #include "StringValue.h"
 
@@ -31,4 +35,12 @@ sk::oci::bind::StringValue::
 getClass() const
 {
   return sk::util::Class(__className);
+}
+
+void 
+sk::oci::bind::StringValue::
+bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
+{
+  int size = sk::util::Injector<sk::util::String, int>(_data).inject(sk::util::mapper::Sizing<sk::util::String>(), sk::util::reducer::Max<sk::util::String, int>());
+  statement.bindCharsTag(tag, size, _data);
 }

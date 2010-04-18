@@ -17,6 +17,8 @@
 
 namespace sk {
   namespace oci {
+    class Statement;
+
     namespace bind {
       class Place 
         : public virtual sk::util::Object
@@ -26,6 +28,9 @@ namespace sk {
           virtual ~Place();
 
           void setValue(bind::Value* value);
+          const bind::Value& getValue() const;
+
+          virtual void bind(sk::oci::Statement& statement) const = 0;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;

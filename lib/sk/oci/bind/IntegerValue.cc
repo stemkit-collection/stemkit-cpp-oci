@@ -10,6 +10,7 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
+#include <sk/oci/Statement.h>
 
 #include "IntegerValue.h"
 
@@ -31,4 +32,11 @@ sk::oci::bind::IntegerValue::
 getClass() const
 {
   return sk::util::Class(__className);
+}
+
+void 
+sk::oci::bind::IntegerValue::
+bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
+{
+  statement.bindIntTag(tag, _data);
 }

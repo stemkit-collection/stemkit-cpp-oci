@@ -23,10 +23,13 @@ namespace sk {
         public:
           TaggedPlace(const sk::util::String& tag);
           virtual ~TaggedPlace();
+
+          // sk::oci::bin::Place implementation.
+          void bind(sk::oci::Statement& statement) const;
       
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
-      
+
         private:
           TaggedPlace(const TaggedPlace& other);
           TaggedPlace& operator = (const TaggedPlace& other);

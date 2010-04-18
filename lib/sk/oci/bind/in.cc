@@ -48,12 +48,30 @@ getClass() const
   return sk::util::Class(__className);
 }
 
+namespace {
+  struct InputBinder : public virtual sk::util::Processor<const sk::oci::bind::Place> {
+    InputBinder(sk::oci::Statement& statement)
+      : _statement(statement) {}
+
+    void process(const sk::oci::bind::Place& place) const {
+      place.bind(_statement);
+    }
+    sk::oci::Statement& _statement;
+  };
+}
+
 void 
 sk::oci::bind::in::
 prepareStatement(sk::oci::Statement& statement) const
 {
-  getScope().notice(SK_METHOD) << "in";
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
+  if(_data.cooker.isEmpty() == false) {
+    throw sk::util::IllegalStateException("Incomplete data specification");
+  }
+  if(_data.cardinality == 0) {
+    return;
+  }
+  statement.setCapacity(_data.cardinality);
+  _data.places.forEach(InputBinder(statement));
 }
 
 void 

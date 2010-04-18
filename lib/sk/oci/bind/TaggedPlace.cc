@@ -32,3 +32,10 @@ getClass() const
 {
   return sk::util::Class(__className);
 }
+
+void 
+sk::oci::bind::TaggedPlace::
+bind(sk::oci::Statement& statement) const
+{
+  getValue().bindTag(_tag, statement);
+}

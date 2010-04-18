@@ -39,3 +39,10 @@ setValue(bind::Value* value)
 {
   _valueHolder.set(value);
 }
+
+const sk::oci::bind::Value& 
+sk::oci::bind::Place::
+getValue() const
+{
+  return _valueHolder.get();
+}

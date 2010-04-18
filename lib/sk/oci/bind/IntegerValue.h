@@ -25,6 +25,9 @@ namespace sk {
           IntegerValue(const sk::util::Integers& data);
           virtual ~IntegerValue();
       
+          // sk::oci::bind::Value implementation.
+          void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const;
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
       
