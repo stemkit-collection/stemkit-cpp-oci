@@ -13,7 +13,7 @@
 
 #include <sk/util/Object.h>
 #include <sk/util/Holder.hxx>
-#include "Value.h"
+#include <sk/oci/Value.h>
 
 namespace sk {
   namespace oci {
@@ -27,8 +27,8 @@ namespace sk {
           Place();
           virtual ~Place();
 
-          void setValue(bind::Value* value);
-          const bind::Value& getValue() const;
+          void setValue(sk::oci::Value* value);
+          const sk::oci::Value& getValue() const;
 
           virtual void bind(sk::oci::Statement& statement) const = 0;
       
@@ -39,7 +39,7 @@ namespace sk {
           Place(const Place& other);
           Place& operator = (const Place& other);
 
-          sk::util::Holder<bind::Value> _valueHolder;
+          sk::util::Holder<sk::oci::Value> _valueHolder;
       };
     }
   }

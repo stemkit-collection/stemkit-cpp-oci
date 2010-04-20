@@ -12,8 +12,8 @@
 #define _SK_OCI_BIND_OUT_H_
 
 #include <sk/util/Object.h>
-#include <sk/util/Integers.h>
-#include <sk/util/Strings.h>
+#include <sk/oci/Integers.h>
+#include <sk/oci/Strings.h>
 #include <sk/oci/Bind.h>
 
 namespace sk {
@@ -28,8 +28,8 @@ namespace sk {
           out(uint32_t amount, uint32_t skip);
           virtual ~out();
       
-          sk::oci::bind::out& operator<<(const sk::util::Integers& values);
-          sk::oci::bind::out& operator<<(const sk::util::Strings& values);
+          sk::oci::bind::out& operator<<(const sk::oci::Integers& values);
+          sk::oci::bind::out& operator<<(const sk::oci::Strings& values);
 
           using sk::oci::Bind::operator<<;
 

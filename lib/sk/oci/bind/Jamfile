@@ -10,9 +10,6 @@ local objects =
   Place.cc
   TaggedPlace.cc
   PositionalPlace.cc
-  Value.cc
-  IntegerValue.cc
-  StringValue.cc
 ;
 
 make-shared-library $(library) : $(objects) ;

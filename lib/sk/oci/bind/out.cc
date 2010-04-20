@@ -62,7 +62,7 @@ processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 
 sk::oci::bind::out& 
 sk::oci::bind::out::
-operator<<(const sk::util::Integers& values)
+operator<<(const sk::oci::Integers& values)
 {
   getScope().notice(SK_METHOD) << "Integers";
   return *this;
@@ -70,7 +70,7 @@ operator<<(const sk::util::Integers& values)
 
 sk::oci::bind::out& 
 sk::oci::bind::out::
-operator<<(const sk::util::Strings& values)
+operator<<(const sk::oci::Strings& values)
 {
   getScope().notice(SK_METHOD) << "Strings";
   return *this;

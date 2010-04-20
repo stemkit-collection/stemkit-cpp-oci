@@ -17,8 +17,9 @@
 #include <sk/oci/bind/in.h>
 #include "TaggedPlace.h"
 #include "PositionalPlace.h"
-#include "IntegerValue.h"
-#include "StringValue.h"
+
+#include <sk/oci/Integers.h>
+#include <sk/oci/Strings.h>
 
 static const sk::util::String __className("sk::oci::bind::in");
 
@@ -98,13 +99,13 @@ analyzeCardinality(int cardinality)
 
 sk::oci::bind::in& 
 sk::oci::bind::in::
-operator<<(const sk::util::Integers& data)
+operator<<(const sk::oci::Integers& data)
 {
   if(_data.cooker.isEmpty() == true) {
     throw sk::util::IllegalStateException(SK_METHOD);
   }
   analyzeCardinality(data.size());
-  _data.cooker.getMutable().setValue(new IntegerValue(data));
+  _data.cooker.getMutable().setValue(new sk::oci::Integers(data));
   _data.places.add(_data.cooker.deprive());
 
   return *this;
@@ -112,13 +113,13 @@ operator<<(const sk::util::Integers& data)
 
 sk::oci::bind::in& 
 sk::oci::bind::in::
-operator<<(const sk::util::Strings& data)
+operator<<(const sk::oci::Strings& data)
 {
   if(_data.cooker.isEmpty() == true) {
     throw sk::util::IllegalStateException(SK_METHOD);
   }
   analyzeCardinality(data.size());
-  _data.cooker.getMutable().setValue(new StringValue(data));
+  _data.cooker.getMutable().setValue(new sk::oci::Strings(data));
   _data.places.add(_data.cooker.deprive());
 
   return *this;
@@ -132,7 +133,7 @@ operator<<(const sk::util::String& tag)
     _data.cooker.set(new TaggedPlace(tag));
   }
   else {
-    (*this) << sk::util::Strings(tag);
+    (*this) << (sk::oci::Strings() << tag);
   }
   return *this;
 }
@@ -145,7 +146,7 @@ operator<<(int position)
     _data.cooker.set(new PositionalPlace(position));
   }
   else {
-    (*this) << sk::util::Integers(position);
+    (*this) << (sk::oci::Integers() << position);
   }
   return *this;
 }

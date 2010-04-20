@@ -15,8 +15,8 @@
 #include <sk/util/Pathname.h>
 #include <sk/oci/bind/in.h>
 #include <sk/oci/bind/out.h>
-#include <sk/util/Integers.h>
-#include <sk/util/Strings.h>
+#include <sk/oci/Integers.h>
+#include <sk/oci/Strings.h>
 
 #include <iostream>
 #include <iomanip>
@@ -63,12 +63,12 @@ void printContent(sk::oci::Accessor& accessor, const sk::util::String& table) {
     "select * from where name = :name and id = :id and zip = :3" + table, 
     sk::oci::Bind()
       << sk::oci::bind::in()
-        << ":id" << (sk::util::Integers() << 1 << 2 << 3)
-        << ":name" << (sk::util::Strings() << "aaa" << "bbb" << "ccc")
-        << 3 << (sk::util::Integers() << 11111 << 22222 << 33333)
+        << ":id" << (sk::oci::Integers() << 1 << 2 << 3)
+        << ":name" << (sk::oci::Strings() << "aaa" << "bbb" << "ccc")
+        << 3 << (sk::oci::Integers() << 11111 << 22222 << 33333)
       << sk::oci::bind::out(25)
-        << sk::util::Integers()
-        << sk::util::Strings()
+        << sk::oci::Integers()
+        << sk::oci::Strings(30)
   );
   scope.info() << result.integers(1);
   scope.info() << result.strings(2);

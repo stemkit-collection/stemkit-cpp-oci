@@ -35,12 +35,12 @@ getClass() const
 
 void 
 sk::oci::bind::Place::
-setValue(bind::Value* value)
+setValue(sk::oci::Value* value)
 {
   _valueHolder.set(value);
 }
 
-const sk::oci::bind::Value& 
+const sk::oci::Value& 
 sk::oci::bind::Place::
 getValue() const
 {

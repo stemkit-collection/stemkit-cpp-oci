@@ -14,6 +14,8 @@ local objects =
   TruncatedColumnException.cc
   BindSizeException.cc
   MissingObjectException.cc
+  Strings.cc
+  Integers.cc
 ;
 
 make-shared-library $(library) : $(objects) ;

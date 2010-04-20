@@ -10,40 +10,53 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
+
+#include <sk/oci/Strings.h>
 #include <sk/oci/Statement.h>
 
-#include "IntegerValue.h"
+static const sk::util::String __className("sk::oci::Strings");
 
-static const sk::util::String __className("sk::oci::bind::IntegerValue");
-
-sk::oci::bind::IntegerValue::
-IntegerValue(const sk::util::Integers& data)
-  : _data(data)
+sk::oci::Strings::
+Strings(int cap)
+  : sk::util::CappedStrings(cap)
 {
 }
 
-sk::oci::bind::IntegerValue::
-~IntegerValue()
+sk::oci::Strings::
+Strings()
+{
+}
+
+sk::oci::Strings::
+~Strings()
 {
 }
 
 const sk::util::Class
-sk::oci::bind::IntegerValue::
+sk::oci::Strings::
 getClass() const
 {
   return sk::util::Class(__className);
 }
 
-void 
-sk::oci::bind::IntegerValue::
-bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
+sk::oci::Strings&
+sk::oci::Strings::
+operator << (const sk::util::String& item)
 {
-  statement.bindIntTag(tag, _data);
+  addLast(item);
+  return *this;
 }
 
 void 
-sk::oci::bind::IntegerValue::
+sk::oci::Strings::
+bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
+{
+  statement.bindCharsTag(tag, maxItemSize(), *this);
+}
+
+void 
+sk::oci::Strings::
 bindPosition(int position, sk::oci::Statement& statement) const
 {
-  statement.bindIntAt(position, _data);
+  statement.bindCharsAt(position, maxItemSize(), *this);
 }

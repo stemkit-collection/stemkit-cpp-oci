@@ -1,4 +1,12 @@
+[2010-04-19]
+============
+
++ Introduced sk::oci::Strings, sk::oci::Integers, etc. to deal with bindable
+  data types. It will take up functionality of current sk::oci::bind::Value
+  objects, implementing extra things as capping strings.
+
 [2010-04-09]
+============
 
 - Implement top level binding capabilities.
 
