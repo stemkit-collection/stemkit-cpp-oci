@@ -10,27 +10,35 @@
 
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
-#include <sk/util/UnsupportedOperationException.h>
+#include <sk/util/Holder.cxx>
 
 #include <sk/oci/bind/out.h>
 
 static const sk::util::String __className("sk::oci::bind::out");
 
+struct sk::oci::bind::out::Data : public virtual sk::util::Object {
+  Data(int amount, int skip)
+    : amount(amount), skip(skip) {}
+
+  int amount;
+  int skip;
+};
+
 sk::oci::bind::out::
 out()
-  : _amount(1), _skip(0)
+  : _dataHolder(new out::Data(0, 0)), _data(_dataHolder.getMutable())
 {
 }
 
 sk::oci::bind::out::
 out(uint32_t amount)
-  : _amount(amount), _skip(0)
+  : _dataHolder(new out::Data(amount, 0)), _data(_dataHolder.getMutable())
 {
 }
 
 sk::oci::bind::out::
 out(uint32_t amount, uint32_t skip)
-  : _amount(amount), _skip(skip)
+  : _dataHolder(new out::Data(amount, skip)), _data(_dataHolder.getMutable())
 {
 }
 
@@ -57,7 +65,6 @@ sk::oci::bind::out::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
   getScope().notice(SK_METHOD) << "in";
-  throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
 sk::oci::bind::out& 

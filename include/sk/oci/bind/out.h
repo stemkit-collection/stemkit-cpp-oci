@@ -12,6 +12,7 @@
 #define _SK_OCI_BIND_OUT_H_
 
 #include <sk/util/Object.h>
+#include <sk/util/Holder.hxx>
 #include <sk/oci/Integers.h>
 #include <sk/oci/Strings.h>
 #include <sk/oci/Bind.h>
@@ -42,8 +43,10 @@ namespace sk {
       
         private:
           out& operator = (const out& other);
-          const uint32_t _amount;
-          const uint32_t _skip;
+
+          struct Data;
+          sk::util::Holder<Data>::Sharing _dataHolder;
+          Data& _data;
       };
     }
   }

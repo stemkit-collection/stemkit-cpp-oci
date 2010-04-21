@@ -8,7 +8,6 @@
  *  Author: Gennady Bystritsky
 */
 
-#include <sk/util/UnsupportedOperationException.h>
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/Holder.cxx>
