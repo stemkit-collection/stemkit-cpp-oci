@@ -33,6 +33,7 @@ namespace sk {
         // sk::oci::Value implementation.
         void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const;
         void bindPosition(int position, sk::oci::Statement& statement) const;
+        int bindPosition(int position, sk::oci::Cursor& cursor) const;
     };
   }
 }

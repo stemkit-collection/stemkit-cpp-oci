@@ -13,6 +13,7 @@
 
 #include <sk/oci/Strings.h>
 #include <sk/oci/Statement.h>
+#include <sk/oci/Cursor.h>
 
 static const sk::util::String __className("sk::oci::Strings");
 
@@ -59,4 +60,11 @@ sk::oci::Strings::
 bindPosition(int position, sk::oci::Statement& statement) const
 {
   statement.bindCharsAt(position, maxItemSize(), *this);
+}
+
+int 
+sk::oci::Strings::
+bindPosition(int position, sk::oci::Cursor& cursor) const
+{
+  return cursor.bindCharsAt(position, maxItemSize());
 }

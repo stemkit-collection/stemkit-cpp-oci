@@ -11,15 +11,19 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/Holder.cxx>
+#include <sk/util/ArrayList.cxx>
 
 #include <sk/oci/bind/out.h>
+#include <sk/oci/Value.h>
+#include <sk/oci/Data.h>
 
 static const sk::util::String __className("sk::oci::bind::out");
 
 struct sk::oci::bind::out::Data : public virtual sk::util::Object {
   Data(int amount, int skip)
-    : amount(amount), skip(skip) {}
+    : amount(std::max(0, amount)), skip(std::max(0, skip)) {}
 
+  sk::util::ArrayList<sk::oci::Value> values;
   int amount;
   int skip;
 };
@@ -60,18 +64,34 @@ prepareStatement(sk::oci::Statement& statement) const
 {
 }
 
+namespace {
+  struct OutputBinder : public virtual sk::util::Processor<const sk::oci::Value> {
+    OutputBinder(sk::util::List<sk::oci::Data>& bounds, sk::oci::Cursor& cursor)
+      : _bounds(bounds), _cursor(cursor), _position(0) {}
+
+    void process(const sk::oci::Value& value) const {
+      _bounds.add(_cursor.boundData(value.bindPosition(++_position, _cursor)));
+    }
+    sk::util::List<sk::oci::Data>& _bounds;
+    sk::oci::Cursor& _cursor;
+    mutable int _position;
+  };
+}
+
 void 
 sk::oci::bind::out::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
-  getScope().notice(SK_METHOD) << "in";
+  cursor.setCapacity(_data.amount);
+  sk::util::ArrayList<sk::oci::Data> bounds;
+  _data.values.forEach(OutputBinder(bounds, cursor));
 }
 
 sk::oci::bind::out& 
 sk::oci::bind::out::
 operator<<(const sk::oci::Integers& values)
 {
-  getScope().notice(SK_METHOD) << "Integers";
+  _data.values.add(values);
   return *this;
 }
 
@@ -79,7 +99,7 @@ sk::oci::bind::out&
 sk::oci::bind::out::
 operator<<(const sk::oci::Strings& values)
 {
-  getScope().notice(SK_METHOD) << "Strings";
+  _data.values.add(values);
   return *this;
 }
 

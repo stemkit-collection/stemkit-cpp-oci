@@ -16,6 +16,7 @@
 namespace sk {
   namespace oci {
     class Statement;
+    class Cursor;
 
     class Value 
       : public virtual sk::util::Object
@@ -23,6 +24,7 @@ namespace sk {
       public:
         virtual void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const = 0;
         virtual void bindPosition(int position, sk::oci::Statement& statement) const = 0;
+        virtual int bindPosition(int position, sk::oci::Cursor& cursor) const = 0;
     };
   }
 }
