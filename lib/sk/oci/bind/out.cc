@@ -11,7 +11,7 @@
 #include <sk/util/Class.h>
 #include <sk/util/String.h>
 #include <sk/util/Holder.cxx>
-#include <sk/util/ArrayList.cxx>
+#include <sk/util/Vector.cxx>
 
 #include <sk/oci/bind/out.h>
 #include <sk/oci/Value.h>
@@ -23,7 +23,7 @@ struct sk::oci::bind::out::Data : public virtual sk::util::Object {
   Data(int amount, int skip)
     : amount(std::max(0, amount)), skip(std::max(0, skip)) {}
 
-  sk::util::ArrayList<sk::oci::Value> values;
+  sk::util::Vector<sk::oci::Value> values;
   int amount;
   int skip;
 };
@@ -76,6 +76,21 @@ namespace {
     sk::oci::Cursor& _cursor;
     mutable int _position;
   };
+
+  struct Populator : public virtual sk::util::Processor<sk::oci::Value> {
+    Populator(sk::util::Vector<sk::oci::Data>& bounds, int amount) 
+      : _bounds(bounds), _amount(amount), _position(0) {}
+
+    void process(sk::oci::Value& value) const {
+      const sk::oci::Data& bind = _bounds.get(_position++);
+      for(int index; index < _amount; ++index) {
+        value.assume(bind.piece(index));
+      }
+    }
+    sk::util::Vector<sk::oci::Data>& _bounds;
+    const int _amount;
+    mutable int _position;
+  };
 }
 
 void 
@@ -83,8 +98,12 @@ sk::oci::bind::out::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
   cursor.setCapacity(_data.amount);
-  sk::util::ArrayList<sk::oci::Data> bounds;
+  sk::util::Vector<sk::oci::Data> bounds;
   _data.values.forEach(OutputBinder(bounds, cursor));
+
+  for(uint32_t rows=cursor.fetch(); rows != 0; rows=cursor.fetch()) {
+    _data.values.forEach(Populator(bounds, _data.amount));
+  }
 }
 
 sk::oci::bind::out& 

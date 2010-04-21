@@ -14,6 +14,7 @@
 #include <sk/oci/Integers.h>
 #include <sk/oci/Statement.h>
 #include <sk/oci/Cursor.h>
+#include <sk/oci/Data.h>
 
 static const sk::util::String __className("sk::oci::Integers");
 
@@ -61,4 +62,11 @@ sk::oci::Integers::
 bindPosition(int position, sk::oci::Cursor& cursor) const
 {
   return cursor.bindIntAt(position);
+}
+
+void 
+sk::oci::Integers::
+assume(const sk::oci::Data& data)
+{
+  add(data.intValue());
 }
