@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -67,7 +67,7 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-void 
+void
 sk::oci::db::Accessor::
 logon()
 {
@@ -100,7 +100,7 @@ getConnectString() const
   return _username + '/' + _password + '@' + _database;
 }
 
-void 
+void
 sk::oci::db::Accessor::
 logoff()
 {
@@ -113,7 +113,7 @@ logoff()
   _connected = false;
 }
 
-void 
+void
 sk::oci::db::Accessor::
 close()
 {
@@ -128,7 +128,7 @@ namespace {
   }
 }
 
-void 
+void
 sk::oci::db::Accessor::
 commit()
 {
@@ -136,7 +136,7 @@ commit()
   _data.service.commit();
 }
 
-void 
+void
 sk::oci::db::Accessor::
 rollback()
 {
@@ -144,14 +144,14 @@ rollback()
   _data.service.rollback();
 }
 
-uint32_t 
+uint32_t
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql)
 {
   return execute(sql, sk::oci::abstract::Director());
 }
 
-uint32_t 
+uint32_t
 sk::oci::db::Accessor::
 execute(const sk::util::String& sql, const sk::oci::Director& director)
 {
@@ -202,7 +202,7 @@ namespace {
   };
 }
 
-const sk::oci::info::Table 
+const sk::oci::info::Table
 sk::oci::db::Accessor::
 describeTable(const sk::util::String& name)
 {
@@ -215,7 +215,7 @@ describeTable(const sk::util::String& name)
 
 namespace {
   struct CountingDirector : public sk::oci::abstract::Director {
-    CountingDirector(uint32_t& counter) 
+    CountingDirector(uint32_t& counter)
       : _counter(counter) {}
 
     void processCursor(sk::oci::Cursor& cursor) const {

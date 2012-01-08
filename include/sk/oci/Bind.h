@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -24,7 +24,7 @@ namespace sk {
       class in;
       class out;
     }
-    class Bind 
+    class Bind
       : public virtual sk::util::Object
     {
       public:
@@ -47,7 +47,7 @@ namespace sk {
 
       protected:
         const sk::rt::Scope& getScope() const;
-    
+
       private:
         Bind& operator = (const Bind& other);
         sk::util::ArrayList<sk::oci::Bind> _binds;

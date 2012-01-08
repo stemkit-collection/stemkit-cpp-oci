@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -19,13 +19,13 @@ namespace sk {
       namespace bind {
         class Data;
 
-        class Piece 
+        class Piece
           : public virtual sk::oci::Data
         {
           public:
             Piece(int index, bind::Data& data);
             virtual ~Piece();
-        
+
             // sk::oci::Data implementation.
             const sk::oci::Data& piece(int index) const;
             sk::oci::Data& piece(int index);
@@ -50,7 +50,7 @@ namespace sk {
             const sk::util::Class getClass() const;
             const sk::util::String toString() const;
             const sk::util::String inspect() const;
-        
+
           private:
             Piece(const Piece& other);
             Piece& operator = (const Piece& other);

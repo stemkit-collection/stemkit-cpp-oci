@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -49,28 +49,28 @@ operator << (const sk::util::String& item)
   return *this;
 }
 
-void 
+void
 sk::oci::Strings::
 bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
 {
   statement.bindCharsTag(tag, maxItemSize(), *this);
 }
 
-void 
+void
 sk::oci::Strings::
 bindPosition(int position, sk::oci::Statement& statement) const
 {
   statement.bindCharsAt(position, maxItemSize(), *this);
 }
 
-int 
+int
 sk::oci::Strings::
 bindPosition(int position, sk::oci::Cursor& cursor) const
 {
   return cursor.bindCharsAt(position, maxItemSize());
 }
 
-void 
+void
 sk::oci::Strings::
 assume(const sk::oci::Data& data)
 {

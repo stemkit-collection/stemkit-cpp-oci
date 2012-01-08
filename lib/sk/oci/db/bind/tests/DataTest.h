@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -28,11 +28,11 @@ namespace sk {
             CPPUNIT_TEST(testColumnCodes);
             CPPUNIT_TEST(testSizes);
           CPPUNIT_TEST_SUITE_END();
-        
+
           public:
             DataTest();
             virtual ~DataTest();
-        
+
             void setUp();
             void tearDown();
             void testBasicsSingle();
@@ -40,7 +40,7 @@ namespace sk {
             void testIndicators();
             void testColumnCodes();
             void testSizes();
-        
+
           private:
             DataTest(const DataTest& other);
             DataTest& operator = (const DataTest& other);

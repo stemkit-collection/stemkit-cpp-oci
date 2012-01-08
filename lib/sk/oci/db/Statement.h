@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -24,7 +24,7 @@ namespace sk {
     class BindRegistry;
 
     namespace db {
-      class Statement 
+      class Statement
         : public db::Handle,
           public virtual oci::Statement,
           public virtual oci::db::bind::Provider
@@ -80,7 +80,7 @@ namespace sk {
 
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
-      
+
           // sk::oci::db::Handle override.
           OCIStmt* getHandle() const;
 

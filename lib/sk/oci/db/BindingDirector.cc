@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -35,21 +35,21 @@ getClass() const
 }
 
 
-void 
+void
 sk::oci::db::BindingDirector::
 prepareStatement(sk::oci::Statement& statement) const
 {
   _bind.accept(statement);
 }
 
-void 
+void
 sk::oci::db::BindingDirector::
 processCursor(sk::oci::Cursor& cursor) const
 {
   _bind.accept(cursor, _data);
 }
 
-bool 
+bool
 sk::oci::db::BindingDirector::
 nextIteration() const
 {

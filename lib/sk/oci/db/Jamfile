@@ -2,7 +2,7 @@
 
 local library = sk.oci.db ;
 
-local objects = 
+local objects =
   Accessor.cc
   Statement.cc
   Cursor.cc
@@ -14,7 +14,7 @@ use-oracle $(objects) $(library). ;
 make-shared-library $(library) : $(objects) ;
 
 add-project-library $(library) :
-  $(library).bind 
+  $(library).bind
 ;
 
 make-subdirs "bind" ;

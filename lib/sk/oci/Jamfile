@@ -2,7 +2,7 @@
 
 local library = sk.oci ;
 
-local objects = 
+local objects =
   Exception.cc
   NoDataException.cc
   ErrorException.cc
@@ -20,7 +20,7 @@ local objects =
 
 make-shared-library $(library) : $(objects) ;
 
-add-project-library $(library) : 
+add-project-library $(library) :
   $(library).info
   $(library).bind
 ;

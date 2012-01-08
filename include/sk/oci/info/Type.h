@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -17,7 +17,7 @@
 namespace sk {
   namespace oci {
     namespace info {
-      class Type 
+      class Type
         : public virtual sk::util::Object
       {
         public:
@@ -56,7 +56,7 @@ namespace sk {
           const sk::util::String toString() const;
 
           bool operator == (const info::Type& other);
-      
+
           static const info::Type SK_UNKNOWN;
           static const info::Type SK_NUMBER;
           static const info::Type SK_VARCHAR2;
@@ -79,7 +79,7 @@ namespace sk {
           static const info::Type SK_BFILE;
           static const info::Type SK_OBJECT;
           static const info::Type SK_NAMEDCOLLECTION;
-      
+
         private:
           Type(const sk::util::String& name);
           Type(const Type& other);

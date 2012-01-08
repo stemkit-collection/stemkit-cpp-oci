@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -36,10 +36,10 @@ Data(int capacity, const sk::util::String& tag, ub2 type, int size)
   _depot.push_back(0);
 }
 
-void 
+void
 sk::oci::db::bind::Data::
 setup(int capacity)
-{                   
+{
   if(_pieceSize <= 0) {
     throw sk::util::IllegalStateException("Wrong bind value size");
   }
@@ -65,14 +65,14 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-const sk::oci::Data& 
+const sk::oci::Data&
 sk::oci::db::bind::Data::
 piece(int index) const
 {
   return _pieces.get(index);
 }
 
-sk::oci::Data& 
+sk::oci::Data&
 sk::oci::db::bind::Data::
 piece(int index)
 {
@@ -100,42 +100,42 @@ info(int index) const
   return depot.join(":");
 }
 
-sk::oci::db::bind::Data::oci_bind_handle& 
+sk::oci::db::bind::Data::oci_bind_handle&
 sk::oci::db::bind::Data::
 bindHandle()
 {
   return _handle.oci_bind;
 }
 
-sk::oci::db::bind::Data::oci_define_handle& 
+sk::oci::db::bind::Data::oci_define_handle&
 sk::oci::db::bind::Data::
 defineHandle()
 {
   return _handle.oci_define;
 }
 
-int 
+int
 sk::oci::db::bind::Data::
 capacity() const
 {
   return _capacity;
 }
 
-ub4 
+ub4
 sk::oci::db::bind::Data::
 position() const
 {
   return _position;
 }
 
-ub2 
+ub2
 sk::oci::db::bind::Data::
 type() const
 {
   return _type;
 }
 
-const text* 
+const text*
 sk::oci::db::bind::Data::
 tagPointer() const
 {
@@ -145,7 +145,7 @@ tagPointer() const
   return reinterpret_cast<const text*>(&_depot[_valueArraySize]);
 }
 
-sb4 
+sb4
 sk::oci::db::bind::Data::
 tagSize() const
 {
@@ -153,7 +153,7 @@ tagSize() const
   return size > 0 ? size - 1 : 0;
 }
 
-sb2* 
+sb2*
 sk::oci::db::bind::Data::
 indicatorPointer()
 {
@@ -162,19 +162,19 @@ indicatorPointer()
 
 sb2
 sk::oci::db::bind::Data::
-indicator(int index) const 
+indicator(int index) const
 {
   return _descriptors[index];
 }
 
-bool 
+bool
 sk::oci::db::bind::Data::
 isNull(int index) const
 {
   return indicator(index) == OCI_IND_NULL;
 }
 
-bool 
+bool
 sk::oci::db::bind::Data::
 isTruncated(int index) const
 {
@@ -182,7 +182,7 @@ isTruncated(int index) const
   return value == -2 || value > 0;
 }
 
-void 
+void
 sk::oci::db::bind::Data::
 setNull(int index, bool state)
 {
@@ -218,21 +218,21 @@ size(int index) const
   return _descriptors[(_capacity << 1) + index];
 }
 
-void 
+void
 sk::oci::db::bind::Data::
 setSize(int index, uint32_t size)
 {
   _descriptors[(_capacity << 1) + index] = size;
 }
 
-dvoid* 
+dvoid*
 sk::oci::db::bind::Data::
 valuePointer()
 {
   return _pieceSize == 0 ? 0 : &_depot[0];
 }
 
-sb4 
+sb4
 sk::oci::db::bind::Data::
 valueSize() const
 {
@@ -290,14 +290,14 @@ setCharsValue(int index, const sk::util::String& value)
   setNull(index, false);
 }
 
-int 
+int
 sk::oci::db::bind::Data::
 descriptorSize() const
 {
   return _descriptors.size();
 }
 
-int 
+int
 sk::oci::db::bind::Data::
 depotSize() const
 {

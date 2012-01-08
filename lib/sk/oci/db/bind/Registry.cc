@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -41,56 +41,56 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindChars(db::bind::Provider& provider, int position, int size, const sk::util::Strings& values)
 {
   return bindData(provider, position, new db::bind::CharsData(provider.datasetSize(), position, size, values));
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindChars(db::bind::Provider& provider, int position, int size)
 {
   return bindData(provider, position, new db::bind::CharsData(provider.datasetSize(), position, size));
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, int position, const sk::util::Integers& values)
 {
   return bindData(provider, position, new db::bind::IntData(provider.datasetSize(), position, values));
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, int position)
 {
   return bindData(provider, position, new db::bind::IntData(provider.datasetSize(), position));
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindChars(db::bind::Provider& provider, const sk::util::String& tag, int size, const sk::util::Strings& values)
 {
   return bindData(provider, tag, new db::bind::CharsData(provider.datasetSize(), tag, size, values));
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindChars(db::bind::Provider& provider, const sk::util::String& tag, int size)
 {
   return bindData(provider, tag, new db::bind::CharsData(provider.datasetSize(), tag, size));
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, const sk::util::String& tag, const sk::util::Integers& values)
 {
   return bindData(provider, tag, new db::bind::IntData(provider.datasetSize(), tag, values));
 }
 
-int 
+int
 sk::oci::db::bind::Registry::
 bindInteger(db::bind::Provider& provider, const sk::util::String& tag)
 {
@@ -123,14 +123,14 @@ bindData(db::bind::Provider& provider, const sk::util::String& tag, db::bind::Da
   return index;
 }
 
-const sk::oci::Data& 
+const sk::oci::Data&
 sk::oci::db::bind::Registry::
 boundData(int bid) const
 {
   return _depot.get(bid).piece(0);
 }
 
-sk::oci::Data& 
+sk::oci::Data&
 sk::oci::db::bind::Registry::
 boundMutableData(int bid)
 {

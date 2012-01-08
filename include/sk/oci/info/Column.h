@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -18,7 +18,7 @@
 namespace sk {
   namespace oci {
     namespace info {
-      class Column 
+      class Column
         : public virtual sk::util::Object
       {
         public:
@@ -31,11 +31,11 @@ namespace sk {
           int getSize() const;
 
           void setTypeName(const sk::util::String& schema, const sk::util::String& object);
-      
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
           const sk::util::String inspect() const;
-      
+
         private:
           Column& operator = (const Column& other);
 

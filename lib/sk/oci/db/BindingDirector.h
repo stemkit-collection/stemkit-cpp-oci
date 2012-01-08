@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -18,7 +18,7 @@
 namespace sk {
   namespace oci {
     namespace db {
-      class BindingDirector 
+      class BindingDirector
         : public virtual sk::oci::Director
       {
         public:
@@ -31,10 +31,10 @@ namespace sk {
           void prepareStatement(sk::oci::Statement& statement) const;
           void processCursor(sk::oci::Cursor& cursor) const;
           bool nextIteration() const;
-      
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
-      
+
         private:
           BindingDirector(const BindingDirector& other);
           BindingDirector& operator = (const BindingDirector& other);

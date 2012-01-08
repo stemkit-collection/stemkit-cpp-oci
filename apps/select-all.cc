@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -73,7 +73,7 @@ namespace {
           break;
         }
         for(int index=0; index < amount; ++index) {
-          std::cout 
+          std::cout
             << c1.getName() << "=" << d1.piece(index).info() << ", "
             << c2.getName() << "=" << d2.piece(index).info()
             << std::endl

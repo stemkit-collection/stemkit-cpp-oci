@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -60,7 +60,7 @@ void printContent(sk::oci::Accessor& accessor, const sk::util::String& table) {
   sk::rt::Scope scope(__FUNCTION__);
 
   const sk::oci::bind::Data result = accessor.execute(
-    "select * from where name = :name and id = :id and zip = :3" + table, 
+    "select * from where name = :name and id = :id and zip = :3" + table,
     sk::oci::Bind()
       << sk::oci::bind::in()
         << ":id" << (sk::oci::Integers() << 1 << 2 << 3)

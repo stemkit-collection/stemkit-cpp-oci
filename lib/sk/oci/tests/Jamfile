@@ -2,7 +2,7 @@
 
 local test = sk-oci-test ;
 
-local test-objects = 
+local test-objects =
   TestSuite.cc
   ExceptionTest.cc
 ;

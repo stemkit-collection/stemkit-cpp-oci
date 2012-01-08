@@ -61,8 +61,8 @@
 
 + Added methods sk::oci::Data#getSize() and sk::oci::Data#getColumnCode().
 
-+ Implemented control for SUCCESS_WITH_INFO after fetch(). Added method 
-  sk::oci::Cursor#hasInfo() to query whether info was available. 
++ Implemented control for SUCCESS_WITH_INFO after fetch(). Added method
+  sk::oci::Cursor#hasInfo() to query whether info was available.
   NOTE: it is always the case when column level return codes are used.
 
 [2010-02-27]
@@ -86,11 +86,11 @@
   take care of construction and inspect().
 
 + [2010-03-03]
-  bind::Registry#boundMutableData() must return non-const reference to 
+  bind::Registry#boundMutableData() must return non-const reference to
   bind::Data.
 
 + [2010-03-03]
-  db::oci::Statement must have boundMutableData() to make it possible to 
+  db::oci::Statement must have boundMutableData() to make it possible to
   modify bound data (say, for the new iterations).
 
 + [2010-03-02]

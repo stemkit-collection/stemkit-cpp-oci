@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -22,7 +22,7 @@
 
 sk::oci::db::Handle::
 Handle(ub4 type, db::Environment& env, db::handle::Error& error)
-  : _type(type), _environment(env), _handle(0), _error(error) 
+  : _type(type), _environment(env), _handle(0), _error(error)
 {
 }
 
@@ -31,23 +31,23 @@ sk::oci::db::Handle::
 {
 }
 
-void 
+void
 sk::oci::db::Handle::
-init() 
+init()
 {
   SK_OCI_ENSURE_SUCCESS(OCIHandleAlloc(_environment.getHandle(), &_handle, _type, 0, 0));
 }
 
-void 
+void
 sk::oci::db::Handle::
-init(void* handle) 
+init(void* handle)
 {
   _handle = handle;
 }
 
-void 
+void
 sk::oci::db::Handle::
-reset() 
+reset()
 {
   if(_handle != 0) {
     sword status = OCIHandleFree(_handle, _type);
@@ -59,9 +59,9 @@ reset()
   }
 }
 
-void 
+void
 sk::oci::db::Handle::
-setAttr(const void* attr, ub4 size, ub4 attrType) 
+setAttr(const void* attr, ub4 size, ub4 attrType)
 {
   SK_OCI_ENSURE_SUCCESS(OCIAttrSet(_handle, _type, const_cast<void*>(attr), size, attrType, _error.getHandle()));
 }
@@ -100,47 +100,47 @@ getCStrAttr(uint32_t* length, ub4 attrType)
 
 bool
 sk::oci::db::Handle::
-haveHandle() const 
+haveHandle() const
 {
   return _handle != 0;
 }
 
-void* 
+void*
 sk::oci::db::Handle::
-getHandle() const 
+getHandle() const
 {
   return _handle;
 }
 
 sk::oci::db::handle::Error&
 sk::oci::db::Handle::
-error() const 
+error() const
 {
   return _error;
 }
 
 ub4
 sk::oci::db::Handle::
-type() const 
+type() const
 {
   return _type;
 }
 
 sk::oci::db::Environment&
 sk::oci::db::Handle::
-environment() const 
+environment() const
 {
   return _environment;
 }
 
-const OraText* 
+const OraText*
 sk::oci::db::Handle::
-toOraText(const sk::util::String& string) const 
+toOraText(const sk::util::String& string) const
 {
   return reinterpret_cast<const OraText*>(string.getChars());
 }
 
-OraText* 
+OraText*
 sk::oci::db::Handle::
 toOraText(std::vector<char>& buffer) const
 {
@@ -159,17 +159,17 @@ mapOracleError(sb4 code) const
 
 void
 sk::oci::db::Handle::
-ensureSuccess(int status, const char* origin) const 
+ensureSuccess(int status, const char* origin) const
 {
   switch(status) {
     case OCI_SUCCESS:
       break;
-      
+
     case OCI_SUCCESS_WITH_INFO:
       _error.handleSuccessWithInfo(origin);
       break;
-                                
-    case OCI_NEED_DATA: 
+
+    case OCI_NEED_DATA:
       throw sk::oci::Exception(origin, "Need data");
 
     case OCI_NO_DATA:
@@ -195,13 +195,13 @@ ensureSuccess(int status, const char* origin) const
       break;
     }
 
-    case OCI_INVALID_HANDLE: 
+    case OCI_INVALID_HANDLE:
       throw sk::oci::InvalidHandleException(origin);
 
-    case OCI_STILL_EXECUTING: 
+    case OCI_STILL_EXECUTING:
       throw sk::oci::StillExecutingException(origin);
 
-    case OCI_CONTINUE: 
+    case OCI_CONTINUE:
       throw sk::oci::ContinueException(origin);
 
     default:

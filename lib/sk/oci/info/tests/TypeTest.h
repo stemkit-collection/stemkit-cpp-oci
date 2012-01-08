@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -25,16 +25,16 @@ namespace sk {
             CPPUNIT_TEST(testQueries);
             CPPUNIT_TEST(testOppositeQueries);
           CPPUNIT_TEST_SUITE_END();
-        
+
           public:
             TypeTest();
             virtual ~TypeTest();
-        
+
             void setUp();
             void tearDown();
             void testQueries();
             void testOppositeQueries();
-        
+
           private:
             TypeTest(const TypeTest& other);
             TypeTest& operator = (const TypeTest& other);

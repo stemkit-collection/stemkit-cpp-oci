@@ -2,7 +2,7 @@
 
 local test = sk-oci-db-bind-test ;
 
-local objects = 
+local objects =
   TestSuite.cc
   DataTest.cc
   CharsDataTest.cc

@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -102,7 +102,7 @@ testSelectList()
   accessor().execute("select * from " + testTable(), Director());
 }
 
-void 
+void
 CoreFeaturesTest::
 testRowCountAfterInsert()
 {
@@ -120,9 +120,9 @@ testRowCountAfterInsert()
   CPPUNIT_ASSERT_EQUAL(7u, accessor().tableSize(testTable()));
 }
 
-void 
+void
 CoreFeaturesTest::
-generateInsertsOneByOne(int amount, const sk::util::String& data) 
+generateInsertsOneByOne(int amount, const sk::util::String& data)
 {
   struct Director : public sk::oci::abstract::Director {
     Director(int amount, const sk::util::String& data)
@@ -148,9 +148,9 @@ generateInsertsOneByOne(int amount, const sk::util::String& data)
   accessor().execute("insert into " + testTable() + " values (:id, :name)", Director(amount, data));
 }
 
-void 
+void
 CoreFeaturesTest::
-generateInsertsAsArray(int amount, const sk::util::String& data) 
+generateInsertsAsArray(int amount, const sk::util::String& data)
 {
   struct Director : public sk::oci::abstract::Director {
     Director(int amount, const sk::util::String& data)
@@ -176,12 +176,12 @@ generateInsertsAsArray(int amount, const sk::util::String& data)
   accessor().execute("insert into " + testTable() + " values (:id, :name)", Director(amount, data));
 }
 
-void 
+void
 CoreFeaturesTest::
-selectAllOneByOne(sk::util::Strings& depot) 
+selectAllOneByOne(sk::util::Strings& depot)
 {
   struct Director : public sk::oci::abstract::Director {
-    Director(sk::util::Strings& depot) 
+    Director(sk::util::Strings& depot)
       : _depot(depot) {}
 
     void processCursor(sk::oci::Cursor& cursor) const {
@@ -197,12 +197,12 @@ selectAllOneByOne(sk::util::Strings& depot)
   accessor().execute("select * from " + testTable(), Director(depot));
 }
 
-void 
+void
 CoreFeaturesTest::
-selectAllAsArray(int chunkSize, sk::util::Strings& depot) 
+selectAllAsArray(int chunkSize, sk::util::Strings& depot)
 {
   struct Director : public sk::oci::abstract::Director {
-    Director(int chunkSize, sk::util::Strings& depot) 
+    Director(int chunkSize, sk::util::Strings& depot)
       : _chunkSize(chunkSize), _depot(depot) {}
 
     void processCursor(sk::oci::Cursor& cursor) const {
@@ -257,7 +257,7 @@ testInsertAsArray()
   CPPUNIT_ASSERT_EQUAL("3:bbb", depot.get(2));
 }
 
-void 
+void
 CoreFeaturesTest::
 testRollback()
 {
@@ -270,7 +270,7 @@ testRollback()
   CPPUNIT_ASSERT_EQUAL(0u, accessor().tableSize(testTable()));
 }
 
-void 
+void
 CoreFeaturesTest::
 testRollbackAfterCommit()
 {
@@ -284,7 +284,7 @@ testRollbackAfterCommit()
   CPPUNIT_ASSERT_EQUAL(7u, accessor().tableSize(testTable()));
 }
 
-void 
+void
 CoreFeaturesTest::
 testCommit()
 {
@@ -300,7 +300,7 @@ testCommit()
   CPPUNIT_ASSERT_EQUAL(7u, another.tableSize(testTable()));
 }
 
-void 
+void
 CoreFeaturesTest::
 testReadNull()
 {
@@ -458,7 +458,7 @@ testTruncateNoException()
       CPPUNIT_ASSERT(id.isTruncated() == false);
       CPPUNIT_ASSERT(name.isTruncated() == true);
       CPPUNIT_ASSERT_EQUAL(14u, name.size());
-      
+
       CPPUNIT_ASSERT(cursor.hasInfo() == false);
       CPPUNIT_ASSERT_EQUAL(0u, name.columnCode());
 
@@ -487,7 +487,7 @@ testTruncateColumnCodes()
       CPPUNIT_ASSERT(id.isTruncated() == false);
       CPPUNIT_ASSERT(name.isTruncated() == true);
       CPPUNIT_ASSERT_EQUAL(14u, name.size());
-      
+
       CPPUNIT_ASSERT(cursor.hasInfo() == true);
       CPPUNIT_ASSERT_EQUAL(1406u, name.columnCode());
 
@@ -497,7 +497,7 @@ testTruncateColumnCodes()
   accessor().execute("select * from " + testTable(), Director());
 }
 
-void 
+void
 CoreFeaturesTest::
 testNoData()
 {

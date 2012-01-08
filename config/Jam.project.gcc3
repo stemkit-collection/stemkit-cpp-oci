@@ -290,11 +290,11 @@ rule platform-hpux-ia64
 
 rule platform-unsupported
 {
-  exit 
+  exit
     Platform $(1) unsupported because of faulty thread implementation -- when
     combined with process handling, the background manager thread often dies
-    without any chance to be recovered from the application itself. This is 
-    one of "expected" side effects of old LixuxThreads implementation. The 
+    without any chance to be recovered from the application itself. This is
+    one of "expected" side effects of old LixuxThreads implementation. The
     newer one based on NPTL is free from this problem (no extra manager thread
     there).
   ;
@@ -357,11 +357,11 @@ project.STEMKIT_ROOT = $(CONTRIB_ROOT)/stemkit-$(project.STEMKIT_VERSION) ;
 project.STEMKIT_INCLUDE = $(project.STEMKIT_ROOT)/include ;
 project.STEMKIT_LIBDIR = $(project.STEMKIT_ROOT)/lib ;
 
-project.ORACLE_INCLUDES = 
+project.ORACLE_INCLUDES =
   include
 ;
 
-project.ORACLE_LIBS = 
+project.ORACLE_LIBS =
    clntsh
 ;
 

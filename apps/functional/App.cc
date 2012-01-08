@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -42,9 +42,9 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-app::Fixture& 
+app::Fixture&
 test::App::
-fixture() 
+fixture()
 {
   return _appHolder.getMutable();
 }

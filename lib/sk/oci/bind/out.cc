@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -58,7 +58,7 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-void 
+void
 sk::oci::bind::out::
 prepareStatement(sk::oci::Statement& statement) const
 {
@@ -78,7 +78,7 @@ namespace {
   };
 
   struct Populator : public virtual sk::util::Processor<sk::oci::Value> {
-    Populator(sk::util::Vector<sk::oci::Data>& bounds, int amount) 
+    Populator(sk::util::Vector<sk::oci::Data>& bounds, int amount)
       : _bounds(bounds), _amount(amount), _position(0) {}
 
     void process(sk::oci::Value& value) const {
@@ -93,7 +93,7 @@ namespace {
   };
 }
 
-void 
+void
 sk::oci::bind::out::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
@@ -106,7 +106,7 @@ processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
   }
 }
 
-sk::oci::bind::out& 
+sk::oci::bind::out&
 sk::oci::bind::out::
 operator<<(const sk::oci::Integers& values)
 {
@@ -114,7 +114,7 @@ operator<<(const sk::oci::Integers& values)
   return *this;
 }
 
-sk::oci::bind::out& 
+sk::oci::bind::out&
 sk::oci::bind::out::
 operator<<(const sk::oci::Strings& values)
 {

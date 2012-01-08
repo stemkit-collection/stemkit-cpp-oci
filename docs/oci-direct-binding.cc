@@ -3,7 +3,7 @@
 sk::oci::db::Accessor accessor("aaa", "bbb", "ccc");
 
 accessor.execute(
-  "insert into t1 values (:id, :name)", 
+  "insert into t1 values (:id, :name)",
    sk::oci::bind::in()
      << ":id" << (sk::util::Integers() << 14 << 15 << 16 << 17)
      << ":name" << (sk::util::Strings() << "aaa" << "bbb" << "ccc" << "ddd")
@@ -12,7 +12,7 @@ accessor.execute(
 int count = accessor.execute("select count(*) from t1", sk::oci::bind::out()).integer();
 
 const sk::oci::bind::out result = accessor.execute(
-  "select name, id from t1 where id < :id and name != :name", 
+  "select name, id from t1 where id < :id and name != :name",
   sk::oci::Bind()
     << sk::oci::bind::in()
       << ":id" << 16

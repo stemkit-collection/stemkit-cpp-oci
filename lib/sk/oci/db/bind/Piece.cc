@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -34,21 +34,21 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-const sk::oci::Data& 
+const sk::oci::Data&
 sk::oci::db::bind::Piece::
 piece(int index) const
 {
   return _data.piece(index);
 }
 
-sk::oci::Data& 
+sk::oci::Data&
 sk::oci::db::bind::Piece::
 piece(int index)
 {
   return _data.piece(index);
 }
 
-const sk::util::String 
+const sk::util::String
 sk::oci::db::bind::Piece::
 info() const
 {
@@ -69,70 +69,70 @@ inspect() const
   return _data.inspect(_index);
 }
 
-const int32_t& 
+const int32_t&
 sk::oci::db::bind::Piece::
 intValue() const
 {
   return _data.intValue(_index);
 }
 
-void 
+void
 sk::oci::db::bind::Piece::
 setIntValue(int32_t value)
 {
   _data.setIntValue(_index, value);
 }
 
-const char* 
+const char*
 sk::oci::db::bind::Piece::
 charsValue() const
 {
   return _data.charsValue(_index);
 }
 
-void 
+void
 sk::oci::db::bind::Piece::
 setCharsValue(const sk::util::String& value)
 {
   _data.setCharsValue(_index, value);
 }
 
-const sk::util::String 
+const sk::util::String
 sk::oci::db::bind::Piece::
 stringValue() const
 {
   return sk::util::String(_data.charsValue(_index), _data.size(_index));
 }
 
-bool 
+bool
 sk::oci::db::bind::Piece::
 isNull() const
 {
   return _data.isNull(_index);
 }
 
-bool 
+bool
 sk::oci::db::bind::Piece::
 isTruncated() const
 {
   return _data.isTruncated(_index);
 }
 
-uint32_t 
+uint32_t
 sk::oci::db::bind::Piece::
 size() const
 {
   return _data.size(_index);
 }
 
-uint32_t 
+uint32_t
 sk::oci::db::bind::Piece::
 columnCode() const
 {
   return _data.columnCode(_index);
 }
 
-void 
+void
 sk::oci::db::bind::Piece::
 setNull(bool state)
 {

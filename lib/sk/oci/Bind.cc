@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -52,14 +52,14 @@ getScope() const
   return _scope;
 }
 
-void 
+void
 sk::oci::Bind::
 accept(sk::oci::Statement& statement) const
 {
   _scope.notice(SK_METHOD) << "Accepting statement, binds=" << _binds.inspect();
 
   struct Acceptor : public virtual sk::util::Processor<const sk::oci::Bind> {
-    Acceptor(sk::oci::Statement& statement) 
+    Acceptor(sk::oci::Statement& statement)
       : _statement(statement) {}
 
     void process(const sk::oci::Bind& bind) const {
@@ -71,14 +71,14 @@ accept(sk::oci::Statement& statement) const
   prepareStatement(statement);
 }
 
-void 
+void
 sk::oci::Bind::
 accept(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
   _scope.notice(SK_METHOD) << "Accepting cursor, binds=" << _binds.inspect();
 
   struct Acceptor : public virtual sk::util::Processor<const sk::oci::Bind> {
-    Acceptor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) 
+    Acceptor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data)
       : _cursor(cursor), _data(data) {}
 
     void process(const sk::oci::Bind& bind) const {
@@ -91,19 +91,19 @@ accept(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
   processCursor(cursor, data);
 }
 
-void 
+void
 sk::oci::Bind::
 prepareStatement(sk::oci::Statement& statement) const
 {
 }
 
-void 
+void
 sk::oci::Bind::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
 }
 
-sk::oci::Bind& 
+sk::oci::Bind&
 sk::oci::Bind::
 operator<<(const sk::oci::Bind& other)
 {

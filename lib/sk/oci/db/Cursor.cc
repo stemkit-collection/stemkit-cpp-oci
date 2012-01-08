@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -38,21 +38,21 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-void 
+void
 sk::oci::db::Cursor::
 useTruncate(bool state)
 {
   _statement.useTruncate(state);
 }
 
-void 
+void
 sk::oci::db::Cursor::
 useColumnCodes(bool state)
 {
   _statement.useColumnCodes(state);
 }
 
-uint32_t 
+uint32_t
 sk::oci::db::Cursor::
 rowCount()
 {
@@ -142,7 +142,7 @@ namespace {
   }
 }
 
-const sk::oci::info::Column 
+const sk::oci::info::Column
 sk::oci::db::Cursor::
 columnAt(int index)
 {
@@ -172,7 +172,7 @@ columnAt(int index)
   return column;
 }
 
-void 
+void
 sk::oci::db::Cursor::
 forEachColumn(const sk::util::Processor<const info::Column>& processor)
 {
@@ -229,42 +229,42 @@ updateRowCount()
   return delta;
 }
 
-const sk::oci::Data& 
+const sk::oci::Data&
 sk::oci::db::Cursor::
 boundData(int bid) const
 {
   return _statement.bindRegistry().boundData(bid);
 }
 
-sk::oci::Data& 
+sk::oci::Data&
 sk::oci::db::Cursor::
 boundMutableData(int bid)
 {
   throw sk::util::UnsupportedOperationException(SK_METHOD);
 }
 
-int 
+int
 sk::oci::db::Cursor::
 bindIntAt(int position)
 {
   return _statement.bindRegistry().bindInteger(*this, position);
 }
 
-int 
+int
 sk::oci::db::Cursor::
 bindCharsAt(int position, int size)
 {
   return _statement.bindRegistry().bindChars(*this, position, size);
 }
 
-void 
+void
 sk::oci::db::Cursor::
 bindDataPosition(db::bind::Data& data)
 {
   _statement.defineDataPosition(data);
 }
 
-void 
+void
 sk::oci::db::Cursor::
 bindDataTag(db::bind::Data& data)
 {

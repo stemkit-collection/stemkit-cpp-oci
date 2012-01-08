@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -43,28 +43,28 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-void 
+void
 sk::oci::Integers::
 bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const
 {
   statement.bindIntTag(tag, *this);
 }
 
-void 
+void
 sk::oci::Integers::
 bindPosition(int position, sk::oci::Statement& statement) const
 {
   statement.bindIntAt(position, *this);
 }
 
-int 
+int
 sk::oci::Integers::
 bindPosition(int position, sk::oci::Cursor& cursor) const
 {
   return cursor.bindIntAt(position);
 }
 
-void 
+void
 sk::oci::Integers::
 assume(const sk::oci::Data& data)
 {

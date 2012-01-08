@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -44,98 +44,98 @@ getClass() const
   return sk::util::Class(__className);
 }
 
-OCIStmt* 
+OCIStmt*
 sk::oci::db::Statement::
-getHandle() const 
+getHandle() const
 {
   return reinterpret_cast<OCIStmt*>(db::Handle::getHandle());
 }
 
-void 
+void
 sk::oci::db::Statement::
-execute(db::handle::Service& service) 
+execute(db::handle::Service& service)
 {
   SK_OCI_ENSURE_SUCCESS(OCIStmtExecute(service.getHandle(), getHandle(), error().getHandle(), _capacity, _offset, 0, 0, _mode));
 }
 
 void
 sk::oci::db::Statement::
-useTruncate(bool state) 
+useTruncate(bool state)
 {
   _useTruncate = state;
 }
 
 void
 sk::oci::db::Statement::
-useColumnCodes(bool state) 
+useColumnCodes(bool state)
 {
   _useColumnCodes = state;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isSelect() const
 {
   return _type == OCI_STMT_SELECT;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isUpdate() const
 {
   return _type == OCI_STMT_UPDATE;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isDelete() const
 {
   return _type == OCI_STMT_DELETE;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isInsert() const
 {
   return _type == OCI_STMT_INSERT;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isCreate() const
 {
   return _type == OCI_STMT_CREATE;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isDrop() const
 {
   return _type == OCI_STMT_DROP;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isAlter() const
 {
   return _type == OCI_STMT_ALTER;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isBegin() const
 {
   return _type == OCI_STMT_BEGIN;
 }
 
-bool 
+bool
 sk::oci::db::Statement::
 isDeclare() const
 {
   return _type == OCI_STMT_DECLARE;
 }
 
-void 
+void
 sk::oci::db::Statement::
 setDescribeOnly(bool state)
 {
@@ -163,14 +163,14 @@ setRowOffset(uint32_t number)
   _offset = number;
 }
 
-const sk::oci::Data& 
+const sk::oci::Data&
 sk::oci::db::Statement::
 boundData(int bid) const
 {
   return _bindRegistry.boundData(bid);
 }
 
-sk::oci::Data& 
+sk::oci::Data&
 sk::oci::db::Statement::
 boundMutableData(int bid)
 {
@@ -239,17 +239,17 @@ bindDataPosition(db::bind::Data& data)
 {
   SK_OCI_ENSURE_SUCCESS(
     OCIBindByPos(
-      getHandle(), 
-      &data.bindHandle(), 
-      error().getHandle(), 
-      data.position(), 
-      data.valuePointer(), 
-      data.valueSize(), 
-      data.type(), 
-      data.indicatorPointer(), 
-      data.sizePointer(), 
-      (_useColumnCodes ? data.columnCodePointer() : 0), 
-      0, 0, 
+      getHandle(),
+      &data.bindHandle(),
+      error().getHandle(),
+      data.position(),
+      data.valuePointer(),
+      data.valueSize(),
+      data.type(),
+      data.indicatorPointer(),
+      data.sizePointer(),
+      (_useColumnCodes ? data.columnCodePointer() : 0),
+      0, 0,
       OCI_DEFAULT
     )
   );
@@ -261,18 +261,18 @@ bindDataTag(db::bind::Data& data)
 {
   SK_OCI_ENSURE_SUCCESS(
     OCIBindByName(
-      getHandle(), 
-      &data.bindHandle(), 
-      error().getHandle(), 
-      data.tagPointer(), 
-      data.tagSize(), 
-      data.valuePointer(), 
-      data.valueSize(), 
-      data.type(), 
-      data.indicatorPointer(), 
-      data.sizePointer(), 
-      (_useColumnCodes ? data.columnCodePointer() : 0), 
-      0, 0, 
+      getHandle(),
+      &data.bindHandle(),
+      error().getHandle(),
+      data.tagPointer(),
+      data.tagSize(),
+      data.valuePointer(),
+      data.valueSize(),
+      data.type(),
+      data.indicatorPointer(),
+      data.sizePointer(),
+      (_useColumnCodes ? data.columnCodePointer() : 0),
+      0, 0,
       OCI_DEFAULT
     )
   );
@@ -284,16 +284,16 @@ defineDataPosition(db::bind::Data& data)
 {
   SK_OCI_ENSURE_SUCCESS(
     OCIDefineByPos(
-      getHandle(), 
-      &data.defineHandle(), 
-      error().getHandle(), 
-      data.position(), 
-      data.valuePointer(), 
-      data.valueSize(), 
-      data.type(), 
-      data.indicatorPointer(), 
-      data.sizePointer(), 
-      (_useColumnCodes ? data.columnCodePointer() : 0), 
+      getHandle(),
+      &data.defineHandle(),
+      error().getHandle(),
+      data.position(),
+      data.valuePointer(),
+      data.valueSize(),
+      data.type(),
+      data.indicatorPointer(),
+      data.sizePointer(),
+      (_useColumnCodes ? data.columnCodePointer() : 0),
       OCI_DEFAULT
     )
   );
@@ -311,8 +311,8 @@ sk::oci::db::Statement::
 fetch(uint32_t amount)
 {
   int status = OCIStmtFetch2(
-    getHandle(), 
-    error().getHandle(), 
+    getHandle(),
+    error().getHandle(),
     amount,
     OCI_FETCH_NEXT,
     0,
@@ -342,7 +342,7 @@ hasInfo() const
 
 sb4
 sk::oci::db::Statement::
-mapOracleError(sb4 code) const 
+mapOracleError(sb4 code) const
 {
   switch(code) {
     case 1406:
@@ -357,7 +357,7 @@ mapOracleError(sb4 code) const
   return code;
 }
 
-uint32_t 
+uint32_t
 sk::oci::db::Statement::
 obtainRowCount()
 {

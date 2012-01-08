@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -22,7 +22,7 @@ namespace sk {
       namespace bind {
         class Data;
 
-        class Registry 
+        class Registry
           : public virtual sk::util::Object
         {
           public:
@@ -43,10 +43,10 @@ namespace sk {
 
             const sk::oci::Data& boundData(int bid) const;
             sk::oci::Data& boundMutableData(int bid);
-        
+
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;
-        
+
           private:
             Registry(const Registry& other);
             Registry& operator = (const Registry& other);

@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -19,13 +19,13 @@
 namespace sk {
   namespace oci {
     namespace db {
-      class Accessor 
+      class Accessor
         : public virtual sk::oci::Accessor
       {
         public:
           Accessor(const sk::util::String& username, const sk::util::String& password, const sk::util::String& database);
           virtual ~Accessor();
-      
+
           // sk::oci::Accessor implementation.
           void close();
           void commit();
@@ -41,7 +41,7 @@ namespace sk {
 
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
-      
+
         private:
           Accessor(const Accessor& other);
           Accessor& operator = (const Accessor& other);

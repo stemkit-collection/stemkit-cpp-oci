@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -61,7 +61,7 @@ namespace {
   };
 }
 
-void 
+void
 sk::oci::bind::in::
 prepareStatement(sk::oci::Statement& statement) const
 {
@@ -75,7 +75,7 @@ prepareStatement(sk::oci::Statement& statement) const
   _data.places.forEach(InputBinder(statement));
 }
 
-void 
+void
 sk::oci::bind::in::
 processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const
 {
@@ -96,7 +96,7 @@ analyzeCardinality(int cardinality)
   }
 }
 
-sk::oci::bind::in& 
+sk::oci::bind::in&
 sk::oci::bind::in::
 operator<<(const sk::oci::Integers& data)
 {
@@ -110,7 +110,7 @@ operator<<(const sk::oci::Integers& data)
   return *this;
 }
 
-sk::oci::bind::in& 
+sk::oci::bind::in&
 sk::oci::bind::in::
 operator<<(const sk::oci::Strings& data)
 {
@@ -124,7 +124,7 @@ operator<<(const sk::oci::Strings& data)
   return *this;
 }
 
-sk::oci::bind::in& 
+sk::oci::bind::in&
 sk::oci::bind::in::
 operator<<(const sk::util::String& tag)
 {
@@ -137,7 +137,7 @@ operator<<(const sk::util::String& tag)
   return *this;
 }
 
-sk::oci::bind::in& 
+sk::oci::bind::in&
 sk::oci::bind::in::
 operator<<(int position)
 {
@@ -150,7 +150,7 @@ operator<<(int position)
   return *this;
 }
 
-sk::oci::bind::in& 
+sk::oci::bind::in&
 sk::oci::bind::in::
 operator<<(const char* tag)
 {

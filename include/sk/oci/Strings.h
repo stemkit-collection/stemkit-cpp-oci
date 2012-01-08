@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -16,8 +16,8 @@
 
 namespace sk {
   namespace oci {
-    class Strings 
-      : public sk::util::CappedStrings, 
+    class Strings
+      : public sk::util::CappedStrings,
         public virtual sk::oci::Value
     {
       public:
@@ -26,10 +26,10 @@ namespace sk {
         virtual ~Strings();
 
         sk::oci::Strings& operator << (const sk::util::String& item);
-    
+
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
-    
+
       protected:
         // sk::oci::Value implementation.
         void bindTag(const sk::util::String& tag, sk::oci::Statement& statement) const;

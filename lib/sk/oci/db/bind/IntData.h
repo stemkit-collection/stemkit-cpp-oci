@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -18,7 +18,7 @@ namespace sk {
   namespace oci {
     namespace db {
       namespace bind {
-        class IntData 
+        class IntData
           : public bind::Data
         {
           public:
@@ -26,14 +26,14 @@ namespace sk {
             IntData(int capacity, const sk::util::String& tag);
             IntData(int capacity, uint32_t position, const sk::util::Integers& values);
             IntData(int capacity, uint32_t position);
-        
+
             // sk::oci::db::bind::Data implementation.
             const sk::util::String toString(int index) const;
             const sk::util::String inspect(int index) const;
 
             // sk::util::Object re-implementation.
             const sk::util::Class getClass() const;
-        
+
           private:
             IntData(const IntData& other);
             IntData& operator = (const IntData& other);

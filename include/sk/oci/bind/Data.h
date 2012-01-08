@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -18,7 +18,7 @@
 namespace sk {
   namespace oci {
     namespace bind {
-      class Data 
+      class Data
         : public virtual sk::util::Object
       {
         public:
@@ -30,10 +30,10 @@ namespace sk {
 
           const sk::util::Integers& integers(int position = 1) const;
           const sk::util::Strings& strings(int position = 1) const;
-      
+
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
-      
+
         private:
           Data& operator = (const Data& other);
       };

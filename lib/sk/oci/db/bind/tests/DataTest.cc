@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -46,7 +46,7 @@ testBasicsSingle()
   CPPUNIT_ASSERT_EQUAL(ub4(2), data.position());
   CPPUNIT_ASSERT_EQUAL(10, data.valueSize());
   CPPUNIT_ASSERT_EQUAL(ub2(SQLT_STR), data.type());
-  
+
   CPPUNIT_ASSERT_EQUAL(0, data.tagSize());
   CPPUNIT_ASSERT_THROW(data.tagPointer(), sk::util::IllegalStateException);
 

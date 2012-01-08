@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -72,7 +72,7 @@ namespace {
       const sk::oci::Data& d2 = cursor.boundData(cursor.bindCharsAt(2, c2.getSize()));
 
       while(cursor.fetch() != 0) {
-        std::cout 
+        std::cout
           << c1.getName() << "=" << d1.info() << ", "
           << c2.getName() << "=" << d2.info()
           << std::endl

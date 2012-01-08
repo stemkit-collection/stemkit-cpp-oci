@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -20,7 +20,7 @@ namespace sk {
   namespace oci {
     namespace db {
       namespace handle {
-        class Service 
+        class Service
           : public db::Handle
         {
           public:
@@ -60,7 +60,7 @@ namespace sk {
             OCISvcCtx* getHandle() const {
               return reinterpret_cast<OCISvcCtx*>(db::Handle::getHandle());
             }
-        
+
           private:
             Service(const Service& other);
             Service& operator = (const Service& other);

@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky (gennady.bystritsky@quest.com)
 */
 
@@ -15,12 +15,12 @@
 
 namespace sk {
   namespace oci {
-    class LogonException 
+    class LogonException
       : public sk::oci::Exception
     {
       public:
         LogonException(const sk::util::String& connectString, const sk::util::String& message);
-    
+
         // sk::util::Object re-implementation.
         const sk::util::Class getClass() const;
     };

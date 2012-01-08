@@ -2,7 +2,7 @@
 
 local library = sk.oci.db.bind ;
 
-local objects = 
+local objects =
   Registry.cc
   Data.cc
   Piece.cc

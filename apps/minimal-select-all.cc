@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -31,7 +31,7 @@ namespace {
     void processCursor(sk::oci::Cursor& cursor) const {
       cursor.useTruncate(true);
       cursor.useColumnCodes(true);
-      
+
       const sk::oci::info::Column c1 = cursor.columnAt(0);
       const sk::oci::info::Column c2 = cursor.columnAt(1);
 
@@ -43,11 +43,11 @@ namespace {
 
       while(cursor.fetch() != 0) {
         std::cout << std::boolalpha
-          << c1.getName() << "=" << d1.intValue() << " (" 
-            << d1.isNull() << ", " << d1.isTruncated() 
-          << "), " 
-          << c2.getName() << "=" << d2.stringValue().inspect() << " ("  
-            << d2.isNull() << ", " << d2.isTruncated() 
+          << c1.getName() << "=" << d1.intValue() << " ("
+            << d1.isNull() << ", " << d1.isTruncated()
+          << "), "
+          << c2.getName() << "=" << d2.stringValue().inspect() << " ("
+            << d2.isNull() << ", " << d2.isTruncated()
           << ")"
           << std::endl
         ;

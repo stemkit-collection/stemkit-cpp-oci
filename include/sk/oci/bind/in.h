@@ -1,10 +1,10 @@
 /*  vim: set sw=2:
  *  Copyright (c) 2010, Gennady Bystritsky <bystr@mac.com>
- *  
+ *
  *  Distributed under the MIT Licence.
  *  This is free software. See 'LICENSE' for details.
  *  You must read and accept the license prior to use.
- *  
+ *
  *  Author: Gennady Bystritsky
 */
 
@@ -20,7 +20,7 @@
 namespace sk {
   namespace oci {
     namespace bind {
-      class in 
+      class in
         : public sk::oci::Bind
       {
         public:
@@ -34,14 +34,14 @@ namespace sk {
           sk::oci::bind::in& operator<<(int position);
 
           using sk::oci::Bind::operator<<;
-      
+
           // sk::oci::Bind implementation.
           void prepareStatement(sk::oci::Statement& statement) const;
           void processCursor(sk::oci::Cursor& cursor, sk::oci::bind::Data& data) const;
 
           // sk::util::Object re-implementation.
           const sk::util::Class getClass() const;
-      
+
         private:
           in& operator = (const in& other);
 

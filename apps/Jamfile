@@ -1,8 +1,8 @@
 # vim: ft=jam: sw=2:
 
-local programs = 
-  oracle-probe 
-  describe-table 
+local programs =
+  oracle-probe
+  describe-table
   select-all
   minimal-select-all
   select-some
@@ -11,7 +11,7 @@ local programs =
 
 use-project-libraries $(programs) : sk.oci sk.oci.db ;
 
-local program ; 
+local program ;
 for program in $(programs) {
   make-program $(program) : $(program).cc ;
 }
